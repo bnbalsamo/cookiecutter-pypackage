@@ -1,6 +1,7 @@
 import unittest
 import {{ cookiecutter.slug_name }}
 
+
 class Tests(unittest.TestCase):
     def setUp(self):
         # Perform any setup that should occur
@@ -14,6 +15,10 @@ class Tests(unittest.TestCase):
 
     def testPass(self):
         self.assertEqual(True, True)
+
+    def testVersionAvailable(self):
+        x = getattr({{ cookiecutter.slug_name }}, "__version__", None)
+        self.assertTrue(x is not None)
 
 
 if __name__ == "__main__":
