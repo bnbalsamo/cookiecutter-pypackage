@@ -1,6 +1,7 @@
 {
     "project_name": "MyProject",
-    "slug_name": "myproject",
+    "slug_name": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
+    "github_repo_name": "{{ cookiecutter.slug_name }}",
     "version": "0.0.1",
     "short_description": "A project",
     "author": "First Last",
