@@ -6,3 +6,4 @@ coverage
 pytest
 twine
 autopep8
+check-manifest
