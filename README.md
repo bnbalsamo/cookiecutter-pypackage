@@ -19,6 +19,7 @@ My cookiecutter template for python packages
     - [coverage](https://coverage.readthedocs.io/en/coverage-4.4.1/)
     - [pytest](https://docs.pytest.org/en/latest/)
     - [twine](https://pypi.python.org/pypi/twine)
+    - [check-manifest](https://github.com/mgedmin/check-manifest)
 
 # Quickstart
 
