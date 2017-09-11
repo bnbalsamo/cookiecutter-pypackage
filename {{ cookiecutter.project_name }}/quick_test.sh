@@ -1,6 +1,6 @@
 #!/bin/sh
 echo "==> Running Tests <=="
-coverage run --source {{ cookiecutter.slug_name }} -m py.test \
+coverage run -m py.test \
     && echo "==> Coverage <==" && \
     coverage report
 echo "==> Flake8 <=="
