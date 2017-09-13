@@ -11,6 +11,7 @@ My cookiecutter template for python packages
 - [TravisCI](https://travis-ci.org/) integration
 - [Coveralls](https://coveralls.io/) integration
 - A minimal README
+- A virtual environment (python >= 3.3)
 - Packages for common development tasks
     - [pip](https://pip.pypa.io/en/latest/)
     - [bumpversion](https://github.com/peritus/bumpversion)
@@ -24,9 +25,7 @@ My cookiecutter template for python packages
 # Quickstart
 
 - Requirements For These Instructions
-    - [virtualenv](https://virtualenv.pypa.io/en/stable/)
-    - [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/)
-        - Properly configured for Project Management
+    - [Cookiecutter](https://github.com/audreyr/cookiecutter)
     - [Github](https://github.com/) account
     - [TravisCI](https://travis-ci.org/) account
     - [Coveralls](https://coveralls.io/) account
@@ -34,17 +33,17 @@ My cookiecutter template for python packages
     - Create a github repo named $YOUR_PROJECT_NAME
     - Enable repository monitoring on Travis
     - Enable repository monitoring on coveralls
-    - ```$ mkproject $YOUR_PROJECT_NAME```
-    - ```$ pip install cookiecutter```
     - ```$ cookiecutter gh:https://github.com/bnbalsamo/cookiecutter-pypackage.git```
-    - Fill in the prompts, be sure $YOUR_PROJECT_NAME matches the Github repository name
+    - Fill in the prompts
     - ```$ cd $YOUR_PROJECT_NAME```
+    - ```$ source .env/bin/activate```
+        - if python < 3.3 create your own venv here
+    - ```$ pip install -r requirements_dev.txt```
     - ```$ git init```
-    - ```$ git add *```
+    - ```$ git add */.*```
     - ```$ git commit -m "first commit"```
     - ```$ git remote add origin $YOUR_REPO_ADDRESS```
-    - ```$ git push```
-    - ```pip install -r requirements_dev.txt```
+    - ```$ git push -u origin master```
     - Begin developing your package!
 
 # Functionalities
