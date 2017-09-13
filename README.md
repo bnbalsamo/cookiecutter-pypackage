@@ -33,7 +33,7 @@ My cookiecutter template for python packages
     - Create a github repo named $YOUR_PROJECT_NAME
     - Enable repository monitoring on Travis
     - Enable repository monitoring on coveralls
-    - ```$ cookiecutter gh:https://github.com/bnbalsamo/cookiecutter-pypackage.git```
+    - ```$ cookiecutter https://github.com/bnbalsamo/cookiecutter-pypackage```
     - Fill in the prompts
     - ```$ cd $YOUR_PROJECT_NAME```
     - ```$ source .env/bin/activate```
