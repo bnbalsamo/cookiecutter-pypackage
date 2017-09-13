@@ -8,6 +8,7 @@
     "email": "you@provider.com",
     "github_username": "githubber",
     "max_line_length": "120",
+    "venv_args": "",
     "license": [
         "GNU GPLv3",
         "GNU AGPLv3",
