@@ -1,6 +1,6 @@
 # cookiecutter-pypackage
 
-v0.3.3
+v0.3.4
 
 [![Build Status](https://travis-ci.org/bnbalsamo/cookiecutter-pypackage.svg?branch=master)](https://travis-ci.org/bnbalsamo/cookiecutter-pypackage)
 
