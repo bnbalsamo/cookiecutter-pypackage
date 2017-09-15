@@ -19,7 +19,7 @@ def make_venv():
     main(args.split())
     print("Virtual environment successfully created. Activate " +
           "it with: \n" +
-          "$ source .env/bin/activate \n" +
+          "$ source venv/bin/activate \n" +
           "from the project root\n")
 
 
