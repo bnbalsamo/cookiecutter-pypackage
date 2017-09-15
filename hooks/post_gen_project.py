@@ -13,13 +13,13 @@ def make_venv():
     from venv import main
 
     cookiecutter_args = "{{cookiecutter.venv_args}}"
-    args = "{}".format(join(getcwd(), '.env'))
+    args = "{}".format(join(getcwd(), 'venv'))
     if cookiecutter_args != "":
         args = "{} {}".format(cookiecutter_args, args)
     main(args.split())
     print("Virtual environment successfully created. Activate " +
           "it with: \n" +
-          "$ source .env/bin/activate \n" +
+          "$ source venv/bin/activate \n" +
           "from the project root\n")
 
 

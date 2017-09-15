@@ -36,7 +36,7 @@ My cookiecutter template for python packages
     - ```$ cookiecutter https://github.com/bnbalsamo/cookiecutter-pypackage```
     - Fill in the prompts
     - ```$ cd $YOUR_PROJECT_NAME```
-    - ```$ source .env/bin/activate```
+    - ```$ source venv/bin/activate```
         - if python < 3.3 create your own venv here
     - ```$ pip install -r requirements_dev.txt```
     - ```$ git init```
