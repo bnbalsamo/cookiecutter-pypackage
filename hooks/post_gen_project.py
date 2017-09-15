@@ -13,7 +13,7 @@ def make_venv():
     from venv import main
 
     cookiecutter_args = "{{cookiecutter.venv_args}}"
-    args = "{}".format(join(getcwd(), '.env'))
+    args = "{}".format(join(getcwd(), 'venv'))
     if cookiecutter_args != "":
         args = "{} {}".format(cookiecutter_args, args)
     main(args.split())
