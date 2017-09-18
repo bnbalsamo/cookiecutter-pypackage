@@ -7,7 +7,7 @@
     "author": "First Last",
     "email": "you@provider.com",
     "github_username": "githubber",
-    "max_line_length": "120",
+    "max_line_length": "100",
     "venv_args": "",
     "license": [
         "GNU GPLv3",
