@@ -1,5 +1,5 @@
 """
-{{ cookiecutter.slug_name }}
+{{ cookiecutter.slug_name }}: {{ cookiecutter.short_description }}
 """
 
 __author__ = "{{ cookiecutter.author }}"

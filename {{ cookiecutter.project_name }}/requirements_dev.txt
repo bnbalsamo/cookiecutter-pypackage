@@ -7,3 +7,5 @@ pytest
 twine
 autopep8
 check-manifest
+sphinx
+sphinx_rtd_theme
