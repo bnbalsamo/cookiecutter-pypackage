@@ -8,7 +8,6 @@
     "email": "you@provider.com",
     "github_username": "githubber",
     "max_line_length": "100",
-    "venv_args": "",
     "license": [
         "GNU GPLv3",
         "GNU AGPLv3",
@@ -18,5 +17,7 @@
         "Mozzilla Public License 2.0", 
         "The Unlicense",
         "None/Other"
-    ]
+    ],
+    "venv_args": "",
+    "create_docs_folder": "y"
 }

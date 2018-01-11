@@ -1,6 +1,6 @@
 # cookiecutter-pypackage
 
-v0.6.0
+v0.7.0
 
 [![Build Status](https://travis-ci.org/bnbalsamo/cookiecutter-pypackage.svg?branch=master)](https://travis-ci.org/bnbalsamo/cookiecutter-pypackage)
 
@@ -10,6 +10,9 @@ My cookiecutter template for python packages
 - [Github](https://github.com/) integration
 - [TravisCI](https://travis-ci.org/) integration
 - [Coveralls](https://coveralls.io/) integration
+- (optional) [Sphinx](http://www.sphinx-doc.org) documentation
+    - With a minimal autodocs setup
+    - Ready for use with [readthedocs](https://readthedocs.org/)
 - A minimal README
 - A virtual environment (python >= 3.3)
 - Packages for common development tasks
@@ -29,10 +32,12 @@ My cookiecutter template for python packages
     - [Github](https://github.com/) account
     - [TravisCI](https://travis-ci.org/) account
     - [Coveralls](https://coveralls.io/) account
+    - [readthedocs](https://readthedocs.org/) account
 - Steps
     - Create a github repo named $YOUR_PROJECT_NAME
     - Enable repository monitoring on Travis
     - Enable repository monitoring on coveralls
+    - Enable repository monitoring on readthedocs
     - ```$ cookiecutter https://github.com/bnbalsamo/cookiecutter-pypackage```
     - Fill in the prompts
     - ```$ cd $YOUR_PROJECT_NAME```
