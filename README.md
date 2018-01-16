@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/bnbalsamo/cookiecutter-pypackage.svg?branch=master)](https://travis-ci.org/bnbalsamo/cookiecutter-pypackage)
 
-My cookiecutter template for python packages
+My [cookiecutter](https://github.com/audreyr/cookiecutter) template for python packages
 
 # Whats it get me?
 - [Github](https://github.com/) integration
