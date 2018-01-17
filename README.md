@@ -1,10 +1,8 @@
-# cookiecutter-pypackage
-
-v0.7.1
+# cookiecutter-pypackage [![v0.7.2](https://img.shields.io/badge/version-0.7.2-blue.svg)](https://github.com/bnbalsamo/cookiecutter-pypackage/releases)
 
 [![Build Status](https://travis-ci.org/bnbalsamo/cookiecutter-pypackage.svg?branch=master)](https://travis-ci.org/bnbalsamo/cookiecutter-pypackage)
 
-My cookiecutter template for python packages
+My [cookiecutter](https://github.com/audreyr/cookiecutter) template for python packages
 
 # Whats it get me?
 - [Github](https://github.com/) integration
