@@ -18,6 +18,7 @@ def remove_docs_folder():
               'make.bat', 'Makefile']:
         remove_file(os.path.join("docs", x))
     for x in ['_build', '_static', '_templates']:
+        remove_file(os.path.join("docs", x, ".gitinclude"))
         remove_dir(os.path.join("docs", x))
     remove_dir("docs")
 
