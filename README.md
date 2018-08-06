@@ -22,6 +22,8 @@ My [cookiecutter](https://github.com/audreyr/cookiecutter) template for python p
     - [pytest](https://docs.pytest.org/en/latest/)
     - [twine](https://pypi.python.org/pypi/twine)
     - [check-manifest](https://github.com/mgedmin/check-manifest)
+    - [isort](https://github.com/timothycrosley/isort)
+    - [bandit](https://github.com/PyCQA/bandit)
 
 # Quickstart
 
@@ -53,7 +55,7 @@ My [cookiecutter](https://github.com/audreyr/cookiecutter) template for python p
 
 Any of the following can be run off the bat from the project root
 
-* ```./quick_test.sh```: Run tests, generate coverage stats, run flake8
+* ```./quick_test.sh```: Run tests, generate coverage stats, run flake8, run an isort check, run bandit
 * ```py.test```: Run tests
 * ```bumpversion $PART```: Bump the version number of the project
     * ```git push && git push --tags``` to upload/release to git
@@ -61,6 +63,8 @@ Any of the following can be run off the bat from the project root
 * ``` check-manifest .```: Check that your manifest file is correct
     * the ```-c``` option will create one, if it doesn't exist
     * the ```-u``` option will update an existing file, or create one
+* ```isort -rc --atomic --apply $YOUR_PROJECT_DIR```: Automatically sort your imports
+* ```bandit -r $YOUR_PROJECT_DIR```: Run a bandit check on your code
 
 ## Uploading to pypi
 
