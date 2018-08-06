@@ -8,7 +8,9 @@ install:
     - "python setup.py install"
 script: 
     - coverage run --source {{ cookiecutter.slug_name }} -m py.test 
-    - flake8 --exit-zero
 after_success:
+    - flake8 --exit-zero
+    - isort -rc --diff -c {{ cookiecutter.slug_name }}
+    - bandit -r {{ cookiecutter.slug_name }}
     - coverage report
     - coveralls
