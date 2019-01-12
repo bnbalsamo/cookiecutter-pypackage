@@ -86,4 +86,5 @@ Inspiration (and some code) taken from the following:
 * [audreyr's pypackage template](https://github.com/audreyr/cookiecutter-pypackage)
 * [kennethreitz setup.py template](https://github.com/kennethreitz/setup.py/blob/master/setup.py)
 * [kennethreitz's blog post "A Better Pip Workflow"](https://www.kennethreitz.org/essays/a-better-pip-workflow)
+* [Donald Stufft's blog post about setup.py vs requirements.txt](https://caremad.io/posts/2013/07/setup-vs-requirement/)
 * All the wonderful folks writing documentation for every tool involved in this template!

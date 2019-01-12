@@ -1,3 +1,0 @@
-# Loosely pinned application requirements
-# eg: pin lower than the next major release, for a semver package
-# Last Reviewed On: ##/##/####
