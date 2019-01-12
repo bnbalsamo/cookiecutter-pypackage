@@ -1,13 +1,14 @@
 {
     "project_name": "MyProject",
     "slug_name": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
-    "github_repo_name": "{{ cookiecutter.slug_name }}",
     "version": "0.0.1",
     "short_description": "A project",
     "author": "First Last",
     "email": "you@provider.com",
+    "github_repo_name": "{{ cookiecutter.slug_name }}",
     "github_username": "githubber",
     "max_line_length": "100",
+    "tox_py_versions": "py37",
     "license": [
         "GNU GPLv3",
         "GNU AGPLv3",

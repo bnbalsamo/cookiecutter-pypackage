@@ -8,11 +8,11 @@ My [cookiecutter](https://github.com/audreyr/cookiecutter) template for python p
 - [Github](https://github.com/) integration
 - [TravisCI](https://travis-ci.org/) integration
 - [Coveralls](https://coveralls.io/) integration
+- Testing via [tox](https://tox.readthedocs.io/en/latest/)
 - (optional) [Sphinx](http://www.sphinx-doc.org) documentation
     - With a minimal autodocs setup
     - Ready for use with [readthedocs](https://readthedocs.org/)
 - A minimal README
-- A virtual environment (python >= 3.3)
 - Packages for common development tasks
     - [pip](https://pip.pypa.io/en/latest/)
     - [bumpversion](https://github.com/peritus/bumpversion)
@@ -33,19 +33,24 @@ My [cookiecutter](https://github.com/audreyr/cookiecutter) template for python p
     - [TravisCI](https://travis-ci.org/) account
     - [Coveralls](https://coveralls.io/) account
     - [readthedocs](https://readthedocs.org/) account
+    - [pyenv](https://github.com/pyenv/pyenv)
+    - [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv)
+        - [pyenv-install-latest](https://github.com/momo-lab/pyenv-install-latest) is also handy
 - Steps
     - Create a github repo named $YOUR_PROJECT_NAME
     - Enable repository monitoring on Travis
     - Enable repository monitoring on coveralls
     - Enable repository monitoring on readthedocs
-    - ```$ cookiecutter https://github.com/bnbalsamo/cookiecutter-pypackage```
+    - ```$ cookiecutter gh:bnbalsamo/cookiecutter-pypackage```
     - Fill in the prompts
     - ```$ cd $YOUR_PROJECT_NAME```
-    - ```$ source venv/bin/activate```
-        - if python < 3.3 create your own venv here
-    - ```$ pip install -r requirements_dev.txt```
+    - ```$ pyenv-virtualenv $WHATEVER_PYTHON_VERSION $SLUG_NAME```
+        - You may need to ```pyenv install $WHATEVER_PYTHON_VERSION```, if you don't have it installed already
+            - Alternatively, ```pyenv install-latest $STUB_VERSION```
+    - ```$ pyenv local $SLUG_NAME $ALL_PY_VERSIONS_TO_EXPOSE_TO_TOX```
+    - ```$ pip install -r requirements/requirements_dev.txt```
     - ```$ git init```
-    - ```$ git add */.*```
+    - Add all the files
     - ```$ git commit -m "first commit"```
     - ```$ git remote add origin $YOUR_REPO_ADDRESS```
     - ```$ git push -u origin master```
@@ -55,8 +60,8 @@ My [cookiecutter](https://github.com/audreyr/cookiecutter) template for python p
 
 Any of the following can be run off the bat from the project root
 
-* ```./quick_test.sh```: Run tests, generate coverage stats, run flake8, run an isort check, run bandit
-* ```py.test```: Run tests
+* ```tox```: Run tests, generate coverage stats, run flake8, run an isort check, run bandit
+* ```tox -e pindeps```: Generate a ```requirements.txt``` with pinned dependencies.
 * ```bumpversion $PART```: Bump the version number of the project
     * ```git push && git push --tags``` to upload/release to git
 * ```autopep8 .```: Automatically fix some pep8 errors
@@ -64,7 +69,6 @@ Any of the following can be run off the bat from the project root
     * the ```-c``` option will create one, if it doesn't exist
     * the ```-u``` option will update an existing file, or create one
 * ```isort -rc --atomic --apply $YOUR_PROJECT_DIR```: Automatically sort your imports
-* ```bandit -r $YOUR_PROJECT_DIR```: Run a bandit check on your code
 
 ## Uploading to pypi
 
@@ -72,7 +76,14 @@ I'll not hazard a short answer here, as there are too many options.
 
 [This](https://hynek.me/articles/sharing-your-labor-of-love-pypi-quick-and-dirty/) blog
 entry provides a good breakdown of uploading a package to pypi. All of the referenced
-tools should be installed by a ```pip -r requirements_dev.txt``` in your project
+tools should be installed by a ```pip -r requirements/requirements_dev.txt``` in your project
 virtualenv.
 
-Inspiration (and some code) taken from [audreyr's pypackage template](https://github.com/audreyr/cookiecutter-pypackage)
+
+## Credit Where It's Due
+
+Inspiration (and some code) taken from the following:
+* [audreyr's pypackage template](https://github.com/audreyr/cookiecutter-pypackage)
+* [kennethreitz setup.py template](https://github.com/kennethreitz/setup.py/blob/master/setup.py)
+* [kennethreitz's blog post "A Better Pip Workflow"](https://www.kennethreitz.org/essays/a-better-pip-workflow)
+* All the wonderful folks writing documentation for every tool involved in this template!
