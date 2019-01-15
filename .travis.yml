@@ -1,11 +1,11 @@
 language: python
 python:
-    - "3.5"
+    - "3.7"
+dist: xenial
+sudo: required
 before_script:
     - pip install cookiecutter tox tox-travis
 script: 
     - cookiecutter . --no-input 
     - cd MyProject 
-    - tox -e py37,flake8,bandit,isort,docs
-services:
-    - docker
+    - tox -e py37,flake8,bandit,isort,docs,pydocstyle
