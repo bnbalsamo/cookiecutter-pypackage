@@ -7,23 +7,25 @@ My [cookiecutter](https://github.com/audreyr/cookiecutter) template for python p
 # Whats it get me?
 - [Github](https://github.com/) integration
 - [TravisCI](https://travis-ci.org/) integration
+    - Optional support for testing multiple versions of python by adding to the python array in ```.travis.yml```
 - [Coveralls](https://coveralls.io/) integration
 - Testing via [tox](https://tox.readthedocs.io/en/latest/)
+- A minimal README + badges
 - (optional) [Sphinx](http://www.sphinx-doc.org) documentation
     - With a minimal autodocs setup
     - Ready for use with [readthedocs](https://readthedocs.org/)
-- A minimal README
 - Packages for common development tasks
     - [pip](https://pip.pypa.io/en/latest/)
     - [bumpversion](https://github.com/peritus/bumpversion)
     - [wheel](http://pythonwheels.com/)
     - [flake8](http://flake8.pycqa.org/en/latest/)
-    - [coverage](https://coverage.readthedocs.io/en/coverage-4.4.1/)
+    - [coverage](https://coverage.readthedocs.io/en/latest/)
     - [pytest](https://docs.pytest.org/en/latest/)
     - [twine](https://pypi.python.org/pypi/twine)
     - [check-manifest](https://github.com/mgedmin/check-manifest)
     - [isort](https://github.com/timothycrosley/isort)
     - [bandit](https://github.com/PyCQA/bandit)
+    - [pydocstyle](www.pydocstyle.org/en/latest/)
 
 # Quickstart
 
@@ -36,6 +38,8 @@ My [cookiecutter](https://github.com/audreyr/cookiecutter) template for python p
     - [pyenv](https://github.com/pyenv/pyenv)
     - [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv)
         - [pyenv-install-latest](https://github.com/momo-lab/pyenv-install-latest) is also handy
+    - Install the requesite python interpreters in pyenv
+        - ```pyenv install-latest 3.7``` for instance
 - Steps
     - Create a github repo named $YOUR_PROJECT_NAME
     - Enable repository monitoring on Travis
@@ -45,13 +49,14 @@ My [cookiecutter](https://github.com/audreyr/cookiecutter) template for python p
     - Fill in the prompts
     - ```$ cd $YOUR_PROJECT_NAME```
     - ```$ pyenv-virtualenv $WHATEVER_PYTHON_VERSION $SLUG_NAME```
-        - You may need to ```pyenv install $WHATEVER_PYTHON_VERSION```, if you don't have it installed already
-            - Alternatively, ```pyenv install-latest $STUB_VERSION```
     - ```$ pyenv local $SLUG_NAME $ALL_PY_VERSIONS_TO_EXPOSE_TO_TOX```
     - ```$ pip install -r requirements/requirements_dev.txt```
     - ```$ git init```
-    - Add all the files
+    - ```$ git add .```
     - ```$ git commit -m "first commit"```
+    - ```$ check-manifest -c```
+    - ```$ git add MANIFEST.in```
+    - ```$ git commit -m "Adding MANIFEST.in"```
     - ```$ git remote add origin $YOUR_REPO_ADDRESS```
     - ```$ git push -u origin master```
     - Begin developing your package!
@@ -60,7 +65,8 @@ My [cookiecutter](https://github.com/audreyr/cookiecutter) template for python p
 
 Any of the following can be run off the bat from the project root
 
-* ```tox```: Run tests, generate coverage stats, run flake8, run an isort check, run bandit
+* ```tox```: Run tests, generate coverage stats, run flake8, run pydocstyle, run an isort check, run bandit
+* ```tox -lv```: List all available tox environments
 * ```tox -e pindeps```: Generate a ```requirements.txt``` with pinned dependencies.
 * ```bumpversion $PART```: Bump the version number of the project
     * ```git push && git push --tags``` to upload/release to git
@@ -87,4 +93,4 @@ Inspiration (and some code) taken from the following:
 * [kennethreitz setup.py template](https://github.com/kennethreitz/setup.py/blob/master/setup.py)
 * [kennethreitz's blog post "A Better Pip Workflow"](https://www.kennethreitz.org/essays/a-better-pip-workflow)
 * [Donald Stufft's blog post about setup.py vs requirements.txt](https://caremad.io/posts/2013/07/setup-vs-requirement/)
-* All the wonderful folks writing documentation for every tool involved in this template!
+* All the wonderful folks writing the tools involved in this template and their documentation!

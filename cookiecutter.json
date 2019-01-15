@@ -6,13 +6,12 @@
         "application",
         "library"
     ],
-    "short_description": "A project",
+    "short_description": "A project.",
     "author": "First Last",
     "email": "you@provider.com",
     "github_repo_name": "{{ cookiecutter.slug_name }}",
     "github_username": "githubber",
     "max_line_length": "100",
-    "tox_py_versions": "py37",
     "license": [
         "GNU GPLv3",
         "GNU AGPLv3",
