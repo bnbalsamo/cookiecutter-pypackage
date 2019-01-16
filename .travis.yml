@@ -1,14 +1,11 @@
 language: python
 python:
-    - "3.5"
+    - "3.7"
+dist: xenial
+sudo: required
 before_script:
-    - pip install cookiecutter pytest
+    - pip install cookiecutter tox tox-travis
 script: 
     - cookiecutter . --no-input 
     - cd MyProject 
-    - pip install -r requirements.txt
-    - pip install -r requirements_dev.txt
-    - python setup.py install 
-    - py.test 
-services:
-    - docker
+    - tox -e py37,flake8,bandit,isort,docs,pydocstyle

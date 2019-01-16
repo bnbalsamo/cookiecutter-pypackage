@@ -26,7 +26,30 @@ def main():
     if '{{ cookiecutter.create_docs_folder }}' != 'y':
         remove_docs_folder()
     print("Template successfully created.\n")
-    print("Done")
+    print("""!!! SETUP !!!
+
+# Install any required versions of python, if not already installed
+eg: $ pyenv install-latest 3.7
+# Create a virtualenv for your project
+eg: $ pyenv virtualenv 3.7.x {{ cookiecutter.slug_name }}
+# Change to the project directory
+$ cd {{ cookiecutter.project_name }}
+# Set your local python environment
+$ pyenv local {{ cookiecutter.slug_name }} 3.7.x # include all versions tox will need
+# Install all the required utilities
+$ pip install -r requirements/requirements_dev.txt
+# Add everything to git
+$ git add .
+$ git commit -m "First commit!"
+# Create a MANIFEST.in, add it to git
+$ check-manifest -c
+$ git add MANIFEST.in
+$ git commit -m "Adding MANIFEST.in"
+# Add your remote repo and push
+$ git remote add origin $YOUR_REMOTE_ADDRESS
+$ git push -u origin master
+""")
+    print("Happy Developing!")
 
 
 main()
