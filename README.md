@@ -9,6 +9,7 @@ My [cookiecutter](https://github.com/audreyr/cookiecutter) template for python p
 - [TravisCI](https://travis-ci.org/) integration
     - Optional support for testing multiple versions of python by adding to the python array in ```.travis.yml```
 - [Coveralls](https://coveralls.io/) integration
+- [pyup](https://pyup.io/) integration
 - Testing via [tox](https://tox.readthedocs.io/en/latest/)
 - A minimal README + badges
 - (optional) [Sphinx](http://www.sphinx-doc.org) documentation
@@ -26,6 +27,7 @@ My [cookiecutter](https://github.com/audreyr/cookiecutter) template for python p
     - [isort](https://github.com/timothycrosley/isort)
     - [bandit](https://github.com/PyCQA/bandit)
     - [pydocstyle](www.pydocstyle.org/en/latest/)
+    - [safety](https://pyup.io/docs/safety/installation-and-usage/)
 
 # Quickstart
 
@@ -35,6 +37,7 @@ My [cookiecutter](https://github.com/audreyr/cookiecutter) template for python p
     - [TravisCI](https://travis-ci.org/) account
     - [Coveralls](https://coveralls.io/) account
     - [readthedocs](https://readthedocs.org/) account
+    - [pyup](https://pyup.io/) account
     - [pyenv](https://github.com/pyenv/pyenv)
     - [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv)
         - [pyenv-install-latest](https://github.com/momo-lab/pyenv-install-latest) is also handy
@@ -45,6 +48,7 @@ My [cookiecutter](https://github.com/audreyr/cookiecutter) template for python p
     - Enable repository monitoring on Travis
     - Enable repository monitoring on coveralls
     - Enable repository monitoring on readthedocs
+    - Enable repository monitoring in pyup
     - ```$ cookiecutter gh:bnbalsamo/cookiecutter-pypackage```
     - Fill in the prompts
     - ```$ cd $YOUR_PROJECT_NAME```
@@ -93,4 +97,4 @@ Inspiration (and some code) taken from the following:
 * [kennethreitz setup.py template](https://github.com/kennethreitz/setup.py/blob/master/setup.py)
 * [kennethreitz's blog post "A Better Pip Workflow"](https://www.kennethreitz.org/essays/a-better-pip-workflow)
 * [Donald Stufft's blog post about setup.py vs requirements.txt](https://caremad.io/posts/2013/07/setup-vs-requirement/)
-* All the wonderful folks writing the tools involved in this template and their documentation!
+* All the wonderful folks writing the tools and services involved in this template and their documentation!
