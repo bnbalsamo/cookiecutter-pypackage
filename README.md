@@ -42,7 +42,7 @@ My [cookiecutter](https://github.com/audreyr/cookiecutter) template for python p
     - [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv)
         - [pyenv-install-latest](https://github.com/momo-lab/pyenv-install-latest) is also handy
     - Install the requesite python interpreters in pyenv
-        - ```pyenv install-latest 3.7``` for instance
+        - ```$ pyenv install-latest 3.7``` for instance
 - Steps
     - Create a github repo named $YOUR_PROJECT_NAME
     - Enable repository monitoring on Travis
