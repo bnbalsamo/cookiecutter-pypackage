@@ -2,6 +2,7 @@
 pip
 wheel
 flake8
+pylint
 isort
 bandit
 bumpversion
