@@ -8,4 +8,4 @@ before_script:
 script: 
     - cookiecutter . --no-input 
     - cd MyProject 
-    - tox -e py37,flake8,bandit,isort,docs,pydocstyle
+    - tox -e py37,flake8,pylint,bandit,isort,docs,pydocstyle
