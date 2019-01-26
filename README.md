@@ -20,6 +20,7 @@ My [cookiecutter](https://github.com/audreyr/cookiecutter) template for python p
     - [bumpversion](https://github.com/peritus/bumpversion)
     - [wheel](http://pythonwheels.com/)
     - [flake8](http://flake8.pycqa.org/en/latest/)
+    - [pylint](https://www.pylint.org)
     - [coverage](https://coverage.readthedocs.io/en/latest/)
     - [pytest](https://docs.pytest.org/en/latest/)
     - [twine](https://pypi.python.org/pypi/twine)
@@ -89,12 +90,58 @@ entry provides a good breakdown of uploading a package to pypi. All of the refer
 tools should be installed by a ```pip -r requirements/requirements_dev.txt``` in your project
 virtualenv.
 
+# Opinions
 
-## Credit Where It's Due
+This template is opinionated (aren't they all, really?) in a couple of ways.
+
+It keeps all of the static analysis tooling dialed up _fairly_ strictly.
+
+This isn't meant to imply that every project should keep the static analysis tooling
+dialed up so strictly, but rather that if you are loosening controls on your static analysis
+for a good reason that reason should be documented as a part of your codebase's git history.
+This helps keep relevant decisions documented with the code.
+
+It causes testing to fail below 80% code coverage.
+
+80% is arbitrary, but I've found it works fairly well for me when starting a project. If while
+I'm actively developing and the code base is small I fall below 80% coverage I know I've
+probably slacked off on tests somewhere. As a codebase grows and matures I tend to turn this
+metric up to whatever reasonable maximum I can hit.
+
+It uses requirements.txt rather than Pipfile and Pipfile.lock.
+
+I made this decision because the pipfile specification isn't integrated into pip (yet),
+because it allows for fewer differences between developing applications and libraries,
+and because I don't particularly like the fact that the existing tools attempt
+to be a "one stop shop" for managing dependency declarations and virtualenvs.
+
+It implements a lot of tooling.
+
+Well, thats the whole reason for the use of a cookiecutter, isn't it? I'm of the opinion
+that even if a project chooses not use every tool in this template, it's easier to rip out
+a few pieces here and there than it is to properly re-implement them. Thus I've tended to err
+on the side of including tooling, rather than omitting it.
+
+It uses web service X instead of competing service Y.
+
+My choice of services is informed by:
+- What services I'm comfortable with implementing
+- What services appear to be populate within the python community
+If the services this repository implement are (significantly) eclipsed by similar services
+in the future open an issue and let me know!
+
+It uses [semver](https://semver.org/) for versioning.
+
+I'm of the opinion that semver is applicable to the vast majority of projects. If, for whatever
+reason, it isn't applicable to a given project, changing the versioning scheme along with the
+justification should be included in the git history.
+
+# Credit Where It's Due
 
 Inspiration (and some code) taken from the following:
 * [audreyr's pypackage template](https://github.com/audreyr/cookiecutter-pypackage)
 * [kennethreitz setup.py template](https://github.com/kennethreitz/setup.py/blob/master/setup.py)
 * [kennethreitz's blog post "A Better Pip Workflow"](https://www.kennethreitz.org/essays/a-better-pip-workflow)
 * [Donald Stufft's blog post about setup.py vs requirements.txt](https://caremad.io/posts/2013/07/setup-vs-requirement/)
+* [Kyle Knapp's talk @ PyCon 2018 "Automating Code Quality"](https://www.youtube.com/watch?v=G1lDk_WKXvY)
 * All the wonderful folks writing the tools and services involved in this template and their documentation!
