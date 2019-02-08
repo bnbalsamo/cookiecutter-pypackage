@@ -1,4 +1,4 @@
-# cookiecutter-pypackage [![v0.12.0](https://img.shields.io/badge/version-0.12.0-blue.svg)](https://github.com/bnbalsamo/cookiecutter-pypackage/releases)
+# cookiecutter-pypackage [![v0.12.1](https://img.shields.io/badge/version-0.12.1-blue.svg)](https://github.com/bnbalsamo/cookiecutter-pypackage/releases)
 
 [![Build Status](https://travis-ci.org/bnbalsamo/cookiecutter-pypackage.svg?branch=master)](https://travis-ci.org/bnbalsamo/cookiecutter-pypackage)
 
@@ -83,12 +83,18 @@ Any of the following can be run off the bat from the project root
 
 ## Uploading to pypi
 
-I'll not hazard a short answer here, as there are too many options.
+Review your package before publishing it!
 
 [This](https://hynek.me/articles/sharing-your-labor-of-love-pypi-quick-and-dirty/) blog
 entry provides a good breakdown of uploading a package to pypi. All of the referenced
 tools should be installed by a ```pip -r requirements/requirements_dev.txt``` in your project
 virtualenv.
+
+This template provides several handy tox environments for packaging.
+
+* ```tox -e build```: Populates the dist/ folder with an sdist and bdist
+* ```tox -e test_release```: Perform a test release to https://test.pypi.org
+* ```tox -e release```: Perform a realease to PyPI.
 
 # Opinions
 
@@ -126,7 +132,7 @@ It uses web service X instead of competing service Y.
 
 My choice of services is informed by:
 - What services I'm comfortable with implementing
-- What services appear to be populate within the python community
+- What services appear to be popular within the python community
 If the services this repository implement are (significantly) eclipsed by similar services
 in the future open an issue and let me know!
 
