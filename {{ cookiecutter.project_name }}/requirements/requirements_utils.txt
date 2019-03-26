@@ -10,3 +10,4 @@ twine
 check-manifest
 autopep8
 safety
+black
