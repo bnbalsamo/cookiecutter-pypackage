@@ -1,4 +1,4 @@
-# cookiecutter-pypackage [![v0.13.0](https://img.shields.io/badge/version-0.13.0-blue.svg)](https://github.com/bnbalsamo/cookiecutter-pypackage/releases)
+# cookiecutter-pypackage [![v0.14.0](https://img.shields.io/badge/version-0.14.0-blue.svg)](https://github.com/bnbalsamo/cookiecutter-pypackage/releases)
 
 [![Build Status](https://travis-ci.org/bnbalsamo/cookiecutter-pypackage.svg?branch=master)](https://travis-ci.org/bnbalsamo/cookiecutter-pypackage)
 
