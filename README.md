@@ -5,30 +5,33 @@
 My [cookiecutter](https://github.com/audreyr/cookiecutter) template for python packages
 
 # Whats it get me?
+
+tl;dr: A CI enabled Python software project with plenty of bells and whistles.
+
 - [Github](https://github.com/) integration
 - [TravisCI](https://travis-ci.org/) integration
     - Optional support for testing multiple versions of python by adding to the python array in ```.travis.yml```
 - [Coveralls](https://coveralls.io/) integration
 - [pyup](https://pyup.io/) integration
 - Testing via [tox](https://tox.readthedocs.io/en/latest/)
-- A minimal README + badges
+- A minimal README + relevant badges
 - (optional) [Sphinx](http://www.sphinx-doc.org) documentation
     - With a minimal autodocs setup
     - Ready for use with [readthedocs](https://readthedocs.org/)
-- Packages for common development tasks
-    - [pip](https://pip.pypa.io/en/latest/)
-    - [bumpversion](https://github.com/peritus/bumpversion)
-    - [wheel](http://pythonwheels.com/)
+- All the tooling you can shake a stick at, wrapped up in a ```tox``` config
+    - [pytest](https://docs.pytest.org/en/latest/)
     - [flake8](http://flake8.pycqa.org/en/latest/)
     - [pylint](https://www.pylint.org)
     - [coverage](https://coverage.readthedocs.io/en/latest/)
-    - [pytest](https://docs.pytest.org/en/latest/)
     - [twine](https://pypi.python.org/pypi/twine)
     - [check-manifest](https://github.com/mgedmin/check-manifest)
     - [isort](https://github.com/timothycrosley/isort)
     - [bandit](https://github.com/PyCQA/bandit)
     - [pydocstyle](www.pydocstyle.org/en/latest/)
     - [safety](https://pyup.io/docs/safety/installation-and-usage/)
+    - [black](https://github.com/ambv/black)
+- Nicely sorted requirements files for easy installation of tools
+  straight into your development environment if required.
 
 # Quickstart
 
@@ -70,16 +73,25 @@ My [cookiecutter](https://github.com/audreyr/cookiecutter) template for python p
 
 Any of the following can be run off the bat from the project root
 
-* ```tox```: Run tests, generate coverage stats, run flake8, run pydocstyle, run an isort check, run bandit
-* ```tox -lv```: List all available tox environments
+* ```tox```:
+  * Run ```pytest```
+  * generate coverage metrics
+  * run ```flake8```
+  * run ```pydocstyle```
+  * run an ```isort``` check
+  * run a ```bandit``` check
+  * run a ```black``` check
+  * run a ```safety``` check
+  * run a ```checkmanifest``` check
+  * build the sphinx documentation
 * ```tox -e pindeps```: Generate a ```requirements.txt``` with pinned dependencies.
+* ```tox -e run_isort```: Run isort on the codebase
+* ```tox -e run_black```: Run black on the codebase
+* ```tox -e build```: Build distribution packages
+* ```tox -e test_release```: Test releasing (with test.pypi.org)
+* ```tox -e release```: Release to pypi
 * ```bumpversion $PART```: Bump the version number of the project
-    * ```git push && git push --tags``` to upload/release to git
-* ```autopep8 .```: Automatically fix some pep8 errors
-* ``` check-manifest .```: Check that your manifest file is correct
-    * the ```-c``` option will create one, if it doesn't exist
-    * the ```-u``` option will update an existing file, or create one
-* ```isort -rc --atomic --apply $YOUR_PROJECT_DIR```: Automatically sort your imports
+  * ```git push && git push --tags``` to upload/release to git
 
 ## Uploading to pypi
 
