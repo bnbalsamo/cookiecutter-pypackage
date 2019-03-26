@@ -1,4 +1,5 @@
 import unittest
+
 import {{ cookiecutter.slug_name }}
 
 
