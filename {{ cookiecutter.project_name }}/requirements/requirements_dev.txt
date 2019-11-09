@@ -1,3 +1,2 @@
--r requirements_utils.txt
 -r requirements_tests.txt
--r requirements_docs.txt
+bumpversion

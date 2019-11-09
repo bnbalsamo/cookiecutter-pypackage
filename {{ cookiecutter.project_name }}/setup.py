@@ -21,6 +21,8 @@ EXTRAS_REQUIRE = {
     # Ex:
     # 'webfrontend': {'flask'}
 }
+OPTIONS = {"bdist_wheel": {"universal": "1"}}
+
 
 def readme():
     try:
@@ -29,6 +31,7 @@ def readme():
     except:
         return False
 
+
 # Derived Package Metadata
 LONG_DESCRIPTION = readme() or DESCRIPTION
 if LONG_DESCRIPTION is False:
@@ -36,6 +39,7 @@ if LONG_DESCRIPTION is False:
     LONG_DESCRIPTION_CONTENT_TYPE = "text/plain"
 else:
     LONG_DESCRIPTION_CONTENT_TYPE = "text/markdown"
+
 
 # Set it up!
 setup(
@@ -46,10 +50,9 @@ setup(
     long_description_content_type=LONG_DESCRIPTION_CONTENT_TYPE,
     author=AUTHOR,
     author_email=AUTHOR_EMAIL,
+    package_dir={"": "src"},
     packages=find_packages(
-        exclude=[
-            'tests'
-        ]
+        where="src"
     ),
     # For CLI Scripts, if required
     # entry_points={
@@ -59,5 +62,6 @@ setup(
     url=URL,
     install_requires=INSTALL_REQUIRES,
     extras_require=EXTRAS_REQUIRE,
-    python_requires=PYTHON_REQUIRES
+    python_requires=PYTHON_REQUIRES,
+    options=OPTIONS
 )

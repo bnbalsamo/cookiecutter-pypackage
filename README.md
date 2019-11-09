@@ -14,6 +14,15 @@ tl;dr: A CI enabled Python software project with plenty of bells and whistles.
 - [Coveralls](https://coveralls.io/) integration
 - [pyup](https://pyup.io/) integration
 - Testing via [tox](https://tox.readthedocs.io/en/latest/)
+- Tox environments to facilitate...
+    - Running autoformatters like black and isort
+    - Easily check `#TODO` comments
+    - Building documentation
+    - Pin depedencies to a `requirements.txt`
+    - Test release to pypi
+    - Release to pypi
+    - Build source distributions and wheels
+    - Build wheelhouses of your projects dependencies
 - A minimal README + relevant badges
 - (optional) [Sphinx](http://www.sphinx-doc.org) documentation
     - With a minimal autodocs setup
@@ -30,8 +39,7 @@ tl;dr: A CI enabled Python software project with plenty of bells and whistles.
     - [pydocstyle](www.pydocstyle.org/en/latest/)
     - [safety](https://pyup.io/docs/safety/installation-and-usage/)
     - [black](https://github.com/ambv/black)
-- Nicely sorted requirements files for easy installation of tools
-  straight into your development environment if required.
+    - [mypy](http://mypy-lang.org/)
 
 # Quickstart
 
@@ -60,11 +68,8 @@ tl;dr: A CI enabled Python software project with plenty of bells and whistles.
     - ```$ pyenv local $SLUG_NAME $ALL_PY_VERSIONS_TO_EXPOSE_TO_TOX```
     - ```$ pip install -r requirements/requirements_dev.txt```
     - ```$ git init```
-    - ```$ git add .```
+    - ```$ git add {.[!.]*,*}```
     - ```$ git commit -m "first commit"```
-    - ```$ check-manifest -c```
-    - ```$ git add MANIFEST.in```
-    - ```$ git commit -m "Adding MANIFEST.in"```
     - ```$ git remote add origin $YOUR_REPO_ADDRESS```
     - ```$ git push -u origin master```
     - Begin developing your package!
@@ -83,11 +88,14 @@ Any of the following can be run off the bat from the project root
   * run a ```black``` check
   * run a ```safety``` check
   * run a ```checkmanifest``` check
+  * run a ```mypy``` check
   * build the sphinx documentation
-* ```tox -e pindeps```: Generate a ```requirements.txt``` with pinned dependencies.
+* ```tox -e check_todos```: List all of the `# TODO` comment lines in the code
+* ```tox -e pindeps```: Generate a ```requirements.txt``` with pinned dependencies
 * ```tox -e run_isort```: Run isort on the codebase
 * ```tox -e run_black```: Run black on the codebase
 * ```tox -e build```: Build distribution packages
+* ```tox -e build_wheelhouse```: Build a wheelhouse of project dependencies
 * ```tox -e test_release```: Test releasing (with test.pypi.org)
 * ```tox -e release```: Release to pypi
 * ```bumpversion $PART```: Bump the version number of the project
@@ -98,9 +106,7 @@ Any of the following can be run off the bat from the project root
 Review your package before publishing it!
 
 [This](https://hynek.me/articles/sharing-your-labor-of-love-pypi-quick-and-dirty/) blog
-entry provides a good breakdown of uploading a package to pypi. All of the referenced
-tools should be installed by a ```pip -r requirements/requirements_dev.txt``` in your project
-virtualenv.
+entry provides a good breakdown of uploading a package to pypi.
 
 This template provides several handy tox environments for packaging.
 
@@ -154,6 +160,10 @@ I'm of the opinion that semver is applicable to the vast majority of projects. I
 reason, it isn't applicable to a given project, changing the versioning scheme along with the
 justification should be included in the git history.
 
+It uses a "src" layout
+
+I've [been](https://hynek.me/articles/testing-packaging/) [convinced](https://blog.ionelmc.ro/2014/05/25/python-packaging/#the-structure).
+
 # Credit Where It's Due
 
 Inspiration (and some code) taken from the following:
@@ -162,4 +172,6 @@ Inspiration (and some code) taken from the following:
 * [kennethreitz's blog post "A Better Pip Workflow"](https://www.kennethreitz.org/essays/a-better-pip-workflow)
 * [Donald Stufft's blog post about setup.py vs requirements.txt](https://caremad.io/posts/2013/07/setup-vs-requirement/)
 * [Kyle Knapp's talk @ PyCon 2018 "Automating Code Quality"](https://www.youtube.com/watch?v=G1lDk_WKXvY)
+* [Hynek's blog post "Sharing Your Labor of Love: PyPI Quick and Dirty"](https://hynek.me/articles/sharing-your-labor-of-love-pypi-quick-and-dirty/)
+* Everyone writing blog posts/github issues/mailing list responses/twitter rants/etc about Python packaging, best practices, and development workflows
 * All the wonderful folks writing the tools and services involved in this template and their documentation!
