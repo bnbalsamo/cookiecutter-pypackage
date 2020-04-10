@@ -8,19 +8,27 @@ VERSION = "{{ cookiecutter.version }}"
 AUTHOR = "{{ cookiecutter.author }}"
 AUTHOR_EMAIL = "{{ cookiecutter.email }}"
 URL = 'https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.slug_name }}'
-PYTHON_REQUIRES= ">=3"
+PYTHON_REQUIRES= ">=3.6,<4"
 INSTALL_REQUIRES = [
-    # Put "abstract" requirements here
+    # Put "abstract" / loosely pinned requirements here
     # See: https://caremad.io/posts/2013/07/setup-vs-requirement/
     # Ex:
     # 'requests'
 ]
 EXTRAS_REQUIRE = {
-    # Put "abstract" requirements here
+    # Put "abstract" / loosely pinned requirements here
     # See: https://caremad.io/posts/2013/07/setup-vs-requirement/
     # Ex:
     # 'webfrontend': {'flask'}
 }
+ENTRY_POINTS = {
+    # For CLI Scripts, if required
+    # Ex:
+    # 'console_scripts': ['mycli=mymodule:cli'],
+	#
+}
+OPTIONS = {"bdist_wheel": {"universal": "1"}}
+
 
 def readme():
     try:
@@ -29,13 +37,14 @@ def readme():
     except:
         return False
 
+
 # Derived Package Metadata
 LONG_DESCRIPTION = readme() or DESCRIPTION
-if LONG_DESCRIPTION is False:
-    LONG_DESCRIPTION = DESCRIPTION
+if LONG_DESCRIPTION == DESCRIPTION:
     LONG_DESCRIPTION_CONTENT_TYPE = "text/plain"
 else:
     LONG_DESCRIPTION_CONTENT_TYPE = "text/markdown"
+
 
 # Set it up!
 setup(
@@ -46,18 +55,15 @@ setup(
     long_description_content_type=LONG_DESCRIPTION_CONTENT_TYPE,
     author=AUTHOR,
     author_email=AUTHOR_EMAIL,
+    package_dir={"": "src"},
     packages=find_packages(
-        exclude=[
-            'tests'
-        ]
+        where="src"
     ),
-    # For CLI Scripts, if required
-    # entry_points={
-    #     'console_scripts': ['mycli=mymodule:cli'],
-	# },
+    entry_points=ENTRY_POINTS,
     include_package_data=True,
     url=URL,
     install_requires=INSTALL_REQUIRES,
     extras_require=EXTRAS_REQUIRE,
-    python_requires=PYTHON_REQUIRES
+    python_requires=PYTHON_REQUIRES,
+    options=OPTIONS
 )

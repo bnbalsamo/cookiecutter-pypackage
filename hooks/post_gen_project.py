@@ -39,14 +39,10 @@ $ pyenv local {{ cookiecutter.slug_name }} 3.7.x # include all versions tox will
 # Install all the required utilities
 $ pip install -r requirements/requirements_dev.txt
 # Add everything to git
-$ git add .
+$ git add {.[!.]*,*}
 $ git commit -m "First commit!"
-# Create a MANIFEST.in, add it to git
-$ check-manifest -c
-$ git add MANIFEST.in
-$ git commit -m "Adding MANIFEST.in"
-# Add your remote repo and push
-$ git remote add origin $YOUR_REMOTE_ADDRESS
+# Add your remote repo and push (change URI if not using a personal github account)
+$ git remote add origin https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.github_repo_name }}.git
 $ git push -u origin master
 """)
     print("Happy Developing!")
