@@ -1,17 +1,5 @@
+exclude *
+include LICNSE
+include README*
+include setup.py
 graft src
-
-include *.toml
-include *.txt
-include *.yml
-include .bumpversion.cfg
-include .coveragerc
-include LICENSE
-include mypy.ini
-include tox.ini
-recursive-include docs *.bat
-recursive-include docs *.gitinclude
-recursive-include docs *.py
-recursive-include docs *.rst
-recursive-include docs Makefile
-recursive-include requirements *.txt
-recursive-include tests *.py
