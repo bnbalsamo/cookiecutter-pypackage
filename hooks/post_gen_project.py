@@ -38,6 +38,8 @@ $ cd {{ cookiecutter.project_name }}
 $ pyenv local {{ cookiecutter.slug_name }} 3.7.x # include all versions tox will need
 # Install all the required utilities
 $ pip install -r requirements/requirements_dev.txt
+# Initialize your git repository
+$ git init
 # Add everything to git
 $ git add {.[!.]*,*}
 $ git commit -m "First commit!"

@@ -8,4 +8,6 @@ before_script:
 script: 
     - cookiecutter . --no-input 
     - cd MyProject 
-    - tox -e py37,flake8,pylint,bandit,check_isort,check_black,docs,pydocstyle
+    - git init
+    - git add {.[!.]*,*}
+    - tox
