@@ -3,3 +3,8 @@ source = {{ cookiecutter.slug_name }}
 
 [report]
 fail_under = 80
+
+[paths]
+source =
+   src
+   .tox/*/site-packages
