@@ -12,6 +12,9 @@ line_length = 88
 
 [tool.check-manifest]
 ignore = [
+    "*__pycache__",
+    "*.py[cod]",
+    "*$py.class",
     ".editorconfig",
     "tox.ini",
     "requirements.txt",
