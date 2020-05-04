@@ -16,14 +16,13 @@ See the full documentation at https://{{cookiecutter.github_repo_name }}.readthe
 # Development
 
 ## Installing Development Dependencies
-
 ```
 $ pip install -r requirements/requirements_dev.txt
 ```
 
 ## Running Tests
 ```
-$ tox
+$ inv run.tests
 ```
 Note: Tox will run tests against the version of the software installed via ```python setup.py install```.
 
@@ -31,12 +30,14 @@ To test against pinned dependencies add ```-r requirements.txt``` to the deps ar
 section.
 
 ## Running autoformatters
-
-- ```tox -e run_black,run_isort```
+```
+$ inv run.autoformatters
+```
 
 ## Pinning Dependencies
-- ```pip install -r requirements/requirements_dev.txt```
-- ```tox -e pindeps```
+```
+$ inv pindeps
+```
 
 # Author
 {{ cookiecutter.author }} <{{ cookiecutter.email }}>

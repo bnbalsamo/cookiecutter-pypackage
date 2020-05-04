@@ -27,7 +27,6 @@ ENTRY_POINTS = {
     # 'console_scripts': ['mycli=mymodule:cli'],
 	#
 }
-OPTIONS = {"bdist_wheel": {"universal": "1"}}
 
 
 def readme():
@@ -64,6 +63,5 @@ setup(
     url=URL,
     install_requires=INSTALL_REQUIRES,
     extras_require=EXTRAS_REQUIRE,
-    python_requires=PYTHON_REQUIRES,
-    options=OPTIONS
+    python_requires=PYTHON_REQUIRES
 )
