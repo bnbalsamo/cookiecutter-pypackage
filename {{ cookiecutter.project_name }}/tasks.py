@@ -18,6 +18,15 @@ while not Path("./tasks.py").exists():
         raise FileNotFoundError("Could not find the repository root.")
 
 
+# Differentiate our output from called app output.
+ECHO_PREFIX = "=> "
+
+
+def echo(msg):
+    # Wrap print to append a prefix
+    print(ECHO_PREFIX + str(msg))
+
+
 @task(name="pindeps")
 def _pindeps(c):
     """
@@ -25,7 +34,12 @@ def _pindeps(c):
     """
     # Requires being run in a fresh virtualenv,
     # so we leverage tox
+    echo("Pinning dependencies...")
     c.run("tox -e pindeps --recreate")
+    # This must be in sync with tox.ini
+    req_path = Path(".") / "requirements.txt"
+    req_path = req_path.resolve()
+    echo(f"Dependencies pinned in {str(req_path)}")
 
 
 @task(name="black")
@@ -35,7 +49,9 @@ def run_black(c):
     """
     # The result of this command should satisfy the
     # corresponding tox testenv check_black
+    echo("Running black...")
     c.run("python -m black ./src ./tests")
+    echo("Blackening complete")
 
 
 @task(name="isort")
@@ -45,7 +61,9 @@ def run_isort(c):
     """
     # The result of this command should satisfy the
     # corresponding tox testenv check_isort
+    echo("Running isort...")
     c.run("python -m isort -rc ./src ./tests")
+    echo("Isort-ing complete")
 
 
 @task(name="autoformatters")
@@ -53,8 +71,10 @@ def run_autoformatters(c):
     """
     Run all the autoformatters.
     """
+    echo("Running all autoformatters...")
     run_black(c)
     run_isort(c)
+    echo("Autoformatting complete")
 
 
 @task(name="tests")
@@ -62,9 +82,11 @@ def run_tests(c, autoformat=True):
     """
     Run the tests.
     """
+    echo("Running tests...")
     if autoformat:
         run_autoformatters(c)
     c.run("tox")
+    echo("Testing complete")
 
 
 @task(name="docs")
@@ -72,9 +94,13 @@ def build_docs(c, clean=True, buildername="html"):
     """
     Build the documentation.
     """
+    echo("Building docs...")
     if clean:
         clean_docs(c)
     c.run(f"sphinx-build docs docs_out --color -W -b{buildername}")
+    docs_dir = Path(".") / "docs_out"
+    docs_dir = docs_dir.resolve()
+    echo(f"Docs available in {str(docs_dir)}")
 
 
 @task(name="dists")
@@ -84,13 +110,15 @@ def clean_dists(c):
     """
     dist_dir = Path("./dist").resolve()
     if not dist_dir.exists():
+        echo(f"No dist dir found at {str(dist_dir)}")
         return
     if not dist_dir.is_dir():
         raise NotADirectoryError(dist_dir)
-    print(f"Removing existing dist dir: {str(dist_dir)}")
+    echo(f"Removing existing dist dir: {str(dist_dir)}...")
     for contents in dist_dir.iterdir():
         contents.unlink()
     dist_dir.rmdir()
+    echo("Dist dir removed")
 
 
 @task(name="docs")
@@ -100,11 +128,13 @@ def clean_docs(c):
     """
     docs_out_dir = Path("./docs_out").resolve()
     if not docs_out_dir.exists():
+        echo(f"No rendered docs dir found at {str(docs_out_dir)}")
         return
     if not docs_out_dir.is_dir():
         raise NotADirectoryError(docs_out_dir)
-    print(f"Removing existing rendered docs dir: {str(docs_out_dir)}")
+    echo(f"Removing existing rendered docs dir: {str(docs_out_dir)}...")
     rmtree(docs_out_dir)
+    echo("Rendered docs directory removed")
 
 
 @task(name="compiled")
@@ -128,12 +158,93 @@ def clean_compiled(c):
         Path("./tests").resolve(),
     ]
     for d in dirs_to_clean:
-        print(f"Cleaning dir {str(d)}")
+        echo(f"Removing compiled/cache artifacts in {str(d)}...")
         clean_dir(d)
+    echo("Compiled artifacts and caches removed")
+
+
+@task(name="tox")
+def clean_tox(c):
+    """
+    Remove the .tox cache directory.
+    """
+    tox_dir = Path("./.tox").resolve()
+    if tox_dir.exists() and tox_dir.is_dir():
+        echo(f"Removing tox cache: {str(tox_dir)}...")
+        rmtree(tox_dir)
+        echo("Tox cache removed")
+    else:
+        echo(f"No docs cache dir found at {str(tox_dir)}")
+
+
+@task(name="mypy")
+def clean_mypy(c):
+    """
+    Remove the .mypy_cache directory.
+    """
+    mypy_cache_dir = Path("./.mypy_cache").resolve()
+    if mypy_cache_dir.exists() and mypy_cache_dir.is_dir():
+        echo(f"Removing mypy cache: {str(mypy_cache_dir)}...")
+        rmtree(mypy_cache_dir)
+        echo("Mypy cache removed")
+    else:
+        echo(f"No mypy cache dir found at {str(mypy_cache_dir)}")
+
+
+@task(name="coverage")
+def clean_coverage(c):
+    """
+    Remove the .coverage cache.
+    """
+    coverage_cache_file = Path("./.coverage").resolve()
+    if coverage_cache_file.exists() and coverage_cache_file.is_file():
+        echo(f"Removing coverage cache: {str(coverage_cache_file)}...")
+        coverage_cache_file.unlink()
+        echo("Coverage cache removed")
+    else:
+        echo(f"No coverage cache file found at {str(coverage_cache_file)}")
+
+
+@task(name="wheelhouse")
+def clean_wheelhouse(c):
+    """
+    Remove the wheelhouse.
+    """
+    wheelhouse_dir = Path("./wheelhouse").resolve()
+    if wheelhouse_dir.exists() and wheelhouse_dir.is_dir():
+        echo(f"Removing wheelhouse dir: {str(wheelhouse_dir)}...")
+        rmtree(wheelhouse_dir)
+        echo("Wheelhouse removed")
+    else:
+        echo(f"No wheelhouse dir found at {str(wheelhouse_dir)}")
+
+
+@task(name="coverage-report")
+def clean_coverage_report(c):
+    """
+    Remove the html coverage report.
+    """
+    coverage_report_dir = Path("./htmlcov").resolve()
+    if coverage_report_dir.exists() and coverage_report_dir.is_dir():
+        echo(f"Removing coverage report dir: {str(coverage_report_dir)}...")
+        rmtree(coverage_report_dir)
+        echo("Coverage report dir removed")
+    else:
+        echo(f"No coverage report dir found at {str(coverage_report_dir)}")
 
 
 @task(name="all")
-def clean_all(c, dists=True, docs=True, compiled=True):
+def clean_all(
+    c,
+    dists=True,
+    docs=True,
+    compiled=True,
+    tox=True,
+    mypy=True,
+    coverage=True,
+    wheelhouse=True,
+    coverage_report=True,
+):
     """
     Remove all clean-able artifacts.
     """
@@ -143,6 +254,16 @@ def clean_all(c, dists=True, docs=True, compiled=True):
         clean_docs(c)
     if compiled:
         clean_compiled(c)
+    if tox:
+        clean_tox(c)
+    if mypy:
+        clean_mypy(c)
+    if coverage:
+        clean_coverage(c)
+    if wheelhouse:
+        clean_wheelhouse(c)
+    if coverage_report:
+        clean_coverage_report(c)
 
 
 @task(name="dists")
@@ -152,9 +273,9 @@ def build_dists(c, clean=True):
     """
     if clean:
         clean_dists(c)
-    print("Building dists...")
+    echo("Building dists...")
     c.run("python -m pep517.build -s -b .")
-    print(f"Dists now available in {Path('./dist').resolve()}")
+    echo(f"Dists now available in {Path('./dist').resolve()}")
 
 
 @task(name="wheelhouse")
@@ -164,9 +285,21 @@ def build_wheelhouse(c, pindeps=True):
     """
     if pindeps:
         _pindeps(c)
-    print("Creating wheelhouse...")
+    echo("Creating wheelhouse...")
     c.run("python -m pip wheel -w wheelhouse -r requirements.txt")
-    print(f"Wheelhouse now available in {Path('./wheelhouse').resolve()}")
+    echo(f"Wheelhouse now available in {Path('./wheelhouse').resolve()}")
+
+
+@task(name="coverage-report")
+def build_coverage_report(c, test=True):
+    """
+    Build an HTML coverage report.
+    """
+    if test:
+        run_tests(c)
+    echo("Creating coverage report...")
+    c.run("coverage html")
+    echo(f"Coverage report available at {str(Path('./htmlcov').resolve())}")
 
 
 @task()
@@ -182,9 +315,13 @@ def release(c, prod=False, clean=True, build=True, skip_tests=False):
         build_dists(c)
     cmd = "python -m twine upload"
     if not prod:
+        echo("Uploading to test.pypi...")
         cmd += " --repository-url https://test.pypi.org/legacy"
+    else:
+        echo("--prod flag present. Uploading to pypi...")
     cmd += " ./dist/*"
     c.run(cmd)
+    echo("Upload complete")
 
 
 # Make implicit root explicit
@@ -209,6 +346,7 @@ build_ns = Collection("build")
 build_ns.add_task(build_docs)
 build_ns.add_task(build_dists)
 build_ns.add_task(build_wheelhouse)
+build_ns.add_task(build_coverage_report)
 
 
 # Define the "clean" subcommand
@@ -216,6 +354,11 @@ clean_ns = Collection("clean")
 clean_ns.add_task(clean_dists)
 clean_ns.add_task(clean_docs)
 clean_ns.add_task(clean_compiled)
+clean_ns.add_task(clean_tox)
+clean_ns.add_task(clean_mypy)
+clean_ns.add_task(clean_coverage)
+clean_ns.add_task(clean_wheelhouse)
+clean_ns.add_task(clean_coverage_report)
 clean_ns.add_task(clean_all)
 
 
