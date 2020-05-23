@@ -29,13 +29,13 @@ def main():
     print("""!!! SETUP !!!
 
 # Install any required versions of python, if not already installed
-eg: $ pyenv install-latest 3.7
+eg: $ pyenv install-latest 3.8
 # Create a virtualenv for your project
-eg: $ pyenv virtualenv 3.7.x {{ cookiecutter.slug_name }}
+eg: $ pyenv virtualenv 3.8.x {{ cookiecutter.slug_name }}
 # Change to the project directory
 $ cd {{ cookiecutter.project_name }}
 # Set your local python environment
-$ pyenv local {{ cookiecutter.slug_name }} 3.7.x # include all versions tox will need
+$ pyenv local {{ cookiecutter.slug_name }} 3.8.x # include all versions tox will need
 # Install all the required utilities
 $ pip install -r requirements/requirements_dev.txt
 # Initialize your git repository

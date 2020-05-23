@@ -52,7 +52,7 @@ tl;dr: A CI enabled Python software project with plenty of bells and whistles.
     - [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv)
         - [pyenv-install-latest](https://github.com/momo-lab/pyenv-install-latest) is also handy
     - Install the requesite python interpreters in pyenv
-        - ```$ pyenv install-latest 3.7``` for instance
+        - ```$ pyenv install-latest 3.8``` for instance
 - Steps
     - Create a github repo named $YOUR_PROJECT_NAME
     - Enable repository monitoring on Travis
