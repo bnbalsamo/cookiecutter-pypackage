@@ -1,2 +1,10 @@
 -r requirements_tests.txt
-bumpversion
+-r requirements_docs.txt
+-r requirements_tests.txt
+bump2version
+invoke
+isort[pyproject]
+black
+wheel
+pep517
+twine
