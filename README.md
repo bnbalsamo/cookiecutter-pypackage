@@ -14,15 +14,14 @@ tl;dr: A CI enabled Python software project with plenty of bells and whistles.
 - [Coveralls](https://coveralls.io/) integration
 - [pyup](https://pyup.io/) integration
 - Testing via [tox](https://tox.readthedocs.io/en/latest/)
-- Tox environments to facilitate...
+- [Invoke](http://www.pyinvoke.org/) tasks to facilitate a variety of tasks, including...
     - Running autoformatters like black and isort
-    - Easily check `#TODO` comments
+    - Easily checking `#TODO` comments
     - Building documentation
-    - Pin depedencies to a `requirements.txt`
-    - Test release to pypi
-    - Release to pypi
-    - Build source distributions and wheels
-    - Build wheelhouses of your projects dependencies
+    - Pinning depedencies to a `requirements.txt`
+    - Releasing to pypi
+    - Building source distributions and wheels
+    - Building wheelhouses of your project's dependencies
 - A minimal README + relevant badges
 - (optional) [Sphinx](http://www.sphinx-doc.org) documentation
     - With a minimal autodocs setup
@@ -32,7 +31,6 @@ tl;dr: A CI enabled Python software project with plenty of bells and whistles.
     - [flake8](http://flake8.pycqa.org/en/latest/)
     - [pylint](https://www.pylint.org)
     - [coverage](https://coverage.readthedocs.io/en/latest/)
-    - [twine](https://pypi.python.org/pypi/twine)
     - [check-manifest](https://github.com/mgedmin/check-manifest)
     - [isort](https://github.com/timothycrosley/isort)
     - [bandit](https://github.com/PyCQA/bandit)
@@ -76,30 +74,49 @@ tl;dr: A CI enabled Python software project with plenty of bells and whistles.
 
 # Functionalities
 
-Any of the following can be run off the bat from the project root
+Any of the following can be run off the bat from the project root, via `invoke`/`inv`...
 
-* ```tox```:
-  * Run ```pytest```
-  * generate coverage metrics
-  * run ```flake8```
-  * run ```pydocstyle```
-  * run an ```isort``` check
-  * run a ```bandit``` check
-  * run a ```black``` check
-  * run a ```safety``` check
-  * run a ```checkmanifest``` check
-  * run a ```mypy``` check
-  * build the sphinx documentation
-* ```tox -e check_todos```: List all of the `# TODO` comment lines in the code
-* ```tox -e pindeps```: Generate a ```requirements.txt``` with pinned dependencies
-* ```tox -e run_isort```: Run isort on the codebase
-* ```tox -e run_black```: Run black on the codebase
-* ```tox -e build```: Build distribution packages
-* ```tox -e build_wheelhouse```: Build a wheelhouse of project dependencies
-* ```tox -e test_release```: Test releasing (with test.pypi.org)
-* ```tox -e release```: Release to pypi
-* ```bumpversion $PART```: Bump the version number of the project
-  * ```git push && git push --tags``` to upload/release to git
+```
+$ inv --list
+Available tasks:
+
+  pindeps                 Pin dependencies, creating or overwriting requirements.txt
+  release                 Perform a release to pypi.
+  build.coverage-report   Build an HTML coverage report.
+  build.dists             Build distribution artifacts.
+  build.docs              Build the documentation.
+  build.wheelhouse        Build a dependency wheelhouse.
+  check.todos             Check for `#TODO` comments in the code.
+  clean.all               Remove all clean-able artifacts.
+  clean.compiled          Remove compilation artifacts.
+  clean.coverage          Remove the .coverage cache.
+  clean.coverage-report   Remove the html coverage report.
+  clean.dists             Remove existing distributions.
+  clean.docs              Remove existing docs.
+  clean.mypy              Remove the .mypy_cache directory.
+  clean.tox               Remove the .tox cache directory.
+  clean.wheelhouse        Remove the wheelhouse.
+  run.autoformatters      Run all the autoformatters.
+  run.black               Run `black` to autoformat the source code.
+  run.isort               Run `isort` to autoformat the source code.
+  run.tests               Run the tests.
+```
+
+Additional information about commands can be obtained by using their `--help` flag, eg:
+
+```
+$ inv release --help
+Usage: inv[oke] [--core-opts] release [--options] [other tasks here ...]
+
+Docstring:
+  Perform a release to pypi.
+
+Options:
+  -b, --[no-]build
+  -c, --[no-]clean
+  -p, --prod
+  -s, --skip-tests
+```
 
 ## Uploading to pypi
 
@@ -108,11 +125,11 @@ Review your package before publishing it!
 [This](https://hynek.me/articles/sharing-your-labor-of-love-pypi-quick-and-dirty/) blog
 entry provides a good breakdown of uploading a package to pypi.
 
-This template provides several handy tox environments for packaging.
+The commands required to release are provided as an `invoke` task:
 
-* ```tox -e build```: Populates the dist/ folder with an sdist and bdist
-* ```tox -e test_release```: Perform a test release to https://test.pypi.org
-* ```tox -e release```: Perform a realease to PyPI.
+```
+$ inv release --prod  # Omit the --prod flag to publish to test.pypi
+```
 
 # Opinions
 
@@ -163,6 +180,16 @@ justification should be included in the git history.
 It uses a "src" layout
 
 I've [been](https://hynek.me/articles/testing-packaging/) [convinced](https://blog.ionelmc.ro/2014/05/25/python-packaging/#the-structure).
+
+It uses [invoke](http://www.pyinvoke.org/) as a task runner
+
+The python ecosystem includes _a ton_ of useful tooling, but remembering the names, options,
+and flags for every individual command, as well as implementing consistent workflows involving
+all of them can be a chore.
+
+Invoke provides (in my opinion) a clean, extensible, understandable method for effectively
+utilizing all of these diverse tools, implementing repeatable workflows, and communicating
+usage information to contributors.
 
 # Credit Where It's Due
 

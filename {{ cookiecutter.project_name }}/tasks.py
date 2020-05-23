@@ -302,6 +302,14 @@ def build_coverage_report(c, test=True):
     echo(f"Coverage report available at {str(Path('./htmlcov').resolve())}")
 
 
+@task(name="todos")
+def check_todos(c):
+    """
+    Check for `#TODO` comments in the code.
+    """
+    c.run("python -m pylint --disable=all --enable=W0511 src tests")
+
+
 @task()
 def release(c, prod=False, clean=True, build=True, skip_tests=False):
     """
@@ -362,7 +370,13 @@ clean_ns.add_task(clean_coverage_report)
 clean_ns.add_task(clean_all)
 
 
+# Define the "check" subcommand
+check_ns = Collection("check")
+check_ns.add_task(check_todos)
+
+
 # Add custom subcommands to root namespace
 ns.add_collection(run_ns)
 ns.add_collection(build_ns)
 ns.add_collection(clean_ns)
+ns.add_collection(check_ns)
