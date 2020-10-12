@@ -3,7 +3,8 @@
 -r requirements_tests.txt
 bump2version
 invoke
-isort[pyproject]
+isort[pyproject] >= 5.0.0
+pylint >= 2.6.0
 black
 wheel
 pep517
