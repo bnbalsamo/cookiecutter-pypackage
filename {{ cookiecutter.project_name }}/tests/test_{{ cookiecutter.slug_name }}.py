@@ -1,26 +1,14 @@
-import unittest
+"""Tests for {{ cookiecutter.slug_name }}."""
+import pytest
 
 import {{ cookiecutter.slug_name }}
 
 
-class Tests(unittest.TestCase):
-    def setUp(self):
-        # Perform any setup that should occur
-        # before every test
-        pass
-
-    def tearDown(self):
-        # Perform any tear down that should
-        # occur after every test
-        pass
-
-    def testPass(self):
-        self.assertEqual(True, True)
-
-    def testVersionAvailable(self):
-        x = getattr({{ cookiecutter.slug_name }}, "__version__", None)
-        self.assertTrue(x is not None)
+def test_version_available():
+    """Test the version dunder is available on the module."""
+    x = getattr({{ cookiecutter.slug_name }}, "__version__", None)
+    assert x is not None
 
 
 if __name__ == "__main__":
-    unittest.main()
+    pytest.main()
