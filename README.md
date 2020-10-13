@@ -38,6 +38,7 @@ tl;dr: A CI enabled Python software project with plenty of bells and whistles.
     - [safety](https://pyup.io/docs/safety/installation-and-usage/)
     - [black](https://github.com/ambv/black)
     - [mypy](http://mypy-lang.org/)
+    - [interrogate](https://interrogate.readthedocs.io/en/latest/)
 
 # Quickstart
 
