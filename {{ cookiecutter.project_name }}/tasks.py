@@ -78,14 +78,17 @@ def run_autoformatters(c):
 
 
 @task(name="tests")
-def run_tests(c, autoformat=True):
+def run_tests(c, autoformat=True, tox_args=None):
     """
     Run the tests.
     """
     echo("Running tests...")
     if autoformat:
         run_autoformatters(c)
-    c.run("tox")
+    cmd = "tox"
+    if tox_args:
+        cmd = cmd + " %s" % tox_args
+    c.run(cmd)
     echo("Testing complete")
 
 
