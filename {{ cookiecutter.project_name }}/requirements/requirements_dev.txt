@@ -9,3 +9,4 @@ black
 wheel
 pep517
 twine
+--editable .
