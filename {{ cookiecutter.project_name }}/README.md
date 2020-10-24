@@ -26,9 +26,6 @@ $ inv run.tests
 ```
 Note: Tox will run tests against the version of the software installed via ```python setup.py install```.
 
-To test against pinned dependencies add ```-r requirements.txt``` to the deps array of the tox.ini testenv
-section.
-
 ## Running autoformatters
 ```
 $ inv run.autoformatters
