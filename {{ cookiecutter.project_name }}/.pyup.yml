@@ -8,8 +8,3 @@ requirements:
         # insecure package, but not spam PRs
         pin: True
         update: insecure
-    - requirements/requirements_loose.txt:
-        # Don't pin - update everything if possible
-        # ie: Prompt us to upgrade major versions,
-        # if we're pinned to the previous major
-        pin: False
