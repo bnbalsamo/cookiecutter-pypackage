@@ -70,7 +70,7 @@ tl;dr: A CI enabled Python software project with plenty of bells and whistles.
     - ```$ git add {.[!.]*,*}```
     - ```$ git commit -m "first commit"```
     - ```$ git remote add origin $YOUR_REPO_ADDRESS```
-    - ```$ git push -u origin master```
+    - ```$ git push -u origin $YOUR_REPO_DEFAULT_BRANCH_NAME```
     - Begin developing your package!
 
 # Functionalities

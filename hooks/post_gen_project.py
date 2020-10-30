@@ -45,7 +45,7 @@ $ git add {.[!.]*,*}
 $ git commit -m "First commit!"
 # Add your remote repo and push (change URI if not using a personal github account)
 $ git remote add origin https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.github_repo_name }}.git
-$ git push -u origin master
+$ git push -u origin {{ cookiecutter.github_default_branch_name }}
 """)
     print("Happy Developing!")
 
