@@ -1,4 +1,5 @@
 {% set has_docs_folder = cookiecutter.create_docs_folder == 'y' -%}
+{% set include_link_back = cookiecutter.include_link_back_to_cookiecutter == 'y' -%}
 # {{cookiecutter.project_name}} [![v{{ cookiecutter.version }}](https://img.shields.io/badge/version-{{ cookiecutter.version }}-blue.svg)](https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.github_repo_name }}/releases)
 
 [![Build Status](https://travis-ci.org/{{ cookiecutter.github_username }}/{{ cookiecutter.github_repo_name }}.svg?branch={{ cookiecutter.github_default_branch_name }})](https://travis-ci.org/{{ cookiecutter.github_username }}/{{ cookiecutter.github_repo_name }}) [![Coverage Status](https://coveralls.io/repos/github/{{ cookiecutter.github_username }}/{{ cookiecutter.github_repo_name }}/badge.svg?branch={{ cookiecutter.github_default_branch_name }})](https://coveralls.io/github/{{ cookiecutter.github_username }}/{{ cookiecutter.github_repo_name }}?branch={{ cookiecutter.github_default_branch_name }}){% if has_docs_folder %} [![Documentation Status](https://readthedocs.org/projects/{{ cookiecutter.github_repo_name }}/badge/?version=latest)](http://{{ cookiecutter.github_repo_name }}.readthedocs.io/en/latest/?badge=latest) {% endif %}[![Updates](https://pyup.io/repos/github/{{ cookiecutter.github_username }}/{{ cookiecutter.github_repo_name }}/shield.svg)](https://pyup.io/repos/github/{{ cookiecutter.github_username }}/{{ cookiecutter.github_repo_name }}/) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
@@ -38,3 +39,8 @@ $ inv pindeps
 
 # Author
 {{ cookiecutter.author }} <{{ cookiecutter.email }}>
+
+{%- if include_link_back %}
+
+_Created using [bnbalsamo/cookiecutter-pypackage](https://github.com/bnbalsamo/cookiecutter-pypackage) v0.27.0_
+{% endif -%}
