@@ -18,5 +18,6 @@
         "The Unlicense",
         "None/Other"
     ],
-    "create_docs_folder": "y"
+    "create_docs_folder": "y",
+    "include_link_back_to_cookiecutter": "y"
 }
