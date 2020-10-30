@@ -7,6 +7,7 @@
     "email": "you@provider.com",
     "github_repo_name": "{{ cookiecutter.slug_name }}",
     "github_username": "githubber",
+    "github_default_branch_name": "master",
     "license": [
         "GNU GPLv3",
         "GNU AGPLv3",

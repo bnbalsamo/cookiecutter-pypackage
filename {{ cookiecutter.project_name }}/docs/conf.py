@@ -45,8 +45,8 @@ templates_path = ['_templates']
 # source_suffix = ['.rst', '.md']
 source_suffix = '.rst'
 
-# The master toctree document.
-master_doc = 'index'
+# The main toctree document.
+main_doc = 'index'
 
 # General information about the project.
 project = '{{cookiecutter.project_name}}'
@@ -145,7 +145,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, '{{ cookiecutter.project_name }}.tex', '{{ cookiecutter.project_name}} Documentation',
+    (main_doc, '{{ cookiecutter.project_name }}.tex', '{{ cookiecutter.project_name}} Documentation',
      '{{cookiecutter.author}}', 'manual'),
 ]
 
@@ -155,7 +155,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, '{{ cookiecutter.project_name }}', '{{cookiecutter.project_name}} Documentation',
+    (main_doc, '{{ cookiecutter.project_name }}', '{{cookiecutter.project_name}} Documentation',
      [author], 1)
 ]
 
@@ -166,7 +166,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, '{{ cookiecutter.project_name }}', '{{cookiecutter.project_name}} Documentation',
+    (main_doc, '{{ cookiecutter.project_name }}', '{{cookiecutter.project_name}} Documentation',
      author, 'cookiecutterproject_name', 'One line description of project.',
      'Miscellaneous'),
 ]

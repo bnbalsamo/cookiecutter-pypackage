@@ -1,4 +1,4 @@
-# cookiecutter-pypackage [![v0.25.1](https://img.shields.io/badge/version-0.25.1-blue.svg)](https://github.com/bnbalsamo/cookiecutter-pypackage/releases)
+# cookiecutter-pypackage [![v0.26.0](https://img.shields.io/badge/version-0.26.0-blue.svg)](https://github.com/bnbalsamo/cookiecutter-pypackage/releases)
 
 [![Build Status](https://travis-ci.org/bnbalsamo/cookiecutter-pypackage.svg?branch=master)](https://travis-ci.org/bnbalsamo/cookiecutter-pypackage)
 
@@ -70,7 +70,7 @@ tl;dr: A CI enabled Python software project with plenty of bells and whistles.
     - ```$ git add {.[!.]*,*}```
     - ```$ git commit -m "first commit"```
     - ```$ git remote add origin $YOUR_REPO_ADDRESS```
-    - ```$ git push -u origin master```
+    - ```$ git push -u origin $YOUR_REPO_DEFAULT_BRANCH_NAME```
     - Begin developing your package!
 
 # Functionalities
