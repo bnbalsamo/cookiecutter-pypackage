@@ -9,11 +9,10 @@ My [cookiecutter](https://github.com/audreyr/cookiecutter) template for python p
 tl;dr: A CI enabled Python software project with plenty of bells and whistles.
 
 - [Github](https://github.com/) integration
-- [TravisCI](https://travis-ci.org/) integration
-    - Optional support for testing multiple versions of python by adding to the python array in ```.travis.yml```
-- [Coveralls](https://coveralls.io/) integration
-- [pyup](https://pyup.io/) integration
 - Testing via [tox](https://tox.readthedocs.io/en/latest/)
+- CI via [GitHub Actions](https://github.com/features/actions)
+- [CodeCov](https://codecov.io/) integration
+- [pyup](https://pyup.io/) integration
 - [Invoke](http://www.pyinvoke.org/) tasks to facilitate a variety of tasks, including...
     - Running autoformatters like black and isort
     - Easily checking `#TODO` comments
@@ -45,8 +44,7 @@ tl;dr: A CI enabled Python software project with plenty of bells and whistles.
 - Requirements For These Instructions
     - [Cookiecutter](https://github.com/audreyr/cookiecutter)
     - [Github](https://github.com/) account
-    - [TravisCI](https://travis-ci.org/) account
-    - [Coveralls](https://coveralls.io/) account
+    - [CodeCov](https://codecov.io/) account
     - [readthedocs](https://readthedocs.org/) account
     - [pyup](https://pyup.io/) account
     - [pyenv](https://github.com/pyenv/pyenv)
@@ -56,8 +54,6 @@ tl;dr: A CI enabled Python software project with plenty of bells and whistles.
         - ```$ pyenv install-latest 3.8``` for instance
 - Steps
     - Create a github repo named $YOUR_PROJECT_NAME
-    - Enable repository monitoring on Travis
-    - Enable repository monitoring on coveralls
     - Enable repository monitoring on readthedocs
     - Enable repository monitoring in pyup
     - ```$ cookiecutter gh:bnbalsamo/cookiecutter-pypackage```
@@ -201,5 +197,6 @@ Inspiration (and some code) taken from the following:
 * [Donald Stufft's blog post about setup.py vs requirements.txt](https://caremad.io/posts/2013/07/setup-vs-requirement/)
 * [Kyle Knapp's talk @ PyCon 2018 "Automating Code Quality"](https://www.youtube.com/watch?v=G1lDk_WKXvY)
 * [Hynek's blog post "Sharing Your Labor of Love: PyPI Quick and Dirty"](https://hynek.me/articles/sharing-your-labor-of-love-pypi-quick-and-dirty/)
+* [Hynek's blog post "Python in GitHub Actions](https://hynek.me/articles/python-github-actions/)
 * Everyone writing blog posts/github issues/mailing list responses/twitter rants/etc about Python packaging, best practices, and development workflows
 * All the wonderful folks writing the tools and services involved in this template and their documentation!
