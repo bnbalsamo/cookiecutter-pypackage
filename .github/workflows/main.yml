@@ -24,6 +24,8 @@ jobs:
           python -m site
           python -m pip install --upgrade pip setuptools wheel cookiecutter tox
       - name: "Create repo and test"
+        env: 
+          TOX_SKIP_ENV: "py3[76]" # Skip other pythons to avoid having to install pyenv
         run: |
           set -xe
           cookiecutter . --no-input

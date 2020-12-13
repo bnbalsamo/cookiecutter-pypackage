@@ -62,7 +62,7 @@ def run_isort(c):
     # The result of this command should satisfy the
     # corresponding tox testenv check_isort
     echo("Running isort...")
-    c.run("python -m isort -rc ./src ./tests")
+    c.run("python -m isort ./src ./tests")
     echo("Isort-ing complete")
 
 
