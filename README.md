@@ -1,6 +1,6 @@
 # cookiecutter-pypackage [![v0.27.0](https://img.shields.io/badge/version-0.27.0-blue.svg)](https://github.com/bnbalsamo/cookiecutter-pypackage/releases)
 
-[![Build Status](https://travis-ci.org/bnbalsamo/cookiecutter-pypackage.svg?branch=master)](https://travis-ci.org/bnbalsamo/cookiecutter-pypackage)
+[![CI](https://github.com/bnbalsamo/cookiecutter-pypackage/workflows/CI/badge.svg?branch=master)](https://github.com/bnbalsamo/cookiecutter-pypackage/actions)
 
 My [cookiecutter](https://github.com/audreyr/cookiecutter) template for python packages
 
