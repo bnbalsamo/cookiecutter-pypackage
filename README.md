@@ -49,24 +49,14 @@ tl;dr: A CI enabled Python software project with plenty of bells and whistles.
     - [pyup](https://pyup.io/) account
     - [pyenv](https://github.com/pyenv/pyenv)
     - [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv)
-        - [pyenv-install-latest](https://github.com/momo-lab/pyenv-install-latest) is also handy
-    - Install the requesite python interpreters in pyenv
-        - ```$ pyenv install-latest 3.8``` for instance
+    - [xxenv-latest](https://github.com/momo-lab/xxenv-latest)
 - Steps
     - Create a github repo named $YOUR_PROJECT_NAME
     - Enable repository monitoring on readthedocs
     - Enable repository monitoring in pyup
     - ```$ cookiecutter gh:bnbalsamo/cookiecutter-pypackage```
     - Fill in the prompts
-    - ```$ cd $YOUR_PROJECT_NAME```
-    - ```$ pyenv-virtualenv $WHATEVER_PYTHON_VERSION $SLUG_NAME```
-    - ```$ pyenv local $SLUG_NAME $ALL_PY_VERSIONS_TO_EXPOSE_TO_TOX```
-    - ```$ pip install -r requirements/requirements_dev.txt```
-    - ```$ git init```
-    - ```$ git add {.[!.]*,*}```
-    - ```$ git commit -m "first commit"```
-    - ```$ git remote add origin $YOUR_REPO_ADDRESS```
-    - ```$ git push -u origin $YOUR_REPO_DEFAULT_BRANCH_NAME```
+    - Complete the setup instructions printed in your terminal after template rendering
     - Begin developing your package!
 
 # Functionalities

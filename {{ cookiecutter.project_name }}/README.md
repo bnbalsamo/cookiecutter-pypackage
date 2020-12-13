@@ -19,16 +19,42 @@ See the full documentation at https://{{cookiecutter.github_repo_name }}.readthe
 
 # Development
 
-## Installing Development Dependencies
+## Quickstart
+
+To quickly install + configure a development environment...
+
+Install [pyenv](https://github.com/pyenv/pyenv), [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv),
+and [xxenv-latest](https://github.com/momo-lab/xxenv-latest) and copy the following into your terminal while
+in the repository root.
+
+```bash
+[[ `type -t pyenv` ]] && \
+[ -s "$PYENV_ROOT/plugins/pyenv-virtualenv" ] && \
+[ -s "$PYENV_ROOT/plugins/xxenv-latest" ] && \
+pyenv latest install -s 3.8 && \
+PYENV_LATEST_38=$(pyenv latest -p 3.8) && \
+pyenv latest install -s 3.7 && \
+PYENV_LATEST_37=$(pyenv latest -p 3.7) && \
+pyenv latest install -s 3.6 && \
+PYENV_LATEST_36=$(pyenv latest -p 3.6) && \
+pyenv virtualenv "$PYENV_LATEST_38" "{{ cookiecutter.project_name }}" && \
+pyenv local "{{ cookiecutter.project_name }}" "$PYENV_LATEST_38" "$PYENV_LATEST_37" "$PYENV_LATEST_36" && \
+pip install -r "requirements/requirements_dev.txt"
 ```
-$ pip install -r requirements/requirements_dev.txt
-```
+
+## Manual Configuration
+
+If you choose not to use the quickstart script you will need to...
+
+- Create a virtual environment
+- Install the development dependencies
+    - `pip install -r requirements/requirements_dev.txt`
+- Configure tox such that it can access all relevant python interpreters
 
 ## Running Tests
 ```
 $ inv run.tests
 ```
-Note: Tox will run tests against the version of the software installed via ```python setup.py install```.
 
 ## Running autoformatters
 ```
