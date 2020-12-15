@@ -49,7 +49,7 @@ If you choose not to use the quickstart script you will need to...
 - Create a virtual environment
 - Install the development dependencies
     - `pip install -r requirements/requirements_dev.txt`
-- Configure tox such that it can access all relevant python interpreters
+- Configure tox so that it can access all relevant python interpreters
 
 ## Running Tests
 ```
