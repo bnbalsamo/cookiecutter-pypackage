@@ -4,6 +4,8 @@
 
 My [cookiecutter](https://github.com/audreyr/cookiecutter) template for python packages
 
+[See an example of a generated project here](https://github.com/bnbalsamo/bnb_cookiecutter_example/)
+
 # Whats it get me?
 
 tl;dr: A CI enabled Python software project with plenty of bells and whistles.
@@ -53,6 +55,9 @@ tl;dr: A CI enabled Python software project with plenty of bells and whistles.
 - Steps
     - Create a github repo named $YOUR_PROJECT_NAME
     - Enable repository monitoring on readthedocs
+        - Configure "Requirements file" in Admin > Advanced Settings
+            - `requirements/requirements_docs.txt`
+        - Check "Install Project" in Admin > Advanced Settings
     - Enable repository monitoring in pyup
     - ```$ cookiecutter gh:bnbalsamo/cookiecutter-pypackage```
     - Fill in the prompts

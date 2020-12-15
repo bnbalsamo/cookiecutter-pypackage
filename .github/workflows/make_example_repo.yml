@@ -1,0 +1,36 @@
+---
+name: CI
+
+on:
+  push:
+    branches: ["master"]
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: "Create Example Repo"
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: "actions/checkout@v2"
+      - uses: "actions/setup-python@v2"
+        with:
+          python-version: "3.8"
+      - name: "Install dependencies"
+        run: |
+          set -xe
+          python -VV
+          python -m site
+          python -m pip install --upgrade pip setuptools wheel cookiecutter
+      - name: "Create Example"
+        run: |
+          set -xe
+          echo -e "bnb-cookiecutter-example\n\n\n\n\n\n\nbnbalsamo\n\n\n\n\n" | cookiecutter .
+      - name: Push to example repository
+        uses: cpina/github-action-push-to-another-repository@master
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source-directory: 'bnb-cookiecutter-example'
+          destination-github-username: 'bnbalsamo'
+          destination-repository-name: 'bnb_cookiecutter_example'
+          user-email: Brian@BrianBalsamo.com
