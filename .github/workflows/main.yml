@@ -14,22 +14,48 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - uses: "actions/checkout@v2"
+
       - uses: "actions/setup-python@v2"
         with:
           python-version: "3.8"
-      - name: "Install dependencies"
+
+      - name: "Install dependencies to global python"
         run: |
           set -xe
           python -VV
           python -m site
           python -m pip install --upgrade pip setuptools wheel cookiecutter tox invoke
-      - name: "Create repo and test"
-        env: 
-          TOX_SKIP_ENV: "py3[76]" # Skip other pythons to avoid having to install pyenv
+
+      - name: "Checkout pyenv"
+        uses: actions/checkout@v2
+        with:
+          repository: pyenv/pyenv
+          path: pyenv
+
+      - name: "Install pyenv"
         run: |
           set -xe
-          cookiecutter . --no-input
-          cd MyProject
-          git init
-          git add {.[!.]*,*}
-          inv run.tests
+          cd pyenv
+          echo "PYENV_ROOT=$(pwd)/pyenv/pyenv" >> $GITHUB_ENV
+          echo "PATH=$(pwd)/pyenv/pyenv/bin:$PATH" >> $GITHUB_ENV
+
+      - name: "Create pyenv plugins dir"
+        run: mkdir -p $PYENV_ROOT/plugins
+
+      - name: "Checkout xxenv-latest"
+        uses: actions/checkout@v2
+        with:
+          repository: momo-lab/xxenv-latest
+          path: $PYENV_ROOT/plugins/xxenv-latest
+
+      - name: "Checkout pyenv virtualenv"
+        uses: actions/checkout@v2
+        with:
+          repository: pyenv/pyenv-virtualenv
+          path: $PYENV_ROOT/plugins/pyenv-virtualenv
+
+      - name: "Create repo and test"
+        run: |
+          set -xe
+          eval $(pyenv init -)
+          bats tests/
