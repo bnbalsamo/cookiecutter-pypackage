@@ -78,7 +78,7 @@ def run_autoformatters(c):
 
 
 @task(name="tests")
-def run_tests(c, autoformat=True, tox_args=None):
+def run_tests(c, autoformat=False, tox_args=None):
     """
     Run the tests.
     """
@@ -314,10 +314,12 @@ def check_todos(c):
 
 
 @task()
-def release(c, prod=False, clean=True, build=True, skip_tests=False):
+def release(c, prod=False, clean=True, build=True, skip_tests=False, autoformat=True):
     """
     Perform a release to pypi.
     """
+    if autoformat:
+        run_autoformatters(c)
     if not skip_tests:
         run_tests(c)
     if clean:
