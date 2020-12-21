@@ -1,7 +1,7 @@
 Auto Docs
 =========
 
-.. automodule:: {{ cookiecutter.slug_name }}
+.. automodule:: {{ cookiecutter.module_name }}
    :members:
    :inherited-members:
    :special-members: __init__

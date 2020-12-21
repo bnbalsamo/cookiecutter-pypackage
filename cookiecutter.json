@@ -1,11 +1,12 @@
 {
-    "project_name": "MyProject",
-    "slug_name": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
+    "project_name": "My-Project",
+    "pip_name": "{{ cookiecutter.project_name.lower().replace(' ', '-') }}",
+    "module_name": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
     "version": "0.0.1",
     "short_description": "A project.",
     "author": "First Last",
     "email": "you@provider.com",
-    "github_repo_name": "{{ cookiecutter.slug_name }}",
+    "github_repo_name": "{{ cookiecutter.project_name }}",
     "github_username": "githubber",
     "github_default_branch_name": "master",
     "license": [

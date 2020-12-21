@@ -12,10 +12,10 @@
 See the full documentation at https://{{cookiecutter.github_repo_name }}.readthedocs.io
 {% endif %}
 # Installation
-- ```$ git clone https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.slug_name }}.git```
-- ```$ cd {{ cookiecutter.slug_name }}```
+- ```$ git clone https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.github_repo_name }}.git```
+- ```$ cd {{ cookiecutter.github_repo_name }}```
     - If you would like to install the pinned dependencies, run ```pip install -r requirements.txt```
-- ```$ python setup.py install```
+- ```$ python -m pip install .```
 
 # Development
 
@@ -71,5 +71,5 @@ $ inv pindeps
 
 {%- if include_link_back %}
 
-_Created using [bnbalsamo/cookiecutter-pypackage](https://github.com/bnbalsamo/cookiecutter-pypackage) v0.31.1_
+_Created using [bnbalsamo/cookiecutter-pypackage](https://github.com/bnbalsamo/cookiecutter-pypackage) v0.32.0_
 {% endif -%}

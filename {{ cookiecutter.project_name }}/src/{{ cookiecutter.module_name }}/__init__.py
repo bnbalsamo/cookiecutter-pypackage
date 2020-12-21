@@ -1,4 +1,4 @@
-"""{{ cookiecutter.slug_name }}: {{ cookiecutter.short_description }}"""
+"""{{ cookiecutter.project_name }}: {{ cookiecutter.short_description }}"""
 
 __author__ = "{{ cookiecutter.author }}"
 __email__ = "{{ cookiecutter.email }}"

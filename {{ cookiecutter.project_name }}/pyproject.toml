@@ -27,7 +27,7 @@ ignore = [
 ]
 
 [tool.coverage.run]
-source = ["{{ cookiecutter.slug_name }}"]
+source = ["{{ cookiecutter.module_name }}"]
 
 [tool.coverage.report]
 fail_under = 80
