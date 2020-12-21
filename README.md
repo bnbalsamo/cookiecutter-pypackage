@@ -4,7 +4,7 @@
 
 My [cookiecutter](https://github.com/audreyr/cookiecutter) template for python packages
 
-[See an example of a generated project here](https://github.com/bnbalsamo/bnb_cookiecutter_example/)
+[See an example of a generated project here](https://github.com/bnbalsamo/bnb-cookiecutter-example/)
 
 # Whats it get me?
 

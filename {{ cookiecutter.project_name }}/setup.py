@@ -2,12 +2,12 @@ from setuptools import setup, find_packages
 
 
 # Provided Package Metadata
-NAME = "{{ cookiecutter.slug_name }}"
+NAME = "{{ cookiecutter.pip_name }}"
 DESCRIPTION = "{{ cookiecutter.short_description }}"
 VERSION = "{{ cookiecutter.version }}"
 AUTHOR = "{{ cookiecutter.author }}"
 AUTHOR_EMAIL = "{{ cookiecutter.email }}"
-URL = 'https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.slug_name }}'
+URL = 'https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_name }}'
 PYTHON_REQUIRES= ">=3.6,<4"
 INSTALL_REQUIRES = [
     # Put "abstract" / loosely pinned requirements here
