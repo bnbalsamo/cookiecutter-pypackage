@@ -167,12 +167,14 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (main_doc, '{{ cookiecutter.project_name }}', '{{cookiecutter.project_name}} Documentation',
-     author, 'cookiecutterproject_name', 'One line description of project.',
+     author, 'cookiecutterproject_name', '{{ cookiecutter.short_description }}',
      'Miscellaneous'),
 ]
 
 
-
-
-# Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'https://docs.python.org/3/': None}
+# Example configuration for intersphinx inventory files
+intersphinx_mapping = {
+    'python': ('https://docs.python.org/3', None),
+#    'twisted': ('https://twistedmatrix.com/documents/current/api/', None),
+#    'environ': ('https://environ-config.readthedocs.io/en/stable/', None),
+}
