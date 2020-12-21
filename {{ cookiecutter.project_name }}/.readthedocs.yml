@@ -1,10 +1,25 @@
 # .readthedocs.yml
+# Read the Docs configuration file
+# See https://docs.readthedocs.io/en/stable/config-file/v2.html for details
 
-build:
-  image: latest
+# (Required) Use v2 of the rtd yml schema
+version: 2
 
+# Build documentation in the docs/ directory with Sphinx
+sphinx:
+  configuration: docs/conf.py
+
+# Configure the docs build env
+# Install docs requirements
+# Install pinned project requirements (if they exist)
+# Install the package with pip
 python:
-  version: 3
-  setup_py_install: true
+  version: 3.8
+  install:
+    - requirements: requirements/requirements_docs.txt
+    - requirements: requirements.txt
+    - method: pip
+      path: .
 
-requirements_file: requirements/requirements_docs.txt
+# Build docs in all formats
+formats: all
