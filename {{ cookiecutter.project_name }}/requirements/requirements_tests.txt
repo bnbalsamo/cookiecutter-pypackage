@@ -1,6 +1,0 @@
-# Tests
-tox
-tox-pyenv
-pytest
-coverage[toml]
-pytest-cov

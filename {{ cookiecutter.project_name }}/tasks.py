@@ -339,6 +339,8 @@ def release(c, prod=False, clean=True, build=True, skip_tests=False, autoformat=
 
 # Make implicit root explicit
 ns = Collection()
+# Apply some default configurations
+ns.configure({"run": {"pty": True, "echo": True}})
 
 
 # Root commands

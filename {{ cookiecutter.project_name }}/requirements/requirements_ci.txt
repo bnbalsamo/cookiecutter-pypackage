@@ -1,3 +1,0 @@
--r requirements_tests.txt
-tox-gh-actions
-invoke
