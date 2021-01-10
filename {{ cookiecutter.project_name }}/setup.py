@@ -19,7 +19,28 @@ EXTRAS_REQUIRE = {
     # Put "abstract" / loosely pinned requirements here
     # See: https://caremad.io/posts/2013/07/setup-vs-requirement/
     # Ex:
-    # 'webfrontend': {'flask'}
+    # 'webfrontend': ['flask']
+    "dev": [
+        "bump2version",
+        "invoke",
+        "isort[pyproject] >= 5.0.0",
+        "pylint >= 2.6.0",
+        "black",
+        "wheel",
+        "pep517",
+        "twine",
+    ],
+    "tests": [
+        "tox",
+        "tox-pyenv",
+        "pytest",
+        "coverage[toml]",
+        "pytest-cov",
+    ],
+    "docs": [
+        "sphinx",
+        "sphinx_rtd_theme",
+    ]
 }
 ENTRY_POINTS = {
     # For CLI scripts, plugins, etc if required

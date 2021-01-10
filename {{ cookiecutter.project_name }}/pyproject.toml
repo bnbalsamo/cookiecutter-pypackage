@@ -17,7 +17,6 @@ ignore = [
     ".editorconfig",
     "tox.ini",
     "requirements.txt",
-    "requirements*",
     "docs*",
     ".github*",
     "tests*",

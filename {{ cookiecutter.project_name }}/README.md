@@ -39,7 +39,7 @@ pyenv latest install -s 3.6 && \
 PYENV_LATEST_36=$(pyenv latest -p 3.6) && \
 pyenv virtualenv "$PYENV_LATEST_38" "{{ cookiecutter.project_name }}" && \
 pyenv local "{{ cookiecutter.project_name }}" "$PYENV_LATEST_38" "$PYENV_LATEST_37" "$PYENV_LATEST_36" && \
-pip install -r "requirements/requirements_dev.txt"
+pip install -e .[dev,tests,docs]
 ```
 
 ## Manual Configuration
@@ -48,7 +48,7 @@ If you choose not to use the quickstart script you will need to...
 
 - Create a virtual environment
 - Install the development dependencies
-    - `pip install -r requirements/requirements_dev.txt`
+    - `pip install -e .[dev,tests,docs]`
 - Configure tox so that it can access all relevant python interpreters
 
 ## Running Tests
@@ -71,5 +71,5 @@ $ inv pindeps
 
 {%- if include_link_back %}
 
-_Created using [bnbalsamo/cookiecutter-pypackage](https://github.com/bnbalsamo/cookiecutter-pypackage) v0.32.0_
+_Created using [bnbalsamo/cookiecutter-pypackage](https://github.com/bnbalsamo/cookiecutter-pypackage) v0.33.0_
 {% endif -%}

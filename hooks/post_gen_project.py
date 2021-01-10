@@ -30,7 +30,7 @@ def print_setup_instructions():
 
 - Configure a venv with an appropriate version of python
 - Configure tox to have access to all relevant versions of python
-- Install the contents of requirements/requirements_dev.txt into the venv
+- Install the package in editable mode + all extras
 - Initialize a git repo and all the files within your project directory
 - Push the contents of your local repo to the appropriate github repo
 
@@ -57,7 +57,7 @@ git remote add origin https://github.com/{{ cookiecutter.github_username }}/{{ c
 git push -u origin {{ cookiecutter.github_default_branch_name }} && \\
 pyenv virtualenv "$PYENV_LATEST_38" "$PROJECT_NAME" && \\
 pyenv local "$PROJECT_NAME" "$PYENV_LATEST_38" "$PYENV_LATEST_37" "$PYENV_LATEST_36" && \\
-pip install -r "requirements/requirements_dev.txt"
+pip install -e .[dev,tests,docs]
 """)
     print()
 
