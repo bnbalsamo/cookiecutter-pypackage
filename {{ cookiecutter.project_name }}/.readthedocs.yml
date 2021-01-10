@@ -16,10 +16,11 @@ sphinx:
 python:
   version: 3.8
   install:
-    - requirements: requirements/requirements_docs.txt
     - requirements: requirements.txt
     - method: pip
       path: .
+      extra_requirements:
+        docs
 
 # Build docs in all formats
 formats: all
