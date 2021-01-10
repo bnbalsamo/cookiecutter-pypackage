@@ -31,7 +31,7 @@ jobs:
           python -VV
           python -m site
           python -m pip install --upgrade pip setuptools wheel
-          python -m pip install tox-gh-actions invoke
+          python -m pip install tox-gh-actions invoke coverage
 
       - name: "Run tests targets for ${{ matrix.python-version }}"
         run: "python -m invoke run.tests"
