@@ -125,6 +125,7 @@ Available tasks:
   clean.wheelhouse        Remove the wheelhouse.
   run.autoformatters      Run all the autoformatters.
   run.black               Run `black` to autoformat the source code.
+  run.blacken-docs        Run `blacken-docs` to autoformat code in the documentation.
   run.isort               Run `isort` to autoformat the source code.
   run.tests               Run the tests.
 ```
