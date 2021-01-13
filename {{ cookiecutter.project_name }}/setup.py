@@ -29,6 +29,7 @@ EXTRAS_REQUIRE = {
         "wheel",
         "pep517",
         "twine",
+        "blacken-docs",
     ],
     "tests": [
         "tox",

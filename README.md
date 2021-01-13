@@ -1,4 +1,4 @@
-# cookiecutter-pypackage [![v0.33.3](https://img.shields.io/badge/version-0.33.3-blue.svg)](https://github.com/bnbalsamo/cookiecutter-pypackage/releases)
+# cookiecutter-pypackage [![v0.34.0](https://img.shields.io/badge/version-0.34.0-blue.svg)](https://github.com/bnbalsamo/cookiecutter-pypackage/releases)
 
 [![CI](https://github.com/bnbalsamo/cookiecutter-pypackage/workflows/CI/badge.svg?branch=master)](https://github.com/bnbalsamo/cookiecutter-pypackage/actions)
 
@@ -125,6 +125,7 @@ Available tasks:
   clean.wheelhouse        Remove the wheelhouse.
   run.autoformatters      Run all the autoformatters.
   run.black               Run `black` to autoformat the source code.
+  run.blacken-docs        Run `blacken-docs` to autoformat code in the documentation.
   run.isort               Run `isort` to autoformat the source code.
   run.tests               Run the tests.
 ```

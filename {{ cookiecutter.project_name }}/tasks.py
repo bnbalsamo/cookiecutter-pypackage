@@ -2,7 +2,9 @@
 Development tasks for {{ cookiecutter.project_name }}
 """
 import os
+from glob import glob
 from pathlib import Path
+from shlex import quote
 from shutil import rmtree
 
 from invoke import Collection, task
@@ -43,37 +45,52 @@ def _pindeps(c):
 
 
 @task(name="black")
-def run_black(c):
+def run_black(c, warn=True):
     """
     Run `black` to autoformat the source code.
     """
     # The result of this command should satisfy the
     # corresponding tox testenv check_black
     echo("Running black...")
-    c.run("python -m black ./src ./tests")
+    c.run("python -m black ./src ./tests", warn=warn)
+    echo("Blackening complete")
+
+
+@task(name="blacken_docs")
+def run_blacken_docs(c, warn=True):
+    """
+    Run `blacken-docs` to autoformat code in the documentation.
+    """
+    echo("Running blacken-docs...")
+    docs_paths = ["README.md"]
+    docs_paths += glob("docs/**/*.rst", recursive=True)
+    docs_paths += glob("src/**/*.py", recursive=True)
+    docs_paths = [quote(p) for p in docs_paths]
+    c.run("blacken-docs %s" % " ".join(docs_paths), warn=warn)
     echo("Blackening complete")
 
 
 @task(name="isort")
-def run_isort(c):
+def run_isort(c, warn=True):
     """
     Run `isort` to autoformat the source code.
     """
     # The result of this command should satisfy the
     # corresponding tox testenv check_isort
     echo("Running isort...")
-    c.run("python -m isort ./src ./tests")
+    c.run("python -m isort ./src ./tests", warn=warn)
     echo("Isort-ing complete")
 
 
 @task(name="autoformatters")
-def run_autoformatters(c):
+def run_autoformatters(c, warn=True):
     """
     Run all the autoformatters.
     """
     echo("Running all autoformatters...")
-    run_black(c)
-    run_isort(c)
+    run_black(c, warn=warn)
+    run_blacken_docs(c, warn=warn)
+    run_isort(c, warn=warn)
     echo("Autoformatting complete")
 
 
@@ -351,6 +368,7 @@ ns.add_task(release)
 # Define the "run" subcommand
 run_ns = Collection("run")
 run_ns.add_task(run_black)
+run_ns.add_task(run_blacken_docs)
 run_ns.add_task(run_isort)
 run_ns.add_task(run_tests)
 run_ns.add_task(run_autoformatters)
