@@ -294,7 +294,7 @@ def build_dists(c, clean=True):
     if clean:
         clean_dists(c)
     echo("Building dists...")
-    c.run("python -m pep517.build -s -b .")
+    c.run("python -m build -s -w .")
     echo(f"Dists now available in {Path('./dist').resolve()}")
 
 
