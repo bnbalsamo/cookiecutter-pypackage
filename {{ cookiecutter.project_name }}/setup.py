@@ -27,7 +27,7 @@ EXTRAS_REQUIRE = {
         "pylint >= 2.6.0",
         "black",
         "wheel",
-        "pep517",
+        "build >= 0.2.1",
         "twine",
         "blacken-docs",
     ],
