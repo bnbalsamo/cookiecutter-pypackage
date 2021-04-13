@@ -1,4 +1,4 @@
-# cookiecutter-pypackage [![v0.36.0](https://img.shields.io/badge/version-0.36.0-blue.svg)](https://github.com/bnbalsamo/cookiecutter-pypackage/releases)
+# cookiecutter-pypackage [![v0.37.1](https://img.shields.io/badge/version-0.37.1-blue.svg)](https://github.com/bnbalsamo/cookiecutter-pypackage/releases)
 
 [![CI](https://github.com/bnbalsamo/cookiecutter-pypackage/workflows/CI/badge.svg?branch=master)](https://github.com/bnbalsamo/cookiecutter-pypackage/actions)
 
@@ -64,6 +64,7 @@ tl;dr: A CI enabled Python software project with plenty of bells and whistles.
 - Requirements For These Instructions
     - [Cookiecutter](https://github.com/audreyr/cookiecutter)
     - [Github](https://github.com/) account
+        - [With SSH access configured](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh)
     - [CodeCov](https://codecov.io/) account
     - [readthedocs](https://readthedocs.org/) account
     - [pyup](https://pyup.io/) account

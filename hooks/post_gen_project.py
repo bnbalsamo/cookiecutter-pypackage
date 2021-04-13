@@ -53,7 +53,7 @@ cd $PROJECT_NAME && \\
 git init && \\
 git add {.[!.]*,*} && \\
 git commit -m "first commit" && \\
-git remote add origin https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.github_repo_name }}.git && \\
+git remote add origin git@github.com:{{ cookiecutter.github_username }}/{{ cookiecutter.github_repo_name }}.git && \\
 git push -u origin {{ cookiecutter.github_default_branch_name }} && \\
 pyenv virtualenv "$PYENV_LATEST_38" "$PROJECT_NAME" && \\
 pyenv local "$PROJECT_NAME" "$PYENV_LATEST_38" "$PYENV_LATEST_37" "$PYENV_LATEST_36" && \\
