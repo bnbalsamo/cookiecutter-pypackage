@@ -64,6 +64,7 @@ tl;dr: A CI enabled Python software project with plenty of bells and whistles.
 - Requirements For These Instructions
     - [Cookiecutter](https://github.com/audreyr/cookiecutter)
     - [Github](https://github.com/) account
+        - [With SSH access configured](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh)
     - [CodeCov](https://codecov.io/) account
     - [readthedocs](https://readthedocs.org/) account
     - [pyup](https://pyup.io/) account
