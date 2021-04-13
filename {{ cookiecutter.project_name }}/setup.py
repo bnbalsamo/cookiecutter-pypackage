@@ -23,7 +23,7 @@ EXTRAS_REQUIRE = {
     "dev": [
         "bump2version",
         "invoke",
-        "isort[pyproject] >= 5.0.0",
+        "isort[pyproject] >= 5.0.2",
         "pylint >= 2.6.0",
         "black",
         "wheel",
