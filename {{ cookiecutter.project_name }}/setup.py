@@ -32,7 +32,7 @@ EXTRAS_REQUIRE = {
         "blacken-docs",
     ],
     "tests": [
-        "tox",
+        "tox >= 3.4",
         "tox-pyenv",
         "pytest",
         "coverage[toml]",
