@@ -234,5 +234,7 @@ Inspiration (and some code) taken from the following:
 * [Kyle Knapp's talk @ PyCon 2018 "Automating Code Quality"](https://www.youtube.com/watch?v=G1lDk_WKXvY)
 * [Hynek's blog post "Sharing Your Labor of Love: PyPI Quick and Dirty"](https://hynek.me/articles/sharing-your-labor-of-love-pypi-quick-and-dirty/)
 * [Hynek's blog post "Python in GitHub Actions](https://hynek.me/articles/python-github-actions/)
+* [Kyle Knapp's talk @ PyGotham 2018 "Automating Code Quality: Next Level](https://www.youtube.com/watch?v=iKAaNaVpJFM)
+* [Thea Flowers' talk @ PyCon 2019 "Break the Cycle: Three excellent Python tools to automate repetitive tasks"](https://www.youtube.com/watch?v=-BHverY7IwU)
 * Everyone writing blog posts/github issues/mailing list responses/twitter rants/etc about Python packaging, best practices, and development workflows
 * All the wonderful folks writing the tools and services involved in this template and their documentation!
