@@ -1,4 +1,4 @@
-# cookiecutter-pypackage [![v0.38.2](https://img.shields.io/badge/version-0.38.2-blue.svg)](https://github.com/bnbalsamo/cookiecutter-pypackage/releases)
+# cookiecutter-pypackage [![v0.38.4](https://img.shields.io/badge/version-0.38.4-blue.svg)](https://github.com/bnbalsamo/cookiecutter-pypackage/releases)
 
 [![CI](https://github.com/bnbalsamo/cookiecutter-pypackage/workflows/CI/badge.svg?branch=master)](https://github.com/bnbalsamo/cookiecutter-pypackage/actions)
 
@@ -234,5 +234,7 @@ Inspiration (and some code) taken from the following:
 * [Kyle Knapp's talk @ PyCon 2018 "Automating Code Quality"](https://www.youtube.com/watch?v=G1lDk_WKXvY)
 * [Hynek's blog post "Sharing Your Labor of Love: PyPI Quick and Dirty"](https://hynek.me/articles/sharing-your-labor-of-love-pypi-quick-and-dirty/)
 * [Hynek's blog post "Python in GitHub Actions](https://hynek.me/articles/python-github-actions/)
+* [Kyle Knapp's talk @ PyGotham 2018 "Automating Code Quality: Next Level](https://www.youtube.com/watch?v=iKAaNaVpJFM)
+* [Thea Flowers' talk @ PyCon 2019 "Break the Cycle: Three excellent Python tools to automate repetitive tasks"](https://www.youtube.com/watch?v=-BHverY7IwU)
 * Everyone writing blog posts/github issues/mailing list responses/twitter rants/etc about Python packaging, best practices, and development workflows
 * All the wonderful folks writing the tools and services involved in this template and their documentation!
