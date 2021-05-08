@@ -30,15 +30,22 @@ def echo(msg):
 
 
 @task(name="pindeps")
-def _pindeps(c):
+def _pindeps(c, generate_hashes=True, upgrade=True, pip_compile_args=""):
     """
-    Pin dependencies, creating or overwriting requirements.txt
+    Pin dependencies.
     """
     # Requires being run in a fresh virtualenv,
     # so we leverage tox
     echo("Pinning dependencies...")
-    c.run("tox -e pindeps --recreate")
-    # This must be in sync with tox.ini
+    argv = ["pip-compile"]
+    if generate_hashes:
+        argv.append("--generate-hashes")
+    if upgrade:
+        argv.append("-U")
+    if pip_compile_args:
+        argv.append(pip_compile_args)
+    os.environ["CUSTOM_COMPILE_COMMAND"] = "inv[oke] pindeps"
+    c.run(" ".join(argv))
     req_path = Path(".") / "requirements.txt"
     req_path = req_path.resolve()
     echo(f"Dependencies pinned in {str(req_path)}")
