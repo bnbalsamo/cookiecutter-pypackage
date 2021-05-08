@@ -30,6 +30,7 @@ EXTRAS_REQUIRE = {
         "build >= 0.2.1",
         "twine",
         "blacken-docs",
+        "pip-tools",
     ],
     "tests": [
         "tox",
