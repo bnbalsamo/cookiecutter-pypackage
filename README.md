@@ -108,14 +108,14 @@ Any of the following can be run off the bat from the project root, via `invoke`/
 $ inv --list
 Available tasks:
 
-  pindeps                 Pin dependencies, creating or overwriting requirements.txt
+  pindeps                 Pin dependencies.
   release                 Perform a release to pypi.
   build.coverage-report   Build an HTML coverage report.
-  build.dists             Build distribution artifacts.
+  build.dists (build)     Build distribution artifacts.
   build.docs              Build the documentation.
   build.wheelhouse        Build a dependency wheelhouse.
   check.todos             Check for `#TODO` comments in the code.
-  clean.all               Remove all clean-able artifacts.
+  clean.all (clean)       Remove all clean-able artifacts.
   clean.compiled          Remove compilation artifacts.
   clean.coverage          Remove the .coverage cache.
   clean.coverage-report   Remove the html coverage report.
@@ -129,6 +129,7 @@ Available tasks:
   run.blacken-docs        Run `blacken-docs` to autoformat code in the documentation.
   run.isort               Run `isort` to autoformat the source code.
   run.tests               Run the tests.
+  serve.docs              Serve the docs on localhost:8000. Reload on changes.
 ```
 
 Additional information about commands can be obtained by using their `--help` flag, eg:

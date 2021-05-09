@@ -31,6 +31,7 @@ EXTRAS_REQUIRE = {
         "twine",
         "blacken-docs",
         "pip-tools",
+        "sphinx-autobuild",
     ],
     "tests": [
         "tox",
