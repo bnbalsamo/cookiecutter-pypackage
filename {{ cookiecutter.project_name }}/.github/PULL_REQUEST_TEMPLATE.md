@@ -1,4 +1,5 @@
 # Closes Issues
+
 * Fixes #...
 * ...
 
@@ -19,7 +20,7 @@ will need to pass in order for your code to be merged.
 If you have any questions about the points below please ask them
 in a comment on this pull request!
 
-This checklist is meant to make the process of conributing easier, not harder!
+This checklist is meant to make the process of contributing easier, not harder!
 
 - [ ] Added tests for changed code
 - [ ] Updated documentation for changed code

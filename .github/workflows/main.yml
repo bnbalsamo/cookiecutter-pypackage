@@ -22,7 +22,7 @@ jobs:
           set -xe
           python -VV
           python -m site
-          python -m pip install --upgrade pip setuptools wheel cookiecutter tox invoke
+          python -m pip install --upgrade pip setuptools wheel cookiecutter
       - name: "Create repo and test"
         env: 
           TOX_SKIP_ENV: "py3[76]" # Skip other pythons to avoid having to install pyenv
@@ -32,4 +32,13 @@ jobs:
           cd My-Project
           git init
           git add {.[!.]*,*}
+          pip install .[dev,tests,docs]
           inv run.tests
+          inv build
+          inv build.dists
+          inv build.docs
+          inv build.wheelhouse
+          inv build.coverage-report --no-test
+          inv clean
+          inv clean.all
+          inv check.todos
