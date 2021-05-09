@@ -124,7 +124,6 @@ def remove_directory(directory, raise_=False):
             raise FileNotFoundError(directory)
         echo(f"No directory found at {str(directory)}")
         return
-    echo(f"Removing {str(directory)}")
     rmtree(directory)
     echo(f"{str(directory)} removed.")
 
@@ -199,7 +198,6 @@ def clean_coverage(c):
     """
     coverage_cache_file = Path("./.coverage").resolve()
     if coverage_cache_file.exists() and coverage_cache_file.is_file():
-        echo(f"Removing {str(coverage_cache_file)}")
         coverage_cache_file.unlink()
         echo(f"{str(coverage_cache_file)} removed.")
     else:
@@ -277,7 +275,6 @@ def build_dists(c, clean=True):
     if clean:
         clean_dists(c)
         clean_build_dir(c)
-    echo("Building dists")
     c.run("python -m build -s -w .")
     echo(f"Dists now available in {Path('./dist').resolve()}")
 
@@ -291,7 +288,6 @@ def build_wheelhouse(c, clean=True, pin_dependencies=True):
         clean_wheelhouse(c)
     if pin_dependencies:
         pindeps(c)
-    echo("Creating wheelhouse")
     c.run("python -m pip wheel -w wheelhouse -r requirements.txt")
     echo(f"Wheelhouse now available in {Path('./wheelhouse').resolve()}")
 
@@ -305,7 +301,6 @@ def build_coverage_report(c, clean=True, test=True):
         clean_coverage_report(c)
     if test:
         run_tests(c, warn=True)
-    echo("Creating coverage report")
     c.run("coverage html")
     echo(f"Coverage report available at {str(Path('./htmlcov').resolve())}")
 

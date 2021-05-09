@@ -38,7 +38,7 @@ jobs:
           inv build.dists
           inv build.docs
           inv build.wheelhouse
-          inv build.coverage-report
+          inv build.coverage-report --no-test
           inv clean
           inv clean.all
           inv check.todos
