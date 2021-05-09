@@ -283,7 +283,7 @@ def build_dists(c, clean=True):
 
 
 @task(name="wheelhouse")
-def build_wheelhouse(c, clean=True, pin_depencies=True):
+def build_wheelhouse(c, clean=True, pin_dependencies=True):
     """
     Build a dependency wheelhouse.
     """
