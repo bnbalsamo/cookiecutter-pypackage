@@ -6,12 +6,18 @@
 Welcome to {{cookiecutter.project_name}}'s documentation!
 =========================================================
 
+{{ cookiecutter.short_description }}
+
+.. todolist::
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   autodoc
-
+   tutorials
+   how-tos
+   reference
+   explanations
 
 
 Indices and tables

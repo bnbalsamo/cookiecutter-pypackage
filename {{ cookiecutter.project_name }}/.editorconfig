@@ -16,6 +16,11 @@ charset = utf-8
 indent_style = space
 indent_size = 4
 
+# 3 space indentation
+[*.rst]
+indent_style = space
+indent_size = 3
+
 # 2 space indentation
 [*.{json,yml,yaml}]
 indent_style = space

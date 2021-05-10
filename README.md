@@ -29,21 +29,27 @@ tl;dr: A CI enabled Python software project with plenty of bells and whistles.
 - [pyup](https://pyup.io/) integration
 - [Invoke](http://www.pyinvoke.org/) tasks to standardize development workflows, including...
     - Running the tests
-    - Running autoformatters like black and isort
+    - Running autoformatters like black, isort, etc.
     - Easily checking `#TODO` comments
     - Building documentation
+    - Serving documentation locally during development
     - Pinning dependencies to a `requirements.txt`
     - Releasing to pypi
     - Building source distributions and wheels
     - Building wheelhouses of your project's dependencies
+    - Cleaning up your development environment
 - A `README.md` that includes...
     - A brief project description
     - Installation instructions
     - relevant badges
     - Easy to follow directions for contributors
 - (optional) [Sphinx](http://www.sphinx-doc.org) documentation
-    - With a minimal autodocs setup
     - Ready for use with [readthedocs](https://readthedocs.org/)
+    - Preconfigured with several staple sphinx extensions
+        - [autodoc](https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html)
+        - [intersphinx](https://www.sphinx-doc.org/en/master/usage/extensions/intersphinx.html)
+        - [todo](https://www.sphinx-doc.org/en/master/usage/extensions/todo.html)
+        - [sphinx-autodoc-typehints](https://pypi.org/project/sphinx-autodoc-typehints/)
 - All the tooling you can shake a stick at, wrapped up in a ```tox``` config, properly configured to work together in harmony.
     - [pytest](https://docs.pytest.org/en/latest/)
     - [flake8](http://flake8.pycqa.org/en/latest/)
@@ -55,8 +61,14 @@ tl;dr: A CI enabled Python software project with plenty of bells and whistles.
     - [pydocstyle](www.pydocstyle.org/en/latest/)
     - [safety](https://pyup.io/docs/safety/installation-and-usage/)
     - [black](https://github.com/ambv/black)
+    - [blacken-docs](https://github.com/asottile/blacken-docs)
     - [mypy](http://mypy-lang.org/)
     - [interrogate](https://interrogate.readthedocs.io/en/latest/)
+    - [sphinx linkcheck](https://www.sphinx-doc.org/en/master/usage/builders/index.html#sphinx.builders.linkcheck.CheckExternalLinksBuilder)
+    - [build](https://pypi.org/project/build/) a PEP517 package builder
+- Some extra goodies for your development environment like...
+    - A preconfigured [editorconfig](https://editorconfig.org/) file.
+    - A preconfigured [bump2version](https://pypi.org/project/bump2version/) configuration file.
 
 
 # Quickstart
@@ -238,5 +250,6 @@ Inspiration (and some code) taken from the following:
 * [Hynek's blog post "Python in GitHub Actions](https://hynek.me/articles/python-github-actions/)
 * [Kyle Knapp's talk @ PyGotham 2018 "Automating Code Quality: Next Level](https://www.youtube.com/watch?v=iKAaNaVpJFM)
 * [Thea Flowers' talk @ PyCon 2019 "Break the Cycle: Three excellent Python tools to automate repetitive tasks"](https://www.youtube.com/watch?v=-BHverY7IwU)
+* [Daniele Procida's Diátaxis Documentation Framework](https://diataxis.fr/)
 * Everyone writing blog posts/github issues/mailing list responses/twitter rants/etc about Python packaging, best practices, and development workflows
 * All the wonderful folks writing the tools and services involved in this template and their documentation!

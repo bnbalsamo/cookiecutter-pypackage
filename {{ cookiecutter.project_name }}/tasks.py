@@ -335,12 +335,36 @@ def release(c, prod=False, clean=True, build=True, skip_tests=False, autoformat=
     echo("Upload complete")
 
 
-@task(name="docs")
-def serve_docs(c):
+@task(name="docs", iterable=['additional_dir'])
+def serve_docs(c, todos=False, additional_dir=None, open_browser=False):
     """
     Serve the docs on localhost:8000. Reload on changes.
     """
-    c.run("sphinx-autobuild --watch src docs docs/_build/html")
+    argv = ["sphinx-autobuild"]
+
+    if open_browser:
+        argv.append("--open-browser")
+
+    # Default additional dirs we want to watch for changes
+    default_additional_dirs = ["src"]
+    for default in default_additional_dirs:
+        additional_dir.append(default)
+
+    # Append append defaults + user specified dirs to argv
+    additional_dir.append("src")
+    for dir_ in additional_dir:
+        argv.append("--watch")
+        argv.append(dir_)
+
+    # sphinx-autobuild positional args
+    argv.append("docs")
+    argv.append("docs/_build/html")
+
+    # See relevant logic in docs/conf.py
+    if todos:
+        os.environ["SPHINX_DISPLAY_TODOS"] = "true"
+
+    c.run(" ".join(argv))
 
 
 # Make implicit root explicit

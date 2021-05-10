@@ -33,8 +33,12 @@ on_rtd = os.environ.get('READTHEDOCS') == 'True'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ['sphinx.ext.autodoc',
-    'sphinx.ext.intersphinx']
+extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.intersphinx',
+    'sphinx.ext.todo',
+    'sphinx_autodoc_typehints',
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -78,8 +82,12 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 pygments_style = 'sphinx'
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
-todo_include_todos = False
+todo_include_todos = bool(os.environ.get("SPHINX_DISPLAY_TODOS"))
 
+# Set typing.TYPE_CHECKING to True to enable “expensive” typing imports
+set_type_checking_flag = True
+# Add stub documentation for undocumented parameters to be able to add type info.
+always_document_param_types = True
 
 # -- Options for HTML output ----------------------------------------------
 
