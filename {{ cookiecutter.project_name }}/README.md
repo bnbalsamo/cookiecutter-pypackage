@@ -71,5 +71,5 @@ $ inv pindeps
 
 {%- if include_link_back %}
 
-_Created using [bnbalsamo/cookiecutter-pypackage](https://github.com/bnbalsamo/cookiecutter-pypackage) v0.41.1_
+_Created using [bnbalsamo/cookiecutter-pypackage](https://github.com/bnbalsamo/cookiecutter-pypackage) v0.42.0_
 {% endif -%}

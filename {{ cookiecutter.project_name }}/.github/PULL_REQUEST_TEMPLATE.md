@@ -23,4 +23,9 @@ in a comment on this pull request!
 This checklist is meant to make the process of contributing easier, not harder!
 
 - [ ] Added tests for changed code
+- [ ] Tests pass locally when invoked via `inv run.tests`
 - [ ] Updated documentation for changed code
+    - [ ] Documentation placed in the correct section according to
+    the [Diátaxis Framework](https://diataxis.fr/)
+    - [ ] New modules have a corresponding `.. automodule` entry in
+    `docs/reference`

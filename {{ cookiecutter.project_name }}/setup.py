@@ -43,6 +43,7 @@ EXTRAS_REQUIRE = {
     "docs": [
         "sphinx",
         "sphinx_rtd_theme",
+        "sphinx-autodoc-typehints",
     ]
 }
 ENTRY_POINTS = {
