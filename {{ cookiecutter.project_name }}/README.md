@@ -39,7 +39,8 @@ pyenv latest install -s 3.6 && \
 PYENV_LATEST_36=$(pyenv latest -p 3.6) && \
 pyenv virtualenv "$PYENV_LATEST_38" "{{ cookiecutter.project_name }}" && \
 pyenv local "{{ cookiecutter.project_name }}" "$PYENV_LATEST_38" "$PYENV_LATEST_37" "$PYENV_LATEST_36" && \
-pip install -e .[dev,tests,docs]
+python -m pip install -U pip wheel && \
+python -m pip install -e .[dev,tests,docs]
 ```
 
 ## Manual Configuration
