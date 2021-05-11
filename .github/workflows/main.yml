@@ -32,6 +32,7 @@ jobs:
           cd My-Project
           git init
           git add {.[!.]*,*}
+          pip install -U pip wheel
           pip install .[dev,tests,docs]
           inv run.tests
           inv build

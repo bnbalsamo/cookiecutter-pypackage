@@ -30,7 +30,7 @@ def echo(msg):
 
 
 @task(name="pindeps")
-def pindeps(c, generate_hashes=True, upgrade=True, pip_compile_args=""):
+def pindeps(c, generate_hashes=True, upgrade=True):
     """
     Pin dependencies.
     """
@@ -39,8 +39,6 @@ def pindeps(c, generate_hashes=True, upgrade=True, pip_compile_args=""):
         argv.append("--generate-hashes")
     if upgrade:
         argv.append("-U")
-    if pip_compile_args:
-        argv.append(pip_compile_args)
     os.environ["CUSTOM_COMPILE_COMMAND"] = "inv[oke] pindeps"
     c.run(" ".join(argv))
     req_path = Path(".") / "requirements.txt"
@@ -92,17 +90,20 @@ def run_autoformatters(c, warn=False):
     run_isort(c, warn=warn)
 
 
-@task(name="tests")
-def run_tests(c, autoformat=True, tox_args=None, warn=False):
+@task(name="tests", iterable=['env'])
+def run_tests(c, autoformat=True, warn=False, env=None, recreate=False):
     """
     Run the tests.
     """
     if autoformat:
         run_autoformatters(c, warn=warn)
-    cmd = "tox"
-    if tox_args:
-        cmd = cmd + " %s" % tox_args
-    c.run(cmd, warn=warn)
+    argv = ["tox"]
+    if env:
+        argv.append("-e")
+        argv.append(",".join(env))
+    if recreate:
+        argv.append("--recreate")
+    c.run(" ".join(argv), warn=warn)
 
 
 @task(name="docs")

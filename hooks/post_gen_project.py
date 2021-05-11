@@ -57,7 +57,8 @@ git remote add origin git@github.com:{{ cookiecutter.github_username }}/{{ cooki
 git push -u origin {{ cookiecutter.github_default_branch_name }} && \\
 pyenv virtualenv "$PYENV_LATEST_38" "$PROJECT_NAME" && \\
 pyenv local "$PROJECT_NAME" "$PYENV_LATEST_38" "$PYENV_LATEST_37" "$PYENV_LATEST_36" && \\
-pip install -e .[dev,tests,docs]
+python -m pip install -U pip wheel && \\
+python -m pip install -e .[dev,tests,docs]
 """)
     print()
 
