@@ -1,14 +1,12 @@
-"""
-Development tasks for {{ cookiecutter.project_name }}
-"""
+"""Development tasks for {{ cookiecutter.project_name }}."""
 import os
 from glob import glob
 from pathlib import Path
 from shlex import quote
 from shutil import rmtree
+from tempfile import TemporaryDirectory
 
 from invoke import Collection, task
-
 
 # Change the CWD to the repo root.
 _LAST_DIR = None
@@ -25,101 +23,92 @@ ECHO_PREFIX = "=> "
 
 
 def echo(msg):
-    # Wrap print to prepend a prefix
+    """Wrap print to prepend a prefix."""
     print(ECHO_PREFIX + str(msg))
 
 
 @task(name="pindeps")
-def pindeps(c, generate_hashes=True, upgrade=True):
-    """
-    Pin dependencies.
-    """
+def pindeps(ctx, generate_hashes=True, upgrade=True):
+    """Pin dependencies."""
     argv = ["pip-compile"]
     if generate_hashes:
         argv.append("--generate-hashes")
     if upgrade:
         argv.append("-U")
     os.environ["CUSTOM_COMPILE_COMMAND"] = "inv[oke] pindeps"
-    c.run(" ".join(argv))
+    ctx.run(" ".join([quote(x) for x in argv]))
     req_path = Path(".") / "requirements.txt"
     req_path = req_path.resolve()
     echo(f"Dependencies pinned in {str(req_path)}")
 
 
 @task(name="black")
-def run_black(c, warn=False):
-    """
-    Run `black` to autoformat the source code.
-    """
+def run_black(ctx, warn=False):
+    """Run `black` to autoformat the source code."""
     # The result of this command should satisfy the
     # corresponding tox testenv check_black
-    c.run("python -m black ./src ./tests", warn=warn)
+    ctx.run("python -m black ./src ./tests setup.py tasks.py", warn=warn)
 
 
 @task(name="blacken_docs")
-def run_blacken_docs(c, warn=False):
-    """
-    Run `blacken-docs` to autoformat code in the documentation.
-    """
+def run_blacken_docs(ctx, warn=False):
+    """Run `blacken-docs` to autoformat code in the documentation."""
     # The result of this command should satisfy the
     # corresponding tox testenv check_blacken_docs
     docs_paths = ["README.md"]
     docs_paths += glob("docs/**/*.rst", recursive=True)
     docs_paths += glob("src/**/*.py", recursive=True)
     docs_paths = [quote(p) for p in docs_paths]
-    c.run("blacken-docs %s" % " ".join(docs_paths), warn=warn)
+    ctx.run("blacken-docs %s" % " ".join(docs_paths), warn=warn)
 
 
 @task(name="isort")
-def run_isort(c, warn=False):
-    """
-    Run `isort` to autoformat the source code.
-    """
+def run_isort(ctx, warn=False):
+    """Run `isort` to autoformat the source code."""
     # The result of this command should satisfy the
     # corresponding tox testenv check_isort
-    c.run("python -m isort ./src ./tests", warn=warn)
+    ctx.run("python -m isort ./src ./tests tasks.py setup.py", warn=warn)
 
 
 @task(name="autoformatters")
-def run_autoformatters(c, warn=False):
-    """
-    Run all the autoformatters.
-    """
-    run_black(c, warn=warn)
-    run_blacken_docs(c, warn=warn)
-    run_isort(c, warn=warn)
+def run_autoformatters(ctx, warn=False):
+    """Run all the autoformatters."""
+    run_black(ctx, warn=warn)
+    run_blacken_docs(ctx, warn=warn)
+    run_isort(ctx, warn=warn)
 
 
-@task(name="tests", iterable=['env'])
-def run_tests(c, autoformat=True, warn=False, env=None, recreate=False):
-    """
-    Run the tests.
-    """
+@task(name="tests", iterable=["env"])
+def run_tests(ctx, autoformat=True, warn=False, env=None, recreate=False):
+    """Run the tests."""
     if autoformat:
-        run_autoformatters(c, warn=warn)
+        run_autoformatters(ctx, warn=warn)
     argv = ["tox"]
     if env:
         argv.append("-e")
         argv.append(",".join(env))
     if recreate:
         argv.append("--recreate")
-    c.run(" ".join(argv), warn=warn)
+    ctx.run(" ".join([quote(x) for x in argv]), warn=warn)
 
 
 @task(name="docs")
-def build_docs(c, clean=True, buildername="html"):
-    """
-    Build the documentation.
-    """
+def build_docs(ctx, clean=True, buildername="html"):
+    """Build the documentation."""
     if clean:
-        clean_docs(c)
-    c.run(f"sphinx-build docs docs_out --color -W -b{buildername}")
+        clean_docs(ctx)
+    ctx.run(f"sphinx-build docs docs_out --color -W -b{buildername}")
     docs_dir = Path(".") / "docs_out"
     docs_dir = docs_dir.resolve()
     echo(f"Docs available in {str(docs_dir)}")
 
 
 def remove_directory(directory, raise_=False):
+    """
+    Remove a directory.
+
+    If raise_ is True and the directory doesn't exist raise an exception.
+    """
     if not directory.exists():
         if raise_:
             raise FileNotFoundError(directory)
@@ -130,31 +119,26 @@ def remove_directory(directory, raise_=False):
 
 
 @task(name="dists")
-def clean_dists(c):
-    """
-    Remove existing distributions.
-    """
+def clean_dists(ctx):  # pylint:disable=W0613
+    """Remove existing distributions."""
     dist_dir = Path("./dist").resolve()
     remove_directory(dist_dir)
 
 
 @task(name="docs")
-def clean_docs(c):
-    """
-    Remove existing docs.
-    """
+def clean_docs(ctx):  # pylint:disable=W0613
+    """Remove existing docs."""
     docs_out_dir = Path("./docs_out").resolve()
     remove_directory(docs_out_dir)
 
 
 @task(name="compiled")
-def clean_compiled(c):
-    """
-    Remove compilation artifacts.
-    """
+def clean_compiled(ctx):  # pylint:disable=W0613
+    """Remove compilation artifacts."""
 
-    def clean_dir(d):
-        for entry in d.iterdir():
+    def clean_dir(dir_):
+        """Remove compiled python artifacts from a directory."""
+        for entry in dir_.iterdir():
             if entry.name.endswith(".pyc"):
                 entry.unlink()
                 continue
@@ -168,35 +152,29 @@ def clean_compiled(c):
         Path("./src").resolve(),
         Path("./tests").resolve(),
     ]
-    for d in dirs_to_clean:
-        echo(f"Removing compiled/cache artifacts in {str(d)}")
-        clean_dir(d)
+    for dir_ in dirs_to_clean:
+        echo(f"Removing compiled/cache artifacts in {str(dir_)}")
+        clean_dir(dir_)
     echo("Compiled artifacts and caches removed")
 
 
 @task(name="tox")
-def clean_tox(c):
-    """
-    Remove the .tox cache directory.
-    """
+def clean_tox(ctx):  # pylint:disable=W0613
+    """Remove the .tox cache directory."""
     tox_dir = Path("./.tox").resolve()
     remove_directory(tox_dir)
 
 
 @task(name="mypy")
-def clean_mypy(c):
-    """
-    Remove the .mypy_cache directory.
-    """
+def clean_mypy(ctx):  # pylint:disable=W0613
+    """Remove the .mypy_cache directory."""
     mypy_cache_dir = Path("./.mypy_cache").resolve()
     remove_directory(mypy_cache_dir)
 
 
 @task(name="coverage")
-def clean_coverage(c):
-    """
-    Remove the .coverage cache.
-    """
+def clean_coverage(ctx):  # pylint:disable=W0613
+    """Remove the .coverage cache."""
     coverage_cache_file = Path("./.coverage").resolve()
     if coverage_cache_file.exists() and coverage_cache_file.is_file():
         coverage_cache_file.unlink()
@@ -206,35 +184,29 @@ def clean_coverage(c):
 
 
 @task(name="wheelhouse")
-def clean_wheelhouse(c):
-    """
-    Remove the wheelhouse.
-    """
+def clean_wheelhouse(ctx):  # pylint:disable=W0613
+    """Remove the wheelhouse."""
     wheelhouse_dir = Path("./wheelhouse").resolve()
     remove_directory(wheelhouse_dir)
 
 
 @task(name="coverage-report")
-def clean_coverage_report(c):
-    """
-    Remove the html coverage report.
-    """
+def clean_coverage_report(ctx):  # pylint:disable=W0613
+    """Remove the html coverage report."""
     coverage_report_dir = Path("./htmlcov").resolve()
     remove_directory(coverage_report_dir)
 
 
 @task(name="build-dir")
-def clean_build_dir(c):
-    """
-    Remove the build directory.
-    """
+def clean_build_dir(ctx):  # pylint:disable=W0613
+    """Remove the build directory."""
     build_directory = Path("./build").resolve()
     remove_directory(build_directory)
 
 
 @task(name="all")
 def clean_all(
-    c,
+    ctx,
     dists=True,
     docs=True,
     compiled=True,
@@ -244,87 +216,132 @@ def clean_all(
     wheelhouse=True,
     coverage_report=True,
     build_directory=True,
-):
-    """
-    Remove all clean-able artifacts.
-    """
+):  # pylint:disable=R0913
+    """Remove all clean-able artifacts."""
     if dists:
-        clean_dists(c)
+        clean_dists(ctx)
     if docs:
-        clean_docs(c)
+        clean_docs(ctx)
     if compiled:
-        clean_compiled(c)
+        clean_compiled(ctx)
     if tox:
-        clean_tox(c)
+        clean_tox(ctx)
     if mypy:
-        clean_mypy(c)
+        clean_mypy(ctx)
     if coverage:
-        clean_coverage(c)
+        clean_coverage(ctx)
     if wheelhouse:
-        clean_wheelhouse(c)
+        clean_wheelhouse(ctx)
     if coverage_report:
-        clean_coverage_report(c)
+        clean_coverage_report(ctx)
     if build_directory:
-        clean_build_dir(c)
+        clean_build_dir(ctx)
 
 
 @task(name="dists")
-def build_dists(c, clean=True):
-    """
-    Build distribution artifacts.
-    """
+def build_dists(ctx, clean=True):
+    """Build distribution artifacts."""
     if clean:
-        clean_dists(c)
-        clean_build_dir(c)
-    c.run("python -m build -s -w .")
+        clean_dists(ctx)
+        clean_build_dir(ctx)
+    ctx.run("python -m build -s -w .")
     echo(f"Dists now available in {Path('./dist').resolve()}")
 
 
-@task(name="wheelhouse")
-def build_wheelhouse(c, clean=True, pin_dependencies=True):
-    """
-    Build a dependency wheelhouse.
-    """
-    if clean:
-        clean_wheelhouse(c)
+@task(name="zipapp")
+def build_zipapp(
+    ctx,
+    command_name=None,
+    executable_name=None,
+    pin_dependencies=True,
+    shebang=None,
+    compress=False,
+):  # pylint:disable=R0913
+    """Use `shiv` to produce a zipapp that includes the depndencies."""
     if pin_dependencies:
-        pindeps(c)
-    c.run("python -m pip wheel -w wheelhouse -r requirements.txt")
+        pindeps(ctx)
+
+    # Defaults
+    if shebang is None:
+        shebang = "/usr/bin/env python3"
+
+    if executable_name is None:
+        if command_name is not None:
+            # Same name as command
+            executable_name = command_name
+        else:
+            # Same name as project directory
+            executable_name = Path().resolve().name
+
+    # Compute output path
+    dist_dir = Path() / "dist"
+    dist_dir.mkdir(exist_ok=True)
+    output_fname = dist_dir / executable_name
+
+    # Run shiv
+    echo("Creating zipapp with shiv")
+    with TemporaryDirectory() as tmp_dir:
+        # Build the shiv argv
+        shiv_cmd = [
+            "shiv",
+            "--site-packages",
+            tmp_dir,
+            "-p",
+            shebang,
+            "-o",
+            str(output_fname),
+        ]
+
+        if command_name:
+            shiv_cmd.extend(["-c", command_name])
+        if compress:
+            shiv_cmd.append("--compressed")
+        echo(f"Creating temporary site_packages at {tmp_dir}")
+        ctx.run(f"python -m pip install -r requirements.txt --target {tmp_dir}")
+        ctx.run(f"python -m pip install . --target {tmp_dir}")
+        ctx.run(" ".join([quote(x) for x in shiv_cmd]))
+    echo(f"Created zipapp: {output_fname}")
+
+
+@task(name="wheelhouse")
+def build_wheelhouse(ctx, clean=True, pin_dependencies=True):
+    """Build a dependency wheelhouse."""
+    if clean:
+        clean_wheelhouse(ctx)
+    if pin_dependencies:
+        pindeps(ctx)
+    ctx.run("python -m pip wheel -w wheelhouse -r requirements.txt")
     echo(f"Wheelhouse now available in {Path('./wheelhouse').resolve()}")
 
 
 @task(name="coverage-report")
-def build_coverage_report(c, clean=True, test=True):
-    """
-    Build an HTML coverage report.
-    """
+def build_coverage_report(ctx, clean=True, test=True):
+    """Build an HTML coverage report."""
     if clean:
-        clean_coverage_report(c)
+        clean_coverage_report(ctx)
     if test:
-        run_tests(c, warn=True)
-    c.run("coverage html")
+        run_tests(ctx, warn=True)
+    ctx.run("coverage html")
     echo(f"Coverage report available at {str(Path('./htmlcov').resolve())}")
 
 
 @task(name="todos")
-def check_todos(c):
-    """
-    Check for `#TODO` comments in the code.
-    """
-    c.run("python -m pylint --disable=all --enable=W0511 src tests")
+def check_todos(ctx):
+    """Check for `#TODO` comments in the code."""
+    ctx.run("python -m pylint --disable=all --enable=W0511 src tests")
 
 
 @task()
-def release(c, prod=False, clean=True, build=True, skip_tests=False, autoformat=True):
-    """
-    Perform a release to pypi.
-    """
+def release(
+    ctx, prod=False, clean=True, build=True, skip_tests=False, autoformat=True
+):  # pylint:disable=R0913
+    """Perform a release to pypi."""
     if not skip_tests:
-        run_tests(c, autoformat=autoformat)
+        run_tests(ctx, autoformat=autoformat)
     if clean:
-        clean_dists(c)
+        clean_dists(ctx)
     if build:
-        build_dists(c)
+        build_dists(ctx)
     cmd = "python -m twine upload"
     if not prod:
         echo("Uploading to test.pypi")
@@ -332,15 +349,13 @@ def release(c, prod=False, clean=True, build=True, skip_tests=False, autoformat=
     else:
         echo("--prod flag present. Uploading to pypi")
     cmd += " ./dist/*"
-    c.run(cmd)
+    ctx.run(cmd)
     echo("Upload complete")
 
 
-@task(name="docs", iterable=['additional_dir'])
-def serve_docs(c, todos=False, additional_dir=None, open_browser=False):
-    """
-    Serve the docs on localhost:8000. Reload on changes.
-    """
+@task(name="docs", iterable=["additional_dir"])
+def serve_docs(ctx, todos=False, additional_dir=None, open_browser=False):
+    """Serve the docs on localhost:8000. Reload on changes."""
     argv = ["sphinx-autobuild"]
 
     if open_browser:
@@ -365,7 +380,7 @@ def serve_docs(c, todos=False, additional_dir=None, open_browser=False):
     if todos:
         os.environ["SPHINX_DISPLAY_TODOS"] = "true"
 
-    c.run(" ".join(argv))
+    ctx.run(" ".join([quote(x) for x in argv]))
 
 
 # Make implicit root explicit
@@ -394,6 +409,7 @@ build_ns.add_task(build_dists, default=True)
 build_ns.add_task(build_docs)
 build_ns.add_task(build_wheelhouse)
 build_ns.add_task(build_coverage_report)
+build_ns.add_task(build_zipapp)
 
 
 # Define the "clean" subcommand

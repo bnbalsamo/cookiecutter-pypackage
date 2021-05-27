@@ -1,5 +1,6 @@
-from setuptools import setup, find_packages
+"""Setup for {{ cookiecutter.project_name }}."""
 
+from setuptools import find_packages, setup
 
 # Provided Package Metadata
 NAME = "{{ cookiecutter.pip_name }}"
@@ -7,8 +8,8 @@ DESCRIPTION = "{{ cookiecutter.short_description }}"
 VERSION = "{{ cookiecutter.version }}"
 AUTHOR = "{{ cookiecutter.author }}"
 AUTHOR_EMAIL = "{{ cookiecutter.email }}"
-URL = 'https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_name }}'
-PYTHON_REQUIRES= ">=3.6,<4"
+URL = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_name }}"  # pylint:disable=C0301
+PYTHON_REQUIRES = ">=3.6,<4"
 INSTALL_REQUIRES = [
     # Put "abstract" / loosely pinned requirements here
     # See: https://caremad.io/posts/2013/07/setup-vs-requirement/
@@ -32,6 +33,7 @@ EXTRAS_REQUIRE = {
         "blacken-docs",
         "pip-tools",
         "sphinx-autobuild",
+        "shiv",
     ],
     "tests": [
         "tox",
@@ -44,7 +46,7 @@ EXTRAS_REQUIRE = {
         "sphinx",
         "sphinx_rtd_theme",
         "sphinx-autodoc-typehints",
-    ]
+    ],
 }
 ENTRY_POINTS = {
     # For CLI scripts, plugins, etc if required
@@ -54,11 +56,12 @@ ENTRY_POINTS = {
 
 
 def readme():
+    """Return the contents of README.md if it exists."""
     try:
-        with open("README.md", 'r') as f:
+        with open("README.md", "r") as f:
             return f.read()
-    except:
-        return False
+    except FileNotFoundError:
+        return None
 
 
 # Derived Package Metadata
@@ -79,13 +82,11 @@ setup(
     author=AUTHOR,
     author_email=AUTHOR_EMAIL,
     package_dir={"": "src"},
-    packages=find_packages(
-        where="src"
-    ),
+    packages=find_packages(where="src"),
     entry_points=ENTRY_POINTS,
     include_package_data=True,
     url=URL,
     install_requires=INSTALL_REQUIRES,
     extras_require=EXTRAS_REQUIRE,
-    python_requires=PYTHON_REQUIRES
+    python_requires=PYTHON_REQUIRES,
 )
