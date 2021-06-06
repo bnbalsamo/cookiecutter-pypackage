@@ -30,7 +30,7 @@ def echo(msg):
 @task(name="pindeps")
 def pindeps(ctx, generate_hashes=True, upgrade=True):
     """Pin dependencies."""
-    argv = ["pip-compile"]
+    argv = ["python", "-m", "piptools", "compile"]
     if generate_hashes:
         argv.append("--generate-hashes")
     if upgrade:
@@ -298,6 +298,10 @@ def build_zipapp(
         if compress:
             shiv_cmd.append("--compressed")
         echo(f"Creating temporary site_packages at {tmp_dir}")
+        # pip-sync doesn't appear to suport the `--target` option :(
+        # https://github.com/jazzband/pip-tools/issues/587
+        # Should be okay, as there aren't going to be any extra
+        # packages in the purpose build site-packages anyways.
         ctx.run(f"python -m pip install -r requirements.txt --target {tmp_dir}")
         ctx.run(f"python -m pip install . --target {tmp_dir}")
         ctx.run(" ".join([quote(x) for x in shiv_cmd]))
