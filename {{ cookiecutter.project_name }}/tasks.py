@@ -48,7 +48,7 @@ def run_black(ctx, warn=False):
     """Run `black` to autoformat the source code."""
     # The result of this command should satisfy the
     # corresponding tox testenv check_black
-    ctx.run("python -m black ./src ./tests setup.py tasks.py", warn=warn)
+    ctx.run("python -m black ./src ./tests ./tasks.py", warn=warn)
 
 
 @task(name="blacken_docs")
@@ -68,7 +68,7 @@ def run_isort(ctx, warn=False):
     """Run `isort` to autoformat the source code."""
     # The result of this command should satisfy the
     # corresponding tox testenv check_isort
-    ctx.run("python -m isort ./src ./tests tasks.py setup.py", warn=warn)
+    ctx.run("python -m isort ./src ./tests ./tasks.py", warn=warn)
 
 
 @task(name="autoformatters")

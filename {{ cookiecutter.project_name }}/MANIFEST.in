@@ -1,5 +1,5 @@
 exclude **
 include LICENSE*
 include README*
-include setup.py
+include setup.cfg
 graft src
