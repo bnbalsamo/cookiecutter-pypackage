@@ -43,7 +43,7 @@ tl;dr: A CI enabled Python software project with plenty of bells and whistles.
     - Installation instructions
     - relevant badges
     - Easy to follow directions for contributors
-- (optional) [Sphinx](http://www.sphinx-doc.org) documentation
+- [Sphinx](http://www.sphinx-doc.org) documentation
     - Ready for use with [readthedocs](https://readthedocs.org/)
     - Preconfigured with several staple sphinx extensions
         - [autodoc](https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html)
@@ -108,7 +108,6 @@ tl;dr: A CI enabled Python software project with plenty of bells and whistles.
 |github_username|githubber|Used to derive the github URL of the project|
 |github_default_branch_name|master (See [#45](https://github.com/bnbalsamo/cookiecutter-pypackage/issues/45))|Used for the CI badge and in the instructions for project bootstrapping|
 |license|GNU GPLv3|The license to release the project under|
-|create_docs_folder|y|If set to `y` a docs folder will be created for sphinx style documentation.|
 |enforce_strong_typing|n|If set to `y` mypy will error on untyped defs.|
 |include_link_back_to_cookiecutter|y|If set to `y`the generated project's `README.md` will include a link back this cookiecutter.|
 
