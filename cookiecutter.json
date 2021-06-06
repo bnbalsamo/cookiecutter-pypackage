@@ -19,7 +19,6 @@
         "The Unlicense",
         "None/Other"
     ],
-    "create_docs_folder": "y",
     "enforce_strong_typing": "n",
     "include_link_back_to_cookiecutter": "y"
 }

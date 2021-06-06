@@ -24,7 +24,7 @@ jobs:
       - name: "Create Example"
         run: |
           set -xe
-          echo -e "bnb-cookiecutter-example\n\n\n\n\n\n\n\nbnbalsamo\n\n\n\n\n\n" | cookiecutter .
+          echo -e "bnb-cookiecutter-example\n\n\n\n\n\n\n\nbnbalsamo\n\n\n\n\n" | cookiecutter .
       - name: Push to example repository
         uses: cpina/github-action-push-to-another-repository@master
         env:
