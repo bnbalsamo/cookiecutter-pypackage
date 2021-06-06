@@ -36,6 +36,7 @@ def pindeps(ctx, generate_hashes=True, upgrade=True):
     if upgrade:
         argv.append("-U")
     os.environ["CUSTOM_COMPILE_COMMAND"] = "inv[oke] pindeps"
+    argv.append("setup.cfg")
     ctx.run(" ".join([quote(x) for x in argv]))
     req_path = Path(".") / "requirements.txt"
     req_path = req_path.resolve()
