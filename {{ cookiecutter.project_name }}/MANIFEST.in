@@ -1,5 +1,0 @@
-exclude **
-include LICENSE*
-include README*
-include setup.cfg
-graft src

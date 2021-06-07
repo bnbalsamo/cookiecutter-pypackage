@@ -2,7 +2,7 @@
     "project_name": "My-Project",
     "pip_name": "{{ cookiecutter.project_name.lower().replace(' ', '-') }}",
     "module_name": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "short_description": "A project.",
     "author": "First Last",
     "email": "you@provider.com",
@@ -12,10 +12,10 @@
     "license": [
         "GNU GPLv3",
         "GNU AGPLv3",
-        "GNU LGPLv3", 
+        "GNU LGPLv3",
         "MIT License",
         "Apache License 2.0",
-        "Mozzilla Public License 2.0", 
+        "Mozzilla Public License 2.0",
         "The Unlicense",
         "None/Other"
     ],
