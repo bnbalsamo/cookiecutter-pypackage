@@ -16,31 +16,27 @@ jobs:
       - uses: "actions/checkout@v2"
       - uses: "actions/setup-python@v2"
         with:
-          python-version: "3.8"
+          python-version: "3.9"
       - name: "Install dependencies"
         run: |
           set -xe
           python -VV
           python -m site
-          python -m pip install --upgrade pip setuptools wheel cookiecutter
+          python -m pip install --upgrade pip setuptools wheel cookiecutter poetry
       - name: "Create repo and test"
-        env: 
-          TOX_SKIP_ENV: "py3[76]" # Skip other pythons to avoid having to install pyenv
         run: |
           set -xe
           cookiecutter . --no-input
           cd My-Project
           git init
           git add {.[!.]*,*}
-          pip install -U pip wheel
-          pip install .[dev,tests,docs]
-          inv run.tests
-          inv build
-          inv build.dists
-          inv build.docs
-          inv build.wheelhouse
-          inv build.coverage-report --no-test
-          inv build.zipapp
-          inv clean
-          inv clean.all
-          inv check.todos
+          poetry install
+          git add poetry.lock
+          poetry run inv run.tests
+          poetry run inv build
+          poetry run inv build.dists
+          poetry run inv build.docs
+          poetry run inv build.coverage-report --no-test
+          poetry run inv build.zipapp
+          poetry run inv clean
+          poetry run inv check.todos

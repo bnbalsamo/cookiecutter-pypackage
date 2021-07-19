@@ -23,20 +23,21 @@ My [cookiecutter](https://github.com/audreyr/cookiecutter) template for python p
 tl;dr: A CI enabled Python software project with plenty of bells and whistles.
 
 - [GitHub](https://github.com/) integration
-- Testing via [tox](https://tox.readthedocs.io/en/latest/)
+- Testing via [nox](https://nox.thea.codes/en/stable/) and [pre-commit](https://pre-commit.com/)
 - CI via [GitHub Actions](https://github.com/features/actions)
 - [CodeCov](https://codecov.io/) integration
 - [pyup](https://pyup.io/) integration
 - [Invoke](http://www.pyinvoke.org/) tasks to standardize development workflows, including...
     - Running the tests
-    - Running autoformatters like black, isort, etc.
+    - Running autoformatters like [black](https://github.com/ambv/black)
+    and [isort](https://github.com/timothycrosley/isort)
     - Easily checking `#TODO` comments
     - Building documentation
     - Serving documentation locally during development
-    - Pinning dependencies to a `requirements.txt`
-    - Releasing to pypi
+    - Managing dependencies precisely and securely with [poetry](https://python-poetry.org/)
+    - Releasing to [pypi](https://pypi.org/)
     - Building source distributions and wheels
-    - Building wheelhouses of your project's dependencies
+    - Building self-contained zipapps via [shiv](https://shiv.readthedocs.io/en/latest/)
     - Cleaning up your development environment
 - A `README.md` that includes...
     - A brief project description
@@ -50,7 +51,7 @@ tl;dr: A CI enabled Python software project with plenty of bells and whistles.
         - [intersphinx](https://www.sphinx-doc.org/en/master/usage/extensions/intersphinx.html)
         - [todo](https://www.sphinx-doc.org/en/master/usage/extensions/todo.html)
         - [sphinx-autodoc-typehints](https://pypi.org/project/sphinx-autodoc-typehints/)
-- All the tooling you can shake a stick at, wrapped up in a ```tox``` config, properly configured to work together in harmony.
+- All the tooling you can shake a stick at, wrapped up in a ```nox``` config, properly configured to work together in harmony.
     - [pytest](https://docs.pytest.org/en/latest/)
     - [flake8](http://flake8.pycqa.org/en/latest/)
     - [pylint](https://www.pylint.org)
@@ -80,9 +81,7 @@ tl;dr: A CI enabled Python software project with plenty of bells and whistles.
     - [CodeCov](https://codecov.io/) account
     - [readthedocs](https://readthedocs.org/) account
     - [pyup](https://pyup.io/) account
-    - [pyenv](https://github.com/pyenv/pyenv)
-    - [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv)
-    - [xxenv-latest](https://github.com/momo-lab/xxenv-latest)
+    - [poetry](https://python-poetry.org)
 - Steps
     - Create a github repo named $YOUR_PROJECT_NAME
     - Enable repository monitoring on readthedocs
@@ -112,34 +111,25 @@ tl;dr: A CI enabled Python software project with plenty of bells and whistles.
 |include_link_back_to_cookiecutter|y|If set to `y`the generated project's `README.md` will include a link back this cookiecutter.|
 
 
-# Preconfigured Invoke Tasks 
+# Preconfigured Invoke Tasks
 
 Any of the following can be run off the bat from the project root, via `invoke`/`inv`...
 
 ```
 $ inv --list
+=> Current Working Directory: ...
 Available tasks:
 
-  pindeps                 Pin dependencies.
+  clean                   Clean up all caches and generated artifacts.
   release                 Perform a release to pypi.
   build.coverage-report   Build an HTML coverage report.
   build.dists (build)     Build distribution artifacts.
   build.docs              Build the documentation.
-  build.wheelhouse        Build a dependency wheelhouse.
+  build.zipapp            Use `shiv` to produce a zipapp that includes the dependencies.
   check.todos             Check for `#TODO` comments in the code.
-  clean.all (clean)       Remove all clean-able artifacts.
-  clean.compiled          Remove compilation artifacts.
-  clean.coverage          Remove the .coverage cache.
-  clean.coverage-report   Remove the html coverage report.
-  clean.dists             Remove existing distributions.
-  clean.docs              Remove existing docs.
-  clean.mypy              Remove the .mypy_cache directory.
-  clean.tox               Remove the .tox cache directory.
-  clean.wheelhouse        Remove the wheelhouse.
   run.autoformatters      Run all the autoformatters.
-  run.black               Run `black` to autoformat the source code.
-  run.blacken-docs        Run `blacken-docs` to autoformat code in the documentation.
-  run.isort               Run `isort` to autoformat the source code.
+  run.nox                 Run nox.
+  run.pre-commit          Run pre-commit against all files.
   run.tests               Run the tests.
   serve.docs              Serve the docs on localhost:8000. Reload on changes.
 ```
@@ -193,12 +183,26 @@ I'm actively developing and the code base is small I fall below 80% coverage I k
 probably slacked off on tests somewhere. As a codebase grows and matures I tend to turn this
 metric up to whatever reasonable maximum I can hit.
 
-**It uses requirements.txt rather than Pipfile and Pipfile.lock**
+**It uses [poetry](https://python-poetry.org/).**
 
-I made this decision because the pipfile specification isn't integrated into pip (yet),
-because it allows for fewer differences between developing applications and libraries,
-and because I don't particularly like the fact that the existing tools attempt
-to be a "one stop shop" for managing dependency declarations and virtualenvs.
+Packaging in the larger Python ecosystem is currently undergoing some significant
+changes, and several tools (or combinations of tools) exist to handle packaging,
+dependency management, environment management, artifact generation, uploading to
+package indices, etc.
+
+Poetry provides a couple of key functionalities:
+
+- A solver which maps dependency constraints to a working combination of dependency
+  versions
+- The ability to have (regular) dependencies, development dependencies, and extras.
+- A lock file, to provide deterministic environment creation, that contains hashes
+- The ability to export a `pip`-compatible constraints file, that can be used
+  to create environments which contain subsets of dependencies for testing.
+- The ability to store all metadata in `pyproject.toml`
+
+These functionalities, in combination with the fact that they require almost no custom code
+(ecept the `install_with_constraints` function in the noxfile), make `poetry` my tool of
+choice for packaging, currently.
 
 **It implements a lot of tooling.**
 
@@ -228,13 +232,14 @@ I've [been](https://hynek.me/articles/testing-packaging/) [convinced](https://bl
 
 **It uses [invoke](http://www.pyinvoke.org/) as a task runner.**
 
-The python ecosystem includes _a ton_ of useful tooling, but remembering the names, options,
+The Python ecosystem includes _a ton_ of useful tooling, but remembering the names, options,
 and flags for every individual command, as well as implementing consistent workflows involving
 all of them can be a chore.
 
 Invoke provides (in my opinion) a clean, extensible, understandable method for effectively
 utilizing all of these diverse tools, implementing repeatable workflows, and communicating
 usage information to contributors.
+
 
 
 # Credit Where It's Due

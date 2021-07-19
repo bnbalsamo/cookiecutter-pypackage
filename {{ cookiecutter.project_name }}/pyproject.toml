@@ -1,25 +1,40 @@
+[tool.poetry]
+name = "{{ cookiecutter.pip_name }}"
+version = "{{ cookiecutter.version }}"
+description = "{{ cookiecutter.short_description }}"
+authors = ["{{ cookiecutter.author }}  <{{ cookiecutter.email }}>"]
+readme = "README.md"
+homepage = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_name }}"
+
+[tool.poetry.dependencies]
+python = "^3.6.1"
+
+[tool.poetry.dev-dependencies]
+black = "*"
+build = ">=0.5.0"
+bump2version = "*"
+invoke = "^1"
+mypy = ">=0.910"
+nox = "*"
+packaging = "*"
+pre-commit = "^2.9.2"
+pylint = "*"
+pytest = "*"
+pytest-cov = "*"
+safety = "*"
+shiv = ">=0.5.2"
+sphinx = "*"
+sphinx-autobuild = "*"
+sphinx-autodoc-typehints = "*"
+sphinx-rtd-theme = "*"
+twine = "*"
+
 [build-system]
-requires = ["setuptools>=40.6.0", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
 
 [tool.isort]
 profile = "black"
-
-[tool.check-manifest]
-ignore = [
-    "*__pycache__",
-    "*.py[cod]",
-    "*$py.class",
-    ".editorconfig",
-    "tox.ini",
-    "requirements.txt",
-    "docs*",
-    ".github*",
-    "tests*",
-    ".pyup.yml",
-    ".readthedocs.yml",
-    ".pylintrc"
-]
 
 [tool.coverage.run]
 source = ["{{ cookiecutter.module_name }}"]
@@ -32,3 +47,10 @@ source = [
    "src",
    ".tox/*/site-packages"
 ]
+
+[tool.mypy]
+warn_unused_configs = true
+check_untyped_defs = true
+{% if cookiecutter.enforce_strong_typing == "y" -%}
+disallow_untyped_defs = true
+{%- endif -%}

@@ -1,3 +1,0 @@
-# No pinned dependencies
-# Run the following to pin dependencies:
-# $ inv pindeps
