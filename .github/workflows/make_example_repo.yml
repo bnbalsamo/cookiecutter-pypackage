@@ -30,7 +30,8 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source-directory: 'bnb-cookiecutter-example'
-          destination-github-username: 'bnbalsamo'
-          destination-repository-name: 'bnb-cookiecutter-example'
-          user-email: 'Brian@BrianBalsamo.com'
+          source-directory: "bnb-cookiecutter-example"
+          destination-github-username: "bnbalsamo"
+          destination-repository-name: "bnb-cookiecutter-example"
+          target-branch: "main"
+          user-email: "Brian@BrianBalsamo.com"
