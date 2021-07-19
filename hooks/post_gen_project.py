@@ -27,7 +27,7 @@ def print_setup_instructions():
     git init && \\
     git add {.[!.]*,*} && \\
     git commit -m "initial template render" && \\
-    poetry install && \\
+    poetry install -E docs -E tests && \\
     git add poetry.lock && \\
     git commit -m "Adding initial lock file" && \\
     poetry run pre-commit install --install-hooks && \\

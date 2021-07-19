@@ -20,29 +20,10 @@ SUPPORTED_PYTHONS: List[str] = [
 ]
 
 
-# Requirements to build the docs
-DOCS_REQUIREMENTS: List[str] = [
-    "sphinx",
-    "sphinx-rtd-theme",
-    "sphinx-autodoc-typehints",
-]
-
-
-# Requirements to run the tests
-TESTS_REQUIREMENTS: List[str] = [
-    "pytest",
-    "pytest-cov",
-]
-
-
-# Requirements to run the development tasks
-TASKS_REQUIREMENTS: List[str] = [
+# Dependencies imported in either noxfile.py or tasks.py
+# (required so mypy and pylint can accurately parse these files)
+IMPORTED_DEV_REQUIREMENTS = [
     "invoke",
-]
-
-
-# Requirements to run nox
-NOX_REQUIREMENTS: List[str] = [
     "nox",
     "packaging",
 ]
@@ -73,6 +54,10 @@ def install_with_constraints(
         session.run(
             "poetry",
             "export",
+            "-E",
+            "docs",
+            "-E",
+            "tests",
             "--dev",
             "--without-hashes",
             "--format=requirements.txt",
@@ -96,8 +81,7 @@ def install_with_constraints(
 @nox.session(python=SUPPORTED_PYTHONS)
 def test(session: Session) -> None:
     """Run the unit tests."""
-    session.run_always("poetry", "install", "--no-dev", external=True)
-    install_with_constraints(session, *TESTS_REQUIREMENTS)
+    session.run_always("poetry", "install", "-E", "tests", "--no-dev", external=True)
     session.run("pytest", "--cov={{ cookiecutter.module_name }}", "--cov-append")
 
 
@@ -113,14 +97,18 @@ def pre_commit(session: Session) -> None:
 @nox.session
 def pylint(session: Session) -> None:
     """Run pylint."""
-    session.run_always("poetry", "install", "--no-dev", external=True)
-    install_with_constraints(
-        session,
-        "pylint",
-        *TESTS_REQUIREMENTS,
-        *TASKS_REQUIREMENTS,
-        *NOX_REQUIREMENTS,
+    session.run_always(
+        "poetry",
+        "install",
+        "-E",
+        "docs",
+        "-E",
+        "tests",
+        "--no-dev",
+        external=True,
     )
+    install_with_constraints(session, "pylint")
+    install_with_constraints(session, *IMPORTED_DEV_REQUIREMENTS)
     session.run(
         "python",
         "-m",
@@ -135,15 +123,20 @@ def pylint(session: Session) -> None:
 @nox.session
 def mypy(session: Session) -> None:
     """Run mypy."""
-    session.run_always("poetry", "install", "--no-dev", external=True)
-    install_with_constraints(
-        session,
-        "mypy",
-        *TESTS_REQUIREMENTS,
-        *NOX_REQUIREMENTS,
+    session.run_always(
+        "poetry",
+        "install",
+        "-E",
+        "docs",
+        "-E",
+        "tests",
+        "--no-dev",
+        external=True,
     )
     # Can't typecheck tasks.py until the following is fixed:
     # https://github.com/pyinvoke/invoke/issues/357
+    install_with_constraints(session, "mypy")
+    install_with_constraints(session, *IMPORTED_DEV_REQUIREMENTS)
     session.run(
         "python",
         "-m",
@@ -179,8 +172,7 @@ def build(session: Session) -> None:
 @nox.session
 def docs(session: Session) -> None:
     """Check that the docs build properly."""
-    session.run_always("poetry", "install", "--no-dev", external=True)
-    install_with_constraints(session, *DOCS_REQUIREMENTS)
+    session.run_always("poetry", "install", "-E", "docs", "--no-dev", external=True)
     with tempfile.TemporaryDirectory() as tmp_dir:
         session.run(
             "sphinx-build",
@@ -197,8 +189,7 @@ def docs(session: Session) -> None:
 @nox.session
 def docs_linkcheck(session: Session) -> None:
     """Check there are no dead links in the docs."""
-    session.run_always("poetry", "install", "--no-dev", external=True)
-    install_with_constraints(session, *DOCS_REQUIREMENTS)
+    session.run_always("poetry", "install", "-E", "docs", "--no-dev", external=True)
     with tempfile.TemporaryDirectory() as tmp_dir:
         session.run(
             "sphinx-build",
