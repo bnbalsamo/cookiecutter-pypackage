@@ -2,7 +2,7 @@
 # {{cookiecutter.project_name}} [![v{{ cookiecutter.version }}](https://img.shields.io/badge/version-{{ cookiecutter.version }}-blue.svg)](https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.github_repo_name }}/releases)
 
 [![CI](https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.github_repo_name }}/workflows/CI/badge.svg?branch={{ cookiecutter.github_default_branch_name }})](https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.github_repo_name }}/actions)
-[![Coverage](https://codecov.io/gh/{{ cookiecutter.github_username }}/{{ cookiecutter.github_repo_name }}/branch/master/graph/badge.svg)](https://codecov.io/gh/{{ cookiecutter.github_username }}/{{ cookiecutter.github_repo_name }}/)
+[![Coverage](https://codecov.io/gh/{{ cookiecutter.github_username }}/{{ cookiecutter.github_repo_name }}/branch/{{ cookiecutter.github_default_branch_name }}/graph/badge.svg)](https://codecov.io/gh/{{ cookiecutter.github_username }}/{{ cookiecutter.github_repo_name }}/)
 [![Documentation Status](https://readthedocs.org/projects/{{ cookiecutter.github_repo_name }}/badge/?version=latest)](http://{{ cookiecutter.github_repo_name }}.readthedocs.io/en/latest/?badge=latest)
 [![Updates](https://pyup.io/repos/github/{{ cookiecutter.github_username }}/{{ cookiecutter.github_repo_name }}/shield.svg)](https://pyup.io/repos/github/{{ cookiecutter.github_username }}/{{ cookiecutter.github_repo_name }}/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
