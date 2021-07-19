@@ -40,3 +40,16 @@ jobs:
           poetry run inv build.zipapp
           poetry run inv clean
           poetry run inv check.todos
+      - name: "Build test example"
+        run: |
+          echo -e "bnb-cookiecutter-example-test\n\n\n\n\n\n\n\nbnbalsamo\n\n\n\n\n" | cookiecutter .
+      - name: Push to test example repository
+        uses: cpina/github-action-push-to-another-repository@master
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source-directory: "bnb-cookiecutter-example-test"
+          destination-github-username: "bnbalsamo"
+          destination-repository-name: "bnb-cookiecutter-example-test"
+          target-branch: "main"
+          user-email: "Brian@BrianBalsamo.com"
