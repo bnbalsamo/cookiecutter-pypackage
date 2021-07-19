@@ -18,7 +18,7 @@ This project is currently only installable via development tooling.
 - Install [poetry](https://python-poetry.org/)
 - ```$ git clone https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.github_repo_name }}.git```
 - ```$ cd {{ cookiecutter.github_repo_name }}```
-- ```$ poetry install . --no-dev```
+- ```$ poetry install --no-dev```
 
 # Development
 
@@ -26,11 +26,11 @@ To install + configure a development environment...
 
 - Install [poetry](https://python-poetry.org/)
 - Clone the repository
-    - `git@github.com:{{ cookiecutter.github_username }}/{{ cookiecutter.github_repo_name }}.git`
+    - `git clone git@github.com:{{ cookiecutter.github_username }}/{{ cookiecutter.github_repo_name }}.git`
 - `cd` into the project directory
     - `cd {{ cookiecutter.github_repo_name }}`
 - Install the project and development dependencies with poetry
-    - `poetry install .`
+    - `poetry install`
 - Activate the project's virtual environment in your current shell
     - `poetry shell`
 - Install the pre-commit hooks
