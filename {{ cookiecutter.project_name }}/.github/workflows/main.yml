@@ -1,4 +1,3 @@
-{% raw -%}
 ---
 name: CI
 
@@ -9,6 +8,7 @@ on:
     branches: ["{{ cookiecutter.github_default_branch_name }}"]
   workflow_dispatch:
 
+{% raw -%}
 jobs:
   tests:
     runs-on: "ubuntu-latest"
