@@ -293,6 +293,7 @@ def build_zipapp(
                 "-m",
                 "pip",
                 "install",
+                "--no-deps",
                 "-r",
                 f"{str(reqs_filepath.resolve())}",
                 "--target",

@@ -8,9 +8,26 @@ homepage = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutte
 
 [tool.poetry.dependencies]
 python = "^3.6.1"
+sphinx = {version = "*", optional = true}
+sphinx-autodoc-typehints = {version = "*", optional = true}
+sphinx-rtd-theme = {version = "*", optional = true}
+pytest = {version = "*", optional = true}
+pytest-cov = {version = "*", optional = true}
+typing-extensions = {version = "*", optional = true}
+
+[tool.poetry.extras]
+docs = [
+    "sphinx",
+    "sphinx-autodoc-typehints",
+    "sphinx-rtd-theme",
+    "typing-extensions",
+]
+tests = [
+    "pytest",
+    "pytest-cov",
+]
 
 [tool.poetry.dev-dependencies]
-black = "*"
 build = ">=0.5.0"
 bump2version = "*"
 invoke = "^1"
@@ -19,14 +36,9 @@ nox = "*"
 packaging = "*"
 pre-commit = "^2.9.2"
 pylint = "*"
-pytest = "*"
-pytest-cov = "*"
 safety = "*"
 shiv = ">=0.5.2"
-sphinx = "*"
 sphinx-autobuild = "*"
-sphinx-autodoc-typehints = "*"
-sphinx-rtd-theme = "*"
 twine = "*"
 
 [build-system]

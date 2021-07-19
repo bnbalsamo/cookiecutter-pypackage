@@ -30,7 +30,7 @@ jobs:
           cd My-Project
           git init
           git add {.[!.]*,*}
-          poetry install
+          poetry install -E docs -E tests
           git add poetry.lock
           poetry run inv run.tests
           poetry run inv build

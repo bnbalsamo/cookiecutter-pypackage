@@ -10,13 +10,11 @@ sphinx:
   configuration: docs/conf.py
 
 # Configure the docs build env
-# Install docs requirements
-# Install pinned project requirements (if they exist)
-# Install the package with pip
+# Install package+docs requirements
+# Have to continue using 3.8 here, as rtd doesn't support 3.9 yet.
 python:
   version: 3.8
   install:
-    - requirements: requirements.txt
     - method: pip
       path: .
       extra_requirements:
