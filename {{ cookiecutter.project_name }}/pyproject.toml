@@ -12,7 +12,7 @@ sphinx = {version = "*", optional = true}
 sphinx-autodoc-typehints = {version = "*", optional = true}
 sphinx-rtd-theme = {version = "*", optional = true}
 pytest = {version = "*", optional = true}
-pytest-cov = {version = "*", optional = true}
+coverage = {version = "*", optional = true, extras = ["toml"]}
 typing-extensions = {version = "*", optional = true}
 
 [tool.poetry.extras]
@@ -24,7 +24,7 @@ docs = [
 ]
 tests = [
     "pytest",
-    "pytest-cov",
+    "coverage",
 ]
 
 [tool.poetry.dev-dependencies]

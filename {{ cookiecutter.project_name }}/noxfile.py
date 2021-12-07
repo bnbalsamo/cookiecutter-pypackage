@@ -1,5 +1,6 @@
 """Noxfile."""
 import tempfile
+from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Any, List
 
@@ -7,6 +8,16 @@ import nox
 from nox.sessions import Session
 from packaging.requirements import Requirement
 
+nox.options.sessions = [
+    "test",
+    "pre_commit",
+    "pylint",
+    "mypy",
+    "safety",
+    "build",
+    "docs",
+    "docs_linkcheck",
+]
 nox.options.error_on_missing_interpreters = False
 nox.options.error_on_external_run = True
 
@@ -81,8 +92,22 @@ def install_with_constraints(
 @nox.session(python=SUPPORTED_PYTHONS)
 def test(session: Session) -> None:
     """Run the unit tests."""
+    # Remove the coverage file if it exists
+    coverage_file = Path(".coverage")
+    if coverage_file.exists():
+        coverage_file.unlink()
+
     session.run_always("poetry", "install", "-E", "tests", "--no-dev", external=True)
-    session.run("pytest", "--cov={{ cookiecutter.module_name }}", "--cov-append")
+    session.run("coverage", "run", "-p", "--branch", "-m", "pytest")
+    session.notify("coverage")
+
+
+@nox.session
+def coverage(session: Session) -> None:
+    """Generate combined coverage metrics."""
+    install_with_constraints(session, "coverage[toml]")
+    session.run("coverage", "combine")
+    session.run("coverage", "report")
 
 
 @nox.session

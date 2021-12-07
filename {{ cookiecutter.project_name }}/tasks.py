@@ -170,12 +170,12 @@ def clean_mypy():
 
 def clean_coverage():
     """Remove the .coverage cache."""
-    coverage_cache_file = Path("./.coverage").resolve()
-    if coverage_cache_file.exists() and coverage_cache_file.is_file():
-        coverage_cache_file.unlink()
-        echo(f"{str(coverage_cache_file)} removed.")
-    else:
-        echo(f"No file found at {str(coverage_cache_file)}")
+    # Nox takes care of .coverage on its own
+    # We just don't want extras in our coverage combine call.
+    for coverage_cache_file in Path().glob(".coverage.*"):
+        if coverage_cache_file.exists() and coverage_cache_file.is_file():
+            coverage_cache_file.unlink()
+            echo(f"{str(coverage_cache_file)} removed.")
 
 
 def clean_coverage_report():
