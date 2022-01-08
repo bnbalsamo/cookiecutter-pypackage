@@ -7,7 +7,7 @@ readme = "README.md"
 homepage = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_name }}"
 
 [tool.poetry.dependencies]
-python = "^3.6.1"
+python = "^3.7.0"
 sphinx = {version = "*", optional = true}
 sphinx-autodoc-typehints = {version = "*", optional = true}
 sphinx-rtd-theme = {version = "*", optional = true}
