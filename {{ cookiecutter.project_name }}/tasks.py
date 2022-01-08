@@ -1,18 +1,16 @@
 """Development tasks for {{ cookiecutter.project_name }}."""
 import os
+import sys
 from pathlib import Path
 from shlex import quote
 from shutil import rmtree
 from tempfile import TemporaryDirectory
+from typing import Callable, Iterable, Tuple
 
 from invoke import Collection, task
 
 # Change the CWD to the repo root.
-while not Path("./tasks.py").exists():
-    os.chdir("..")
-    if Path(".").resolve() == Path(".").resolve().parent:
-        # We hit the FS root :(
-        raise FileNotFoundError("Could not find the repository root.")
+os.chdir(Path(__file__).parent.resolve())
 
 
 # Differentiate our output from called app output.
@@ -27,13 +25,21 @@ def echo(msg):
 echo(f"Current Working Directory: {str(Path('.').resolve())}")
 
 
+def get_posargs():
+    """Get tox style "posargs" that follow "--" on the CLI."""
+    try:
+        return sys.argv[sys.argv.index("--") + 1 :]
+    except (ValueError, IndexError):
+        return []
+
+
 def run_argv(ctx, argv, warn=False):
     """Run a constructed argv via the provided context."""
     return ctx.run(" ".join([quote(x) for x in argv]), warn=warn)
 
 
-@task(name="pre-commit")
-def run_pre_commit(ctx, hook=None, warn=False):
+@task
+def lint(ctx):
     """Run pre-commit against all files."""
     argv = [
         "poetry",
@@ -43,40 +49,38 @@ def run_pre_commit(ctx, hook=None, warn=False):
         "--all-files",
         "--show-diff-on-failure",
     ]
-    if hook:
-        argv.append(hook)
-    run_argv(ctx, argv, warn=warn)
+    run_argv(ctx, argv, warn=False)
 
 
-@task(name="autoformatters")
-def run_autoformatters(ctx, warn=True):
-    """Run all the autoformatters."""
-    run_pre_commit(ctx, hook="black", warn=warn)
-    run_pre_commit(ctx, hook="blacken-docs", warn=warn)
-    run_pre_commit(ctx, hook="isort", warn=warn)
-    run_pre_commit(ctx, hook="end-of-file-fixer", warn=warn)
-    run_pre_commit(ctx, hook="trailing-whitespace", warn=warn)
+@task(name="format")
+def format_(ctx):
+    """Run all the formatters."""
+    for formatter in (
+        "black",
+        "blacken-docs",
+        "isort",
+        "end-of-file-fixer",
+        "trailing-whitespace",
+    ):
+        argv = (
+            "poetry",
+            "run",
+            "pre-commit",
+            "run",
+            "--all-files",
+            "--show-diff-on-failure",
+            formatter,
+        )
+        run_argv(ctx, argv, warn=True)
 
 
-@task(name="nox", iterable=["env"])
-def run_nox(ctx, warn=False, env=None):
-    """Run nox."""
-    argv = ["poetry", "run", "nox"]
-    if env:
-        for environment in env:
-            argv.extend(["-e", environment])
-
-    run_argv(ctx, argv, warn=warn)
-
-
-@task(name="tests", iterable=["env"])
-def run_tests(ctx, autoformat=True, env=None, warn=False):
+@task(pre=[format_])
+def test(ctx):
     """Run the tests."""
-    if autoformat:
-        echo("Running autoformatters...")
-        run_autoformatters(ctx, warn=warn)
     clean_coverage()
-    run_nox(ctx, warn=warn, env=env)
+    argv = ["poetry", "run", "nox"]
+    argv.extend(get_posargs())
+    run_argv(ctx, argv)
 
 
 @task(name="docs")
@@ -216,7 +220,7 @@ def clean(
     preserve any artifacts/caches you should pass the corresponding `--no-...`
     flag to this command.
     """
-    cleaners = (
+    cleaners: Iterable[Tuple[bool, Callable]] = (
         (dists, clean_dists),
         (docs, clean_docs),
         (compiled, clean_compiled),
@@ -233,11 +237,10 @@ def clean(
 
 
 @task(name="dists")
-def build_dists(ctx, clean_=True):
+def build_dists(ctx):
     """Build distribution artifacts."""
-    if clean_:
-        clean_dists()
-        clean_build_dir()
+    clean_dists()
+    clean_build_dir()
     argv = ["poetry", "run", "python", "-m", "build", "."]
     run_argv(ctx, argv)
     echo(f"Dists now available in {Path('./dist').resolve()}")
@@ -324,13 +327,9 @@ def build_zipapp(
     echo(f"Created zipapp: {output_fname}")
 
 
-@task(name="coverage-report")
-def build_coverage_report(ctx, clean_=True, test=True):
+@task(pre=[test], name="coverage-report")
+def build_coverage_report(ctx):
     """Build an HTML coverage report."""
-    if clean_:
-        clean_coverage_report()
-    if test:
-        run_tests(ctx, warn=True)
     run_argv(ctx, ["poetry", "run", "coverage", "html"])
     echo(f"Coverage report available at {str(Path('./htmlcov').resolve())}")
 
@@ -350,17 +349,9 @@ def check_todos(ctx):
     run_argv(ctx, argv)
 
 
-@task()
-def release(
-    ctx, prod=False, clean_=True, build=True, skip_tests=False, autoformat=True
-):  # pylint:disable=R0913
+@task(pre=[test, lint, build_dists])
+def release(ctx, prod=False):
     """Perform a release to pypi."""
-    if not skip_tests:
-        run_tests(ctx, autoformat=autoformat)
-    if clean_:
-        clean_dists()
-    if build:
-        build_dists(ctx)
     argv = ["python", "-m", "twine", "upload"]
     if not prod:
         echo("Uploading to test.pypi")
@@ -411,14 +402,9 @@ ns.configure({"run": {"pty": True, "echo": True}})
 # Root commands
 ns.add_task(release)
 ns.add_task(clean)
-
-
-# Define the "run" subcommand
-run_ns = Collection("run")
-run_ns.add_task(run_autoformatters)
-run_ns.add_task(run_nox)
-run_ns.add_task(run_pre_commit)
-run_ns.add_task(run_tests)
+ns.add_task(format_)
+ns.add_task(test)
+ns.add_task(lint)
 
 
 # Define the "build" subcommand
@@ -440,7 +426,6 @@ serve_ns.add_task(serve_docs)
 
 
 # Add custom subcommands to root namespace
-ns.add_collection(run_ns)
 ns.add_collection(build_ns)
 ns.add_collection(check_ns)
 ns.add_collection(serve_ns)

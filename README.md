@@ -1,4 +1,4 @@
-# cookiecutter-pypackage [![v0.45.0](https://img.shields.io/badge/version-0.45.0-blue.svg)](https://github.com/bnbalsamo/cookiecutter-pypackage/releases)
+# cookiecutter-pypackage [![v0.46.0](https://img.shields.io/badge/version-0.46.0-blue.svg)](https://github.com/bnbalsamo/cookiecutter-pypackage/releases)
 
 [![CI](https://github.com/bnbalsamo/cookiecutter-pypackage/workflows/CI/badge.svg?branch=master)](https://github.com/bnbalsamo/cookiecutter-pypackage/actions)
 
@@ -105,7 +105,7 @@ tl;dr: A CI enabled Python software project with plenty of bells and whistles.
 |email|you@provider.com|Included in the `README.md`, used as the contact email for your pypi package, and included in the package's `__email__` dunder.|
 |github_repo_name|$project_name|Used to derive the github URL of the project|
 |github_username|githubber|Used to derive the github URL of the project|
-|github_default_branch_name|master (See [#45](https://github.com/bnbalsamo/cookiecutter-pypackage/issues/45))|Used for the CI badge and in the instructions for project bootstrapping|
+|github_default_branch_name|main|Used for the CI badge and in the instructions for project bootstrapping|
 |license|GNU GPLv3|The license to release the project under|
 |enforce_strong_typing|n|If set to `y` mypy will error on untyped defs.|
 |include_link_back_to_cookiecutter|y|If set to `y`the generated project's `README.md` will include a link back this cookiecutter.|
@@ -121,16 +121,15 @@ $ inv --list
 Available tasks:
 
   clean                   Clean up all caches and generated artifacts.
+  format                  Run all the formatters.
+  lint                    Run pre-commit against all files.
   release                 Perform a release to pypi.
+  test                    Run the tests.
   build.coverage-report   Build an HTML coverage report.
   build.dists (build)     Build distribution artifacts.
   build.docs              Build the documentation.
   build.zipapp            Use `shiv` to produce a zipapp that includes the dependencies.
   check.todos             Check for `#TODO` comments in the code.
-  run.autoformatters      Run all the autoformatters.
-  run.nox                 Run nox.
-  run.pre-commit          Run pre-commit against all files.
-  run.tests               Run the tests.
   serve.docs              Serve the docs on localhost:8000. Reload on changes.
 ```
 

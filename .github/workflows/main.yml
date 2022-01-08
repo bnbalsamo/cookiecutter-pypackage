@@ -32,11 +32,11 @@ jobs:
           git add {.[!.]*,*}
           poetry install -E docs -E tests
           git add poetry.lock
-          poetry run inv run.tests
+          poetry run inv test
           poetry run inv build
           poetry run inv build.dists
           poetry run inv build.docs
-          poetry run inv build.coverage-report --no-test
+          poetry run inv build.coverage-report
           poetry run inv build.zipapp
           poetry run inv clean
           poetry run inv check.todos
