@@ -24,10 +24,10 @@ nox.options.error_on_external_run = True
 
 # Python versions the package supports
 SUPPORTED_PYTHONS: List[str] = [
+    "3.10",
     "3.9",
     "3.8",
     "3.7",
-    "3.6",
 ]
 
 
