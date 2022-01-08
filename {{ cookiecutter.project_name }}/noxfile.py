@@ -97,7 +97,9 @@ def test(session: Session) -> None:
     if coverage_file.exists():
         coverage_file.unlink()
 
-    session.run_always("poetry", "install", "-E", "tests", "--no-dev", external=True)
+    session.run_always(
+        "poetry", "install", "-q", "-E", "tests", "--no-dev", external=True
+    )
     session.run("coverage", "run", "-p", "--branch", "-m", "pytest")
     session.notify("coverage")
 

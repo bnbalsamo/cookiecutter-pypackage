@@ -1,0 +1,32 @@
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/.mypy_cache": true,
+    "**/.pytest_cache": true,
+    "**/.venv": true,
+    "**/__pycache__": true,
+    "**/*.pyc": true,
+    "**/.coverage": true,
+    "**/*.egg-info": true
+  },
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/*/**": true,
+    "**/.hg/store/**": true,
+    "**/.nox/**": true,
+    "**/.venv/**": true
+  },
+  "python.testing.pytestEnabled": true,
+  "python.formatting.provider": "black",
+  "python.testing.unittestEnabled": false,
+  "python.linting.enabled": true,
+  "python.linting.banditEnabled": false,
+  "python.linting.pylintEnabled": true,
+  "python.linting.mypyEnabled": true
+}

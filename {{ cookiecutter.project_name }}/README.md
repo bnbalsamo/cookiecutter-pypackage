@@ -41,12 +41,12 @@ script. After installation you can view the help via `inv --list`
 
 ## Running Tests
 ```
-$ inv run.tests
+$ inv test
 ```
 
 ## Running autoformatters
 ```
-$ inv run.autoformatters
+$ inv format
 ```
 
 ## Upgrading Dependencies
