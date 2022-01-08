@@ -74,9 +74,11 @@ def format_(ctx):
         run_argv(ctx, argv, warn=True)
 
 
-@task(pre=[format_])
-def test(ctx):
+@task
+def test(ctx, autoformat=True):
     """Run the tests."""
+    if autoformat:
+        format_(ctx)
     clean_coverage()
     argv = ["poetry", "run", "nox"]
     argv.extend(get_posargs())
