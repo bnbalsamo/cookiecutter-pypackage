@@ -18,7 +18,7 @@ jobs:
       - run: |
           python -m pip install coverage poetry
           poetry install -E docs -E tests
-          poetry run inv run.tests --no-autoformat
+          poetry run inv test --no-autoformat
       - name: "Generate coverage XML"
         run: "poetry run coverage xml"
       - name: "Upload Coverage to CodeCov"
