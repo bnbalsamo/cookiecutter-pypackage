@@ -2,11 +2,11 @@
 import tempfile
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from typing import Any, List
+from typing import List
 
 import nox
-from nox.sessions import Session
-from packaging.requirements import Requirement
+import nox_poetry
+from nox_poetry.sessions import Session
 
 nox.options.sessions = [
     "test",
@@ -37,59 +37,11 @@ IMPORTED_DEV_REQUIREMENTS = [
     "invoke",
     "nox",
     "packaging",
+    "nox-poetry",
 ]
 
 
-def install_with_constraints(
-    session: Session, *args: Any, allow_unlocked: bool = False, **kwargs: Any
-) -> None:
-    """
-    Install packages constrained by Poetry's lock file.
-
-    This function is a wrapper for nox.sessions.Session.install. It
-    invokes pip to install packages inside of the session's virtualenv.
-    Additionally, pip is passed a constraints file generated from
-    Poetry's lock file, to ensure that the packages are pinned to the
-    versions specified in poetry.lock. This allows you to manage the
-    packages as Poetry development dependencies.
-
-    Arguments:
-        session: The Session object.
-        args: Command-line arguments for pip.
-        allow_unlocked: If true allow installing dependencies that don't
-            exist in the poetry lock file.
-        kwargs: Additional keyword arguments for Session.install.
-    """
-    with tempfile.NamedTemporaryFile(mode="w") as tmp_file:
-        req_path = tmp_file.name
-        session.run(
-            "poetry",
-            "export",
-            "-E",
-            "docs",
-            "-E",
-            "tests",
-            "--dev",
-            "--without-hashes",
-            "--format=requirements.txt",
-            f"--output={req_path}",
-            external=True,
-        )
-
-        # Confirm the requested package exists in the poetry.lock file
-        if not allow_unlocked:
-            pinned_names = []
-            with open(req_path) as req_file:
-                for line in req_file.readlines():
-                    pinned_names.append(Requirement(line).name)
-            for name in args:
-                if Requirement(name).name not in pinned_names:
-                    raise RuntimeError(f"{name} missing from poetry.lock!")
-        # Install the package via pip
-        session.install(f"--constraint={req_path}", *args, **kwargs)
-
-
-@nox.session(python=SUPPORTED_PYTHONS)
+@nox_poetry.session(python=SUPPORTED_PYTHONS)
 def test(session: Session) -> None:
     """Run the unit tests."""
     # Remove the coverage file if it exists
@@ -97,45 +49,34 @@ def test(session: Session) -> None:
     if coverage_file.exists():
         coverage_file.unlink()
 
-    session.run_always(
-        "poetry", "install", "-q", "-E", "tests", "--no-dev", external=True
-    )
+    session.install(".[tests]")
     session.run("coverage", "run", "-p", "--branch", "-m", "pytest")
     session.notify("coverage")
 
 
-@nox.session
+@nox_poetry.session
 def coverage(session: Session) -> None:
     """Generate combined coverage metrics."""
-    install_with_constraints(session, "coverage[toml]")
+    session.install("coverage[toml]")
     session.run("coverage", "combine")
     session.run("coverage", "report")
 
 
-@nox.session
+@nox_poetry.session
 def pre_commit(session: Session) -> None:
     """Run pre-commit against all files."""
-    install_with_constraints(session, "pre-commit")
+    session.install("pre-commit")
     session.run(
         "python", "-m", "pre_commit", "run", "--all-files", "--show-diff-on-failure"
     )
 
 
-@nox.session
+@nox_poetry.session
 def pylint(session: Session) -> None:
     """Run pylint."""
-    session.run_always(
-        "poetry",
-        "install",
-        "-E",
-        "docs",
-        "-E",
-        "tests",
-        "--no-dev",
-        external=True,
-    )
-    install_with_constraints(session, "pylint")
-    install_with_constraints(session, *IMPORTED_DEV_REQUIREMENTS)
+    session.install(".[docs,tests]")
+    session.install("pylint")
+    session.install(*IMPORTED_DEV_REQUIREMENTS)
     session.run(
         "python",
         "-m",
@@ -147,23 +88,13 @@ def pylint(session: Session) -> None:
     )
 
 
-@nox.session
+@nox_poetry.session
 def mypy(session: Session) -> None:
     """Run mypy."""
-    session.run_always(
-        "poetry",
-        "install",
-        "-E",
-        "docs",
-        "-E",
-        "tests",
-        "--no-dev",
-        external=True,
-    )
+    session.install(".[docs,tests]", *IMPORTED_DEV_REQUIREMENTS)
     # Can't typecheck tasks.py until the following is fixed:
     # https://github.com/pyinvoke/invoke/issues/357
-    install_with_constraints(session, "mypy")
-    install_with_constraints(session, *IMPORTED_DEV_REQUIREMENTS)
+    session.install("mypy")
     session.run(
         "python",
         "-m",
@@ -177,29 +108,29 @@ def mypy(session: Session) -> None:
     )
 
 
-@nox.session
+@nox_poetry.session
 def safety(session: Session) -> None:
     """Run safety against the installed environment."""
-    session.run_always("poetry", "install", "--no-dev", external=True)
+    session.install(".")
     # Update what comes packaged in the venv
     session.run_always("pip", "install", "-U", "pip", "setuptools", "wheel")
-    install_with_constraints(session, "safety")
+    session.install("safety")
     session.run("python", "-m", "safety", "check")
 
 
-@nox.session
+@nox_poetry.session
 def build(session: Session) -> None:
     """Check that the package builds properly."""
-    install_with_constraints(session, "build", "twine")
+    session.install("build", "twine")
     with TemporaryDirectory() as tmp_dir:
         session.run("python", "-m", "build", "--outdir", tmp_dir, ".")
         session.run("python", "-m", "twine", "check", tmp_dir + "/*")
 
 
-@nox.session
+@nox_poetry.session
 def docs(session: Session) -> None:
     """Check that the docs build properly."""
-    session.run_always("poetry", "install", "-E", "docs", "--no-dev", external=True)
+    session.install(".[docs]")
     with tempfile.TemporaryDirectory() as tmp_dir:
         session.run(
             "sphinx-build",
@@ -213,10 +144,10 @@ def docs(session: Session) -> None:
         )
 
 
-@nox.session
+@nox_poetry.session
 def docs_linkcheck(session: Session) -> None:
     """Check there are no dead links in the docs."""
-    session.run_always("poetry", "install", "-E", "docs", "--no-dev", external=True)
+    session.install(".[docs]")
     with tempfile.TemporaryDirectory() as tmp_dir:
         session.run(
             "sphinx-build",
