@@ -2,23 +2,10 @@
     "project_name": "My-Project",
     "pip_name": "{{ cookiecutter.project_name.lower().replace(' ', '-') }}",
     "module_name": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
-    "version": "0.1.0",
-    "short_description": "A project.",
+    "version": "1000.1",
+    "short_description": "A package.",
     "author": "First Last",
     "email": "you@provider.com",
     "github_repo_name": "{{ cookiecutter.project_name }}",
-    "github_username": "githubber",
-    "github_default_branch_name": "main",
-    "license": [
-        "GNU GPLv3",
-        "GNU AGPLv3",
-        "GNU LGPLv3",
-        "MIT License",
-        "Apache License 2.0",
-        "Mozzilla Public License 2.0",
-        "The Unlicense",
-        "None/Other"
-    ],
-    "enforce_strong_typing": "n",
-    "include_link_back_to_cookiecutter": "y"
+    "github_username": "github_username"
 }

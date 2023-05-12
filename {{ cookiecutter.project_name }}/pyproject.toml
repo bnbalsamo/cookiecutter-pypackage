@@ -1,57 +1,149 @@
-[tool.poetry]
-name = "{{ cookiecutter.pip_name }}"
-version = "{{ cookiecutter.version }}"
-description = "{{ cookiecutter.short_description }}"
-authors = ["{{ cookiecutter.author }}  <{{ cookiecutter.email }}>"]
-readme = "README.md"
-homepage = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_name }}"
-
-[tool.poetry.dependencies]
-python = "^3.7.0"
-sphinx = {version = "*", optional = true}
-sphinx-autodoc-typehints = {version = "*", optional = true}
-sphinx-rtd-theme = {version = "*", optional = true}
-pytest = {version = "*", optional = true}
-coverage = {version = "*", optional = true, extras = ["toml"]}
-typing-extensions = {version = "*", optional = true}
-
-[tool.poetry.extras]
-docs = [
-    "sphinx",
-    "sphinx-autodoc-typehints",
-    "sphinx-rtd-theme",
-    "typing-extensions",
-]
-tests = [
-    "pytest",
-    "coverage",
-]
-
-[tool.poetry.dev-dependencies]
-build = ">=0.5.0"
-bump2version = "*"
-invoke = "^1"
-mypy = ">=0.910"
-nox = "*"
-nox-poetry = "*"
-packaging = "*"
-pre-commit = "^2.9.2"
-pylint = "*"
-safety = "*"
-shiv = ">=0.5.2"
-sphinx-autobuild = "*"
-toml = "*"
-twine = "*"
-
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
 
-[tool.isort]
-profile = "black"
+[project]
+name = "{{ cookiecutter.pip_name }}"
+authors = [{name = "{{ cookiecutter.author }}", email = "{{ cookiecutter.email }}"}]
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.8"
+dynamic = ["version", "description"]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Typing :: Typed",
+]
+
+[project.urls]
+Documentation = "https://{{ cookiecutter.github_username }}.github.io/{{ cookiecutter.project_name }}"
+Source = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_name }}"
+
+# dependencies = [
+#     "attrs>=23.1.0",
+# ]
+
+# [project.optional-dependencies]
+# networking = ["requests"]
+
+# [project.scripts]
+# my-script = "my_package.module:function"
+
+# [project.entry-points."pygments.lexers"]
+# dogelang = "dogelang.lexer:DogeLexer"
+
+
+[tool.ruff]
+select = [
+    "A",    # flake8-built-ins
+#    "ANN",  # flake8-annotations (disallow_untyped_defs takes care of this)
+#    "ARG",  # flake8-unused-arguments (pylint takes care of this)
+    "B",    # flake8-bugbear
+    "BLE",  # flake8-blind-except
+    "C4",   # flake8-comprehensions
+    "C90",  # mccabe
+#    "COM",  # flake8-commas (black takes care of this)
+    "D",    # pydocstyle
+#    "DJ",   # flake8-django  (enable if using django)
+    "DTZ",  # flake8-datetimez
+    "E",    # pycodestyle errors
+    "EM",   # flake8-errmsg
+    "ERA",  # eradicate
+    "EXE",  # flake8-executable
+    "F",    # pyflakes
+    "FBT",  # flake8-boolean-trap
+    "G",    # flake8-logging-format
+    "I",    # isort
+    "ICN",  # flake8-import-conventions
+    "INP",  # flake8-no-pep420
+    "INT",  # flake8-gettext
+    "ISC",  # flake8-implicit-string-concat
+    "N",    # pep8-naming
+#    "NPY",  # NumPy-specific rules (enable if using numpy)
+#    "PD",   # pandas-vet (enable if using pandas)
+    "PGH",  # pygrep-hooks
+    "PIE",  # flake8-pie
+#    "PLC",  # pylint convention (pylint takes care of this)
+#    "PLE",  # pylint error (pylint takes care of this)
+#    "PLR",  # pylint refactor (pylint takes care of this)
+#    "PLW",  # pylint warning (pylint takes care of this)
+    "PT",   # flake8-pytest-style
+    "PTH",  # flake8-use-pathlib
+    "PYI",  # flake8-pyi
+    "Q",    # flake8-quotes
+    "RET",  # flake8-return
+    "RSE",  # flake8-raise
+    "RUF",  # ruff specific rules
+    "S",    # flake8-bandit
+    "SIM",  # flake8-simplify
+    "SLF",  # flake8-self
+    "T10",  # flake8-debugger
+    "T20",  # flake8-print
+    "TCH",  # flake8-type-checking
+    "TID",  # flake8-tidy-imports
+    "TRY",  # tryceratops
+    "UP",   # pyupgrade
+    "W",    # pycodestyle warnings
+    "YTT",  # flake8-2020
+]
+ignore = [
+    "E501",  # black takes care of line length
+    "D203",  # Incompatible pydocstyle rule
+    "D212",  # Incompatible pydocstyle rule
+]
+unfixable = [
+    "F401",    # Don't remove unused imports
+]
+
+[tool.ruff.per-file-ignores]
+"tests/**" = [
+    "S101",    # Allow asserts in tests
+    "INP001",  # Don't require __init__.py in tests
+]
+
+[tool.ruff.isort]
+known-first-party = ["{{ cookiecutter.module_name }}"]
+
+[tool.mypy]
+strict = true
+check_untyped_defs = true
+ignore_missing_imports = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+warn_unreachable = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+allow_untyped_defs = true
+
+[tool.towncrier]
+package = "{{ cookiecutter.module_name }}"
+directory = "newsfragments"
+filename = "CHANGELOG.md"
+
+[tool.bumpver]
+current_version = "{{ cookiecutter.version }}"
+version_pattern = "YYYY.MM[.INC0][.PYTAGNUM]"
+commit_message = "bump version {old_version} -> {new_version}"
+commit = true
+tag = true
+push = true
+
+[tool.bumpver.file_patterns]
+"pyproject.toml" = [
+    'current_version = "{version}"',
+]
+"src/{{ cookiecutter.module_name }}/__init__.py" = [
+    '__version__ = "{version}"',
+]
 
 [tool.coverage.run]
-source = ["{{ cookiecutter.module_name }}"]
+parallel = true
+branch = true
+source_pkgs = ["{{ cookiecutter.module_name }}"]
 
 [tool.coverage.report]
 fail_under = 80
@@ -59,12 +151,5 @@ fail_under = 80
 [tool.coverage.paths]
 source = [
    "src",
-   ".tox/*/site-packages"
+   ".nox/**/site-packages"
 ]
-
-[tool.mypy]
-warn_unused_configs = true
-check_untyped_defs = true
-{% if cookiecutter.enforce_strong_typing == "y" -%}
-disallow_untyped_defs = true
-{%- endif -%}

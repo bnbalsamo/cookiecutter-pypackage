@@ -1,7 +1,6 @@
 # Closes Issues
 
 * Fixes #...
-* ...
 
 # Description
 
@@ -20,12 +19,7 @@ will need to pass in order for your code to be merged.
 If you have any questions about the points below please ask them
 in a comment on this pull request!
 
-This checklist is meant to make the process of contributing easier, not harder!
-
-- [ ] Added tests for changed code
-- [ ] Tests pass locally when invoked via `inv run.tests`
+- [ ] Added tests for changed/added code
+- [ ] Tests pass locally when invoked via `inv test`
 - [ ] Updated documentation for changed code
-    - [ ] Documentation placed in the correct section according to
-    the [Diátaxis Framework](https://diataxis.fr/)
-    - [ ] New modules have a corresponding `.. automodule` entry in
-    `docs/reference`
+- [ ] Newfragment created

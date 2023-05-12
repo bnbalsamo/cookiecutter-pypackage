@@ -1,44 +1,42 @@
+"""
+Post generation script.
+
+Template variables in this script will be substituted before execution.
+
+When this script executes the template will be rendered, and the working directory
+will be set to the root of the rendered template.
+"""
+
+from pathlib import Path
 from textwrap import dedent
 
 
 def print_setup_instructions():
     print(
         dedent(
-            """\
-    !!! SETUP !!!
+            f"""\
+            !!! SETUP !!!
 
-    -> Please complete setup via either the manual steps *OR* the automatic script. <-
-
-    # Manual Steps
-
-    - cd into the project directory
-    - Create a git repository, add all the created files
-    - Install the project with poetry
-    - Install the pre-commit hooks
-    - Push the contents of your local repo to the appropriate github repo
-
-    # Automatic Setup
-
-    -> Copy/paste the following into your terminal, or manually complete setup. <-
-    -> This requires poetry be installed <-
-
-    ([[ `type -t poetry` ]] || (echo poetry not installed && exit 1)) && \\
-    cd "{{ cookiecutter.project_name }}" && \\
-    git init && \\
-    git add {.[!.]*,*} && \\
-    git commit -m "initial template render" && \\
-    poetry install -E docs -E tests && \\
-    git add poetry.lock && \\
-    git commit -m "Adding initial lock file" && \\
-    poetry run pre-commit install --install-hooks && \\
-    git remote add origin git@github.com:{{ cookiecutter.github_username }}/{{ cookiecutter.github_repo_name }}.git && \\
-    git push -u origin {{ cookiecutter.github_default_branch_name }}
-    """
+            cd "{{ cookiecutter.project_name }}" && \\
+            python -m venv venv && \\
+            source venv/bin/activate && \\
+            python -m pip install -r requirements/dev_requirements.txt && \\
+            git init && \\
+            python -m pre_commit autoupdate && \\
+            git add {" ".join(entry.name for entry in Path(".").iterdir())} && \\
+            git commit -m "initial template render" && \\
+            python -m invoke install && \\
+            python -m pre_commit install --install-hooks && \\
+            git remote add origin git@github.com:{{ cookiecutter.github_username }}/{{ cookiecutter.github_repo_name }}.git && \\
+            git push -u origin main
+            """
         )
     )
 
 
 print("Template successfully created.\n")
 print_setup_instructions()
+print("Please review the license file (and pyproject.toml classifier) and make any appropriate changes.\n")
+print("Remember to add a `PYPI_TOKEN` secret to the repo!\n")
 print("Happy Developing!\n")
 exit(0)

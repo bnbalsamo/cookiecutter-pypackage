@@ -1,3 +1,11 @@
+"""
+Pre generation script.
+
+Template variables in this script will be substituted before execution.
+
+Exiting non-zero from this script will halt template rendering.
+"""
+
 import re
 import sys
 
@@ -17,9 +25,6 @@ if re.match(r"\s", project_name):
 # Check module name
 if not re.match(MODULE_REGEX, module_name):
     print(
-        "ERROR: The module_name (%s) is not a valid Python module name. Please do not use a - and use _ instead"
-        % module_name
+        "ERROR: The module_name (%s) is not a valid Python module name." % module_name
     )
-
-    # Exit to cancel project
     sys.exit(1)
