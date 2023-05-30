@@ -29,4 +29,6 @@ $ python -m invoke test
 Note: Rather than using `python -m invoke` you may choose to use the shorter `invoke` or `inv` command.
 These instructions use the `python -m` syntax to avoid any issues with global `invoke` installations/path variables/python paths.
 
+Alternatively, this project supports a [VSCode dev container](https://code.visualstudio.com/docs/devcontainers/containers).
+
 _Created using [bnbalsamo/cookiecutter-pypackage](https://github.com/bnbalsamo/cookiecutter-pypackage)_

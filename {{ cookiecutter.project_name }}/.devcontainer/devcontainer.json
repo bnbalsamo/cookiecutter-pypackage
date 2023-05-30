@@ -1,0 +1,5 @@
+{
+	"name": "Python 3",
+	"image": "mcr.microsoft.com/devcontainers/python:0-3.11",
+	"postCreateCommand": "python -m venv venv && . venv/bin/activate && pip install -r requirements/dev_requirements.txt && inv install -e && echo \". $(pwd)/venv/bin/activate\" >> ~/.bashrc"
+}

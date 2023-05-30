@@ -38,6 +38,8 @@ def test(ctx):  # type: ignore[no-untyped-def]
 def lint(ctx):  # type: ignore[no-untyped-def]
     """Lint (and autoformat) the source."""
     ctx.run("python -m pre_commit run --all-files", pty=True)
+    ctx.run("python -m pylint src", pty=True)
+    ctx.run("python -m mypy src", pty=True)
 
 
 def _get_next_version(ctx: invoke.Context, bumpver_cmd: str) -> str:
@@ -73,28 +75,3 @@ def prepare(ctx, *, hotfix=False):  # type: ignore[no-untyped-def]
 
     # Bumpver
     ctx.run(bumpver_cmd)
-
-
-@invoke.task(pre=[build])
-def publish(ctx):  # type: ignore[no-untyped-def]
-    """Publish built artifacts to pypi."""
-    twine_cmd = "python -m twine upload dist/* "
-    if os.environ.get("CI") is None:
-        maybe_continue = input(
-            "It looks like you're not the CI server. "
-            "Please type 'continue' to continue: "
-        )
-        if maybe_continue.strip() != "continue":
-            msg = "Exiting..."
-            raise SystemExit(msg)
-    else:
-        twine_cmd += "--non-interactive --disable-progress-bar "
-
-    prod_pypi = "https://upload.pypi.org/legacy/"
-    twine_cmd += f"--repository-url {prod_pypi} "
-
-    # Upload package
-    ctx.run(twine_cmd)
-
-    # Deploy docs
-    ctx.run("mkdocs gh-deploy --force")
