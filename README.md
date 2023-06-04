@@ -27,14 +27,16 @@ My [cookiecutter](https://github.com/audreyr/cookiecutter) template for python p
     - full support for modern build standards (rendered projects use [`flit`](https://flit.pypa.io/en/stable/) and are built via [`build`](https://pypa-build.readthedocs.io/en/latest/))
 - [`invoke`](https://www.pyinvoke.org/) tasks for facilitating local development and wrapping all other tools into one easy to use CLI
 - Pre-configured testing and linting powered by [`nox`](https://nox.thea.codes/en/stable/) and [`pre-commit`](https://pre-commit.com/)
-    - unit testing and coverage metrics via [`pytest`](https://docs.pytest.org/en/latest/) and [`coverage.py`](https://coverage.readthedocs.io/en/7.2.7/)
+    - unit testing and coverage metrics via [`pytest`](https://docs.pytest.org/en/latest/) and [`coverage`](https://coverage.readthedocs.io/en/7.2.7/)
     - type checking via [`mypy`](https://mypy.readthedocs.io/en/latest/)
     - linting via [`ruff`](https://beta.ruff.rs/docs/) and [`pylint`](https://pylint.readthedocs.io/en/latest/)
     - code formatting via [`black`](https://black.readthedocs.io/en/stable/) and [`ruff`](https://beta.ruff.rs/docs/)
     - docstring coverage via [`interrogate`](https://interrogate.readthedocs.io/en/latest/)
 - CI via [Github Actions](https://github.com/features/actions)
     - Including partially automated releasing to [PyPI](https://pypi.org/)
-- Documentation built via [MkDocs](https://www.mkdocs.org/) hosted on [GitHub Pages](https://pages.github.com/)
+- Documentation built via [`mkdocs`](https://www.mkdocs.org/) hosted on [GitHub Pages](https://pages.github.com/)
+    - Documentation uses the [Material theme](https://squidfunk.github.io/mkdocs-material/)
+    - API documentation is auto generated via [`mkdocstrings`](https://mkdocstrings.github.io/)
 - Changelog auto generation via [`towncrier`](https://towncrier.readthedocs.io/en/stable/)
 - Version management via [`bumpver`](https://github.com/mbarkhau/bumpver)
 - A prepopulated `README.md` that includes documentation for project development and contributing
