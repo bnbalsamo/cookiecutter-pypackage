@@ -29,9 +29,11 @@ def build(ctx):  # type: ignore[no-untyped-def]
 
 
 @invoke.task(pre=[build])
-def test(ctx):  # type: ignore[no-untyped-def]
+def test(ctx, *, wheel=False):  # type: ignore[no-untyped-def]
     """Run the tests."""
-    ctx.run("python -m nox -- -a dist/*.whl", pty=True)
+    if wheel:
+        os.environ.update({"NOX_USE_WHEEL": "1"})
+    ctx.run("python -m nox", pty=True)
 
 
 @invoke.task

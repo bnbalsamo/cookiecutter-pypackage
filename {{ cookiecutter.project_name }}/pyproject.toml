@@ -17,14 +17,13 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Typing :: Typed",
 ]
+# dependencies = [
+#     "attrs>=23.1.0",
+# ]
 
 [project.urls]
 Documentation = "https://{{ cookiecutter.github_username }}.github.io/{{ cookiecutter.project_name }}"
 Source = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_name }}"
-
-# dependencies = [
-#     "attrs>=23.1.0",
-# ]
 
 # [project.optional-dependencies]
 # networking = ["requests"]
