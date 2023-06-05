@@ -36,7 +36,9 @@ def print_setup_instructions():
 
 print("Template successfully created.\n")
 print_setup_instructions()
-print("Please review the license file (and pyproject.toml classifier) and make any appropriate changes.\n")
+print(
+    "Please review the license file (and pyproject.toml classifier) and make any appropriate changes.\n"
+)
 print("Remember to add a `PYPI_TOKEN` secret to the repo!\n")
 print("Happy Developing!\n")
 exit(0)
